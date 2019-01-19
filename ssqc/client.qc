@@ -2,7 +2,7 @@
 // prototypes
 void () W_WeaponFrame;
 void() W_SetCurrentAmmo;
-void() player_pain;
+void (entity et, float f) player_pain;
 void() player_stand1;
 void (vector org) spawn_tfog;
 void (vector org, entity death_owner) spawn_tdeath;
@@ -301,7 +301,7 @@ void() changelevel_touch =
 		return;
 	}
 
-	if (coop || deathmatch)
+	if (deathmatch)
 	{
 		bprint (other.netname);
 		bprint (" exited the level\n");
@@ -351,16 +351,7 @@ void() set_suicide_frame;
 // called by ClientKill and DeadThink
 void() respawn =
 {
-	if (coop)
-	{
-		// make a copy of the dead body for appearances sake
-		CopyToBodyQue (self);
-		// get the spawn parms as they were at level start
-		setspawnparms (self);
-		// respawn
-		PutClientInServer ();
-	}
-	else if (deathmatch)
+	if (deathmatch)
 	{
 		// make a copy of the dead body for appearances sake
 		CopyToBodyQue (self);
@@ -417,15 +408,7 @@ entity() SelectSpawnPoint =
 		return spot;
 
 // choose a info_player_deathmatch point
-	if (coop)
-	{
-		lastspawn = find(lastspawn, classname, "info_player_coop");
-		if (lastspawn == world)
-			lastspawn = find (lastspawn, classname, "info_player_start");
-		if (lastspawn != world)
-			return lastspawn;
-	}
-	else if (deathmatch)
+	if (deathmatch)
 	{
 		spot = lastspawn;
 		while (1)
@@ -531,7 +514,7 @@ void() PutClientInServer =
 
 	player_stand1 ();
 
-	if (deathmatch || coop)
+	if (deathmatch)
 	{
 		makevectors(self.angles);
 		spawn_tfog (self.origin + v_forward*20);
@@ -648,7 +631,6 @@ void() NextLevel =
 	}
 
 	nextmap = o.map;
-	gameover = TRUE;
 
 	if (o.nextthink < time)
 	{
@@ -666,22 +648,7 @@ Exit deathmatch games upon conditions
 */
 void() CheckRules =
 {
-	local	float		timelimit;
-	local	float		fraglimit;
-
-	if (gameover)	// someone else quit the game already
-		return;
-
-	timelimit = cvar("timelimit") * 60;
-	fraglimit = cvar("fraglimit");
-
 	if (timelimit && time >= timelimit)
-	{
-		NextLevel ();
-		return;
-	}
-
-	if (fraglimit && self.frags >= fraglimit)
 	{
 		NextLevel ();
 		return;
@@ -1146,6 +1113,30 @@ void() PlayerPostThink =
 	CheckPowerups ();
 };
 
+void () PutClientInIntermission =
+{
+    local entity pos;
+
+    pos = FindIntermission ();
+
+    if (pos) {
+        WriteByte (MSG_ONE, SVC_CDTRACK);
+        WriteByte (MSG_ONE, 3);
+
+        WriteByte (MSG_ONE, SVC_INTERMISSION);
+        WriteCoord (MSG_ONE, pos.origin_x);
+        WriteCoord (MSG_ONE, pos.origin_y);
+        WriteCoord (MSG_ONE, pos.origin_z);
+        WriteAngle (MSG_ONE, pos.mangle_x);
+        WriteAngle (MSG_ONE, pos.mangle_y);
+        WriteAngle (MSG_ONE, pos.mangle_z);
+    }
+
+    self.takedamage = DAMAGE_NO;
+    self.solid = SOLID_NOT;
+    self.movetype = MOVETYPE_NONE;
+    self.modelindex = 0;
+}
 
 /*
 ===========
@@ -1154,14 +1145,15 @@ ClientConnect
 called when a player connects to a server
 ============
 */
-void() ClientConnect =
+void(optional float csqcactive) ClientConnect =
 {
 	bprint (self.netname);
 	bprint (" entered the game\n");
 
-// a client connecting during an intermission can cause problems
-	if (intermission_running)
-		ExitIntermission ();
+   if (intermission_running) {
+        PutClientInIntermission();
+        GotoNextMap();
+    }
 };
 
 
@@ -1174,11 +1166,6 @@ called when a player disconnects from a server
 */
 void() ClientDisconnect =
 {
-	if (gameover)
-		return;
-	// if the level end trigger has been activated, just return
-	// since they aren't *really* leaving
-
 	// let everyone else know
 	bprint (self.netname);
 	bprint (" left the game with ");

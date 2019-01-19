@@ -993,6 +993,10 @@ void() W_ChangeWeapon =
 		if (self.ammo_cells < 1)
 			am = 1;
 	}
+	else
+	{
+		fl = IT_AXE;
+	}
 
 	self.impulse = 0;
 
@@ -1022,7 +1026,7 @@ CheatCommand
 */
 void() CheatCommand =
 {
-	if (deathmatch || coop)
+	if (deathmatch)
 		return;
 
 	self.ammo_rockets = 100;
@@ -1208,7 +1212,7 @@ void() ServerflagsCommand =
 
 void() QuadCheat =
 {
-	if (deathmatch || coop)
+	if (deathmatch)
 		return;
 	self.super_time = 1;
 	self.super_damage_finished = time + 30;

@@ -280,9 +280,7 @@ void () armor_touch = {
     if (deathmatch != 2) {
         self.nextthink = time + 20;
     }
-    if (coop) {
-        self.nextthink = time + 40;
-    }
+
     self.think = SUB_regen;
     sound(other, 3, "items/armor1.wav", 1, 1);
     stuffcmd(other, "bf\n");
@@ -410,7 +408,7 @@ void() weapon_touch =
 	best = W_BestWeapon();
 	self = stemp;
 
-	if (deathmatch == 2 || coop)
+	if (deathmatch == 2)
 		leave = 1;
 	else
 		leave = 0;

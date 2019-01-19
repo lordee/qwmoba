@@ -342,7 +342,7 @@ void() StartFrame =
 	framecount = framecount + 1;
 
 	if (!deathmatch)
-		localcmd("deathmatch 1;coop 0;restart\n");
+		localcmd("deathmatch 1;restart\n");
 };
 
 /*
