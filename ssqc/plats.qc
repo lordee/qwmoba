@@ -144,10 +144,7 @@ Set "sounds" to one of the following:
 */
 
 
-void() func_plat =
-
-{
-local entity t;
+void() func_plat = {
 
 	if (!self.t_length)
 		self.t_length = 80;

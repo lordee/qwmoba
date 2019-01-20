@@ -149,7 +149,6 @@ void() item_health =
 
 void() health_touch =
 {
-	local	float amount;
 	local	string	s;
 
 	if (other.classname != "player")
@@ -237,8 +236,6 @@ void () armor_touch = {
     local float type;
     local float value;
     local float bit;
-    local string s;
-    local entity oldself;
 
     if (other.health <= 0) {
         return;
@@ -879,9 +876,6 @@ void() powerup_touch;
 
 void() powerup_touch =
 {
-local entity	stemp;
-local float		best;
-
 	if (other.classname != "player")
 		return;
 	if (other.health <= 0)

@@ -1,6 +1,4 @@
-
-entity stemp, otemp, s, old;
-
+entity s;
 
 void() trigger_reactivate =
 {
@@ -221,8 +219,6 @@ void() trigger_secret =
 
 void() counter_use =
 {
-	local string junk;
-
 	self.count = self.count - 1;
 	if (self.count < 0)
 		return;
