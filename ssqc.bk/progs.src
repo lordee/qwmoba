@@ -1,0 +1,24 @@
+../qwprogs.dat
+
+defs.qc
+fteextensions.qc
+// qwmoba
+qwmobadefs.qc
+
+// qw
+subs.qc
+combat.qc
+items.qc
+weapons.qc
+world.qc
+client.qc
+player.qc
+doors.qc
+buttons.qc
+triggers.qc
+plats.qc
+misc.qc
+server.qc
+
+// qwmoba
+qwmobamenu.qc
