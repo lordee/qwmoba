@@ -47,18 +47,3 @@ void Hud_Draw(vector scrsz)
 	Hud_DrawLargeValue(pos+'136 0 0', getstatf(STAT_HEALTH), 25);
 	Hud_DrawLargeValue(pos+'248 0 0', getstatf(STAT_AMMO), 10);
 };
-
-void(float width, float height, float menushown) CSQC_UpdateView =
-{
-    clearscene();
-	setviewprop(VF_DRAWENGINESBAR, 1);
-	setviewprop(VF_DRAWCROSSHAIR, 1);
-
-	vid_realwidth = width;
-    vid_realheight = height;
-    
-    addentities((intermission?0:MASK_VIEWMODEL)|MASK_ENGINE);
-
-    renderscene();
-    //Hud_Draw([width, height]);
-};

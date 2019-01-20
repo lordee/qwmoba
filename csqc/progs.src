@@ -1,7 +1,9 @@
 ../csprogs.dat
 csdefs.qc
 csmobadefs.qc
+csqc.qc
 view.qc
+
 
 menu.qc
 lobby.qc
