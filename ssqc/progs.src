@@ -3,7 +3,7 @@
 defs.qc
 fteextensions.qc
 // qwmoba
-qwmoba.qc
+qwmobadefs.qc
 
 // qw
 subs.qc
