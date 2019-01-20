@@ -215,3 +215,6 @@
 #define AS_SLIDING	2
 #define AS_MELEE	3
 #define AS_MISSILE	4
+
+// qwmoba menus
+#define MNU_LOBBY 1

@@ -6,6 +6,7 @@ void (entity et, float f) player_pain;
 void() player_stand1;
 void (vector org) spawn_tfog;
 void (vector org, entity death_owner) spawn_tdeath;
+void (entity player, float menutype) ShowMenu;
 
 float	modelindex_eyes, modelindex_player;
 
@@ -76,6 +77,7 @@ void() SetNewParms =
 
 void() DecodeLevelParms =
 {
+	entity ent;
 	if (serverflags)
 	{
 		if (world.model == "maps/start.bsp")
@@ -91,6 +93,13 @@ void() DecodeLevelParms =
 	self.ammo_cells = parm7;
 	self.weapon = parm8;
 	self.armortype = parm9 * 0.01;
+
+	ent = find(world, classname, "info_qwmdetect");
+	if (ent != world) {
+
+		// ParseQWMENT();
+
+	}
 };
 
 /*
@@ -1111,6 +1120,12 @@ void() PlayerPostThink =
 		self.jump_flag = self.velocity_z;
 
 	CheckPowerups ();
+
+	if (self.lobby == 1)
+	{
+		// if menu not showing, show it
+		ShowMenu(self, MNU_LOBBY);
+	}
 };
 
 void () PutClientInIntermission =
@@ -1149,6 +1164,8 @@ void(optional float csqcactive) ClientConnect =
 {
 	bprint (self.netname);
 	bprint (" entered the game\n");
+
+	self.lobby = 1;
 
    if (intermission_running) {
         PutClientInIntermission();
