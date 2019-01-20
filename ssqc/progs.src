@@ -21,4 +21,4 @@ misc.qc
 server.qc
 
 // qwmoba
-menu.qc
+qwmobamenu.qc
