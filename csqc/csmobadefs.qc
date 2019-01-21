@@ -1,12 +1,21 @@
 #include "../share/defs.h"
 
+// btn fields
+.string btn_text;
+.string btn_img;
+.float btn_flags;
+.float btn_no;
+
 // menu stuff
-float inmenu;
+float mnu_active;
 float vid_realwidth;
 float vid_realheight;
-float global_bt_no;
-.string bt_text;
-.string bt_cmd;
-.string bt_img;
-.float bt_flags;
-.float bt_no;
+float global_btn_no;
+
+typedef struct
+{
+    float x;
+    float y;
+} MouseStruct;
+
+MouseStruct Mouse;

@@ -1,4 +1,10 @@
+void () LobbyFire = {
+    localcmd("say fire!\n;", "\n");
+}
+
 void () ShowLobbyMenu = {
+    ClearMenu();
+    setcursormode(TRUE);
     local vector men;                  // position of the first menu button
     local vector but_size;               // size of all the buttons
     local string buttonback;            // Button image
@@ -8,6 +14,7 @@ void () ShowLobbyMenu = {
     men_y = vid_realheight*0.2;                     // first button will be displayed 20% of the vertical value from the top of the screen
     buttonback = "progs/csqc/csqcguiback.tga";
 
-    CreateButton( "Fire!", "+attack\n;testmenu", men, buttonback, but_size, 0); men_y+=but_size_y;
-    CreateButton( "Second go!", "+attack\n;testmenu", men, buttonback, but_size, 0); men_y+=but_size_y;
+    CreateButton( "Fire!", LobbyFire, men, buttonback, but_size, 0); men_y+=but_size_y;
+    //CreateButton( "Second go!", "say hello\n;", men, buttonback, but_size, 0); men_y+=but_size_y;
 }
+
