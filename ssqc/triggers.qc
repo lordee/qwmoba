@@ -1,7 +1,5 @@
 entity stemp, otemp, s;
 
-void () TeamFortress_DetpackExplode;
-
 void () trigger_reactivate = {
     self.solid = SOLID_TRIGGER;
 };
@@ -100,18 +98,6 @@ void () trigger_multiple = {
     }
     self.use = multi_use;
 
-    // q3 fields
-    switch(self.allowteams)
-    {
-        case "blue":
-            self.team_no = 1;
-            break;
-        case "red":
-            self.team_no = 2;
-            break;
-        default:
-    }
-
     InitTrigger();
 
     if (self.health) {
@@ -176,19 +162,19 @@ void () counter_use = {
         if ((activator.classname == "player") &&
             ((self.spawnflags & SPAWNFLAG_NOMESSAGE) == 0)) {
             if (self.count >= 4)
-                CenterPrint(activator, "There are more to go...");
+                centerprint(activator, "There are more to go...");
             else if (self.count == 3)
-                CenterPrint(activator, "Only 3 more to go...");
+                centerprint(activator, "Only 3 more to go...");
             else if (self.count == 2)
-                CenterPrint(activator, "Only 2 more to go...");
+                centerprint(activator, "Only 2 more to go...");
             else
-                CenterPrint(activator, "Only 1 more to go...");
+                centerprint(activator, "Only 1 more to go...");
         }
         return;
     }
     if ((activator.classname == "player") &&
         ((self.spawnflags & SPAWNFLAG_NOMESSAGE) == 0))
-        CenterPrint(activator, "Sequence completed!");
+        centerprint(activator, "Sequence completed!");
 
     self.enemy = activator;
     multi_trigger();
@@ -263,14 +249,6 @@ void () tdeath_touch = {
 
     if (other.health)
         T_Damage(other, self, self, 5000);
-
-    if (other.think == TeamFortress_DetpackExplode) {
-        other.solid = SOLID_NOT;
-        other.nextthink = time + 1 + random() * 2;
-        dremove(other.oldenemy);
-        bprint(PRINT_MEDIUM, other.owner.netname,
-               "'s detpack was telefragged by ", self.owner.netname, "\n");
-    }
 };
 
 void (vector org, entity death_owner) spawn_tdeath = {
@@ -436,7 +414,7 @@ void () trigger_onlyregistered_touch = {
         SUB_UseTargets();
         remove(self);
     } else if (self.message != "") {
-        CenterPrint(other, self.message);
+        centerprint(other, self.message);
         sound(other, CHAN_BODY, "misc/talk.wav", 1, ATTN_NORM);
     }
 };

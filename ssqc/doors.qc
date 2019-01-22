@@ -173,23 +173,23 @@ void () door_touch = {
     if ((self.items & other.items) != self.items) {
         if (self.owner.items == IT_KEY1) {
             if (world.worldtype == 2) {
-                CenterPrint(other, "You need the silver keycard");
+                centerprint(other, "You need the silver keycard");
                 sound(self, CHAN_VOICE, self.noise3, 1, ATTN_NORM);
             } else if (world.worldtype == 1) {
-                CenterPrint(other, "You need the silver runekey");
+                centerprint(other, "You need the silver runekey");
                 sound(self, CHAN_VOICE, self.noise3, 1, ATTN_NORM);
             } else if (world.worldtype == 0) {
-                CenterPrint(other, "You need the silver key");
+                centerprint(other, "You need the silver key");
                 sound(self, CHAN_VOICE, self.noise3, 1, ATTN_NORM);
             }
         } else if (world.worldtype == 2) {
-            CenterPrint(other, "You need the gold keycard\n");
+            centerprint(other, "You need the gold keycard\n");
             sound(self, CHAN_VOICE, self.noise3, 1, ATTN_NORM);
         } else if (world.worldtype == 1) {
-            CenterPrint(other, "You need the gold runekey");
+            centerprint(other, "You need the gold runekey");
             sound(self, CHAN_VOICE, self.noise3, 1, ATTN_NORM);
         } else if (world.worldtype == 0) {
-            CenterPrint(other, "You need the gold key");
+            centerprint(other, "You need the gold key");
             sound(self, CHAN_VOICE, self.noise3, 1, ATTN_NORM);
         }
         return;

@@ -10,7 +10,6 @@ void () boss_face = {
         if (!self.enemy)
             self.enemy = find(self.enemy, classname, "player");
     }
-    ai_face();
 };
 
 void () boss_rise1 =[0, boss_rise2] {

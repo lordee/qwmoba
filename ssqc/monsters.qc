@@ -112,14 +112,6 @@ void () t_movetarget = {
 
 };
 
-float (float v) anglemod = {
-    while (v >= 360)
-        v = v - 360;
-    while (v < 0)
-        v = v + 360;
-    return (v);
-};
-
 float (entity targ) range = {
     local vector spot1;
     local vector spot2;
