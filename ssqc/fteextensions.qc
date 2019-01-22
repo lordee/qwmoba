@@ -21,6 +21,7 @@ Available options:
 #pragma warning disable F211 /*system crc outdated (eg: dp's csqc). Note that this may trigger emulation.*/
 #pragma warning enable F301 /*non-utf-8 strings. Think of the foreigners! Also think of text editors that insist on screwing up your char encodings.*/
 #pragma warning enable F302 /*uninitialised locals. They usually default to 0 in qc (except in recursive functions), but its still probably a bug*/
+#define QUAKEWORLD
 #if !defined(CSQC) && !defined(NQSSQC) && !defined(QWSSQC)&& !defined(MENU)
 #ifdef QUAKEWORLD
 #define QWSSQC
