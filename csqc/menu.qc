@@ -6,17 +6,37 @@ void (vector boxpos, vector boxsize, string boxpic, string boxtext, vector boxrg
 	drawstring(boxpos + '10 12 0', boxtext, '8 8 0', boxrgb, 1, 0);
 };
 
+void (float menu) AckMenu = {
+    sendevent("AckMenu", "f", menu);
+}
+
 void (float menuitem) ShowMenu = {
 
-    if (mnu_active == 0 && vid_realwidth != 0)
+    // no active menu
+    if (vid_realwidth != 0)
     {
-        mnu_active = 1;
-        switch (menuitem)
+        if (mnu_active == MNU_INACTIVE)
         {
-            case MNU_LOBBY:
-                ShowLobbyMenu();
-            break;
-            default:
+            // a different menu is/was active, now we change it or send ACK if same
+            if (mnu_active != menuitem)
+            {
+                mnu_active = menuitem;
+                switch (menuitem)
+                {
+                    case MNU_LOBBY:
+                        ShowLobbyMenu();
+                    break;
+                    default:
+                }
+            }
+            else 
+            {
+                AckMenu(mnu_active);
+            }
+        }
+        else 
+        {
+            AckMenu(mnu_active);
         }
     }
 }
@@ -34,8 +54,6 @@ void () ClearMenu = {
 	}
 }
 
-
-
 entity (float btnID) GetButton = {
     entity button;
     button = find(world, classname, "gui_button");
@@ -51,19 +69,19 @@ entity (float btnID) GetButton = {
 
 entity (string button_text, void () btnMethod, vector button_spawnpos, string button_image, vector button_size, float button_flags, float btnID) CreateButton =
 {
-   entity newbutton;
-   
-   newbutton = spawn();
-   newbutton.classname = "gui_button";
-   newbutton.origin = button_spawnpos;
-   newbutton.size = button_size;
-   newbutton.btn_img = button_image;
-   newbutton.btn_text = button_text;
-   newbutton.btn_flags = button_flags;
-   newbutton.btn_no = btnID;
-   newbutton.think = btnMethod;
+    entity newbutton;
 
-   return newbutton;
+    newbutton = spawn();
+    newbutton.classname = "gui_button";
+    newbutton.origin = button_spawnpos;
+    newbutton.size = button_size;
+    newbutton.btn_img = button_image;
+    newbutton.btn_text = button_text;
+    newbutton.btn_flags = button_flags;
+    newbutton.btn_no = btnID;
+    newbutton.think = btnMethod;
+
+    return newbutton;
 }
 
 float () MouseOnButton = {
@@ -91,6 +109,7 @@ void () MouseClick = {
     float btnid;
     entity btn;
     btnid = MouseOnButton();
+    dprint ("btnid: ", ftos(btnid), "\n");
     if (btnid > 0)
     {
         btn = GetButton(btnid);

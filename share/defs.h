@@ -217,4 +217,5 @@
 #define AS_MISSILE	4
 
 // qwmoba menus
+#define MNU_INACTIVE 0
 #define MNU_LOBBY 1
