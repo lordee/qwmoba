@@ -8,6 +8,8 @@ void (float menu) Cmd_AckMenu_f = {
 }
 
 void (float c) Cmd_ChooseChamp_f = {
-    self.champ = c;
     self.menu = MNU_INACTIVE;
+    self.champ = c;
+    // force a respawn as that champ
+    ClientKill();
 }

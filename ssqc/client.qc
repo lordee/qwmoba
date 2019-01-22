@@ -290,6 +290,10 @@ Player entered the suicide command
 */
 void() ClientKill =
 {
+	if (self.champ == CHAMP_UNDEFINED)
+	{
+		return;
+	}
 	bprint (PRINT_MEDIUM, self.netname);
 	bprint (PRINT_MEDIUM, " suicides\n");
 	set_suicide_frame ();
@@ -1148,7 +1152,7 @@ void() PlayerPostThink =
 	// send this even when 0
 	ShowMenu(self, self.menu);
 	
-	
+
 };
 
 

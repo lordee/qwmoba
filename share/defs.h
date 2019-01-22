@@ -225,13 +225,14 @@
 #define MNU_LOBBYCHAMP 2
 
 // champs
-#define CHAMP_ASHE      0
-#define CHAMP_CAITLYN   1
-#define CHAMP_ALISTAR   2
-#define CHAMP_TARIC     3
-#define CHAMP_MASTERYI  4
-#define CHAMP_WARWICK   5
-#define CHAMP_GAREN     6
-#define CHAMP_KAYLE     7
-#define CHAMP_AHRI      8
-#define CHAMP_VEIGAR    9
+#define CHAMP_UNDEFINED      0
+#define CHAMP_ASHE      1
+#define CHAMP_CAITLYN   2
+#define CHAMP_ALISTAR   3
+#define CHAMP_TARIC     4
+#define CHAMP_MASTERYI  5
+#define CHAMP_WARWICK   6
+#define CHAMP_GAREN     7
+#define CHAMP_KAYLE     8
+#define CHAMP_AHRI      9
+#define CHAMP_VEIGAR    10
