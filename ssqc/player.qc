@@ -9,7 +9,6 @@
 // };
 
 void () bubble_bob;
-void () T_Dispenser;
 void () Headless_Think;
 
 void () player_touch = {
@@ -807,7 +806,6 @@ void () GibPlayer = {
     } else {
         self.deadflag = 2;
     }
-    TeamFortress_SetupRespawn(0);
     if (damage_attacker.classname == "teledeath") {
         sound(self, 2, "player/teledth1.wav", 1, 0);
         self.respawn_time = (self.respawn_time + 2) + (random() * 2);
@@ -846,10 +844,6 @@ void () PlayerDie = {
             te = find(te, classname, "timer");
         }
     }
-    TeamFortress_RemoveTimers();
-
-    if (deathmatch || coop)
-        DropBackpack();
 
     self.weaponmodel = "";
     self.view_ofs = '0 0 -8';
@@ -870,7 +864,6 @@ void () PlayerDie = {
     self.angles_z = 0;
     if (self.current_weapon <= 16) {
         player_die_ax1();
-        TeamFortress_SetupRespawn(0);
         return;
     }
     i = 1 + floor(random() * 6);
@@ -884,8 +877,6 @@ void () PlayerDie = {
         player_died1();
     else
         player_diee1();
-
-    TeamFortress_SetupRespawn(0);
 };
 
 void () set_suicide_frame = {

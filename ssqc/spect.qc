@@ -21,30 +21,6 @@ void () SpectatorConnect = {
     self.classname = "observer";
     self.flags = 8;
 
-    st2 = infokey(world, "apw");
-    if (st2 == string_null)
-        st2 = infokey(world, "adminpwd");
-
-    st = infokey(self, "apw");
-    if (st == string_null)
-        st = infokey(self, "adminpwd");
-
-    if (((st2 != string_null) && (st != string_null)) && (st == st2)) {
-        self.is_admin = TRUE;
-        stuffcmd(self, "setinfo apw \"");
-        stuffcmd(self, "\"\n");
-        stuffcmd(self, "setinfo adminpwd \"");
-        stuffcmd(self, "\"\n");
-        TeamFortress_Alias("countplayers", 192, 0);
-        TeamFortress_Alias("deal", 189, 0);
-        TeamFortress_Alias("kick", 190, 0);
-        TeamFortress_Alias("ban", 191, 0);
-        TeamFortress_Alias("next", 195, 0);
-        TeamFortress_Alias("ceasefire", 193, 0);
-        TeamFortress_Alias("listips", 198, 0);
-    } else
-        self.is_admin = FALSE;
-
     st = infokey(self, "em");
     if (st == string_null)
         st = infokey(self, "exec_map");

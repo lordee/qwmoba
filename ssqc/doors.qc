@@ -144,8 +144,6 @@ void () door_killed = {
     self = oself;
 };
 
-float () DoorShouldOpen;
-
 void () door_touch = {
     local entity te;
 
@@ -197,12 +195,7 @@ void () door_touch = {
     other.items = other.items - self.items;
     other.tf_items = other.tf_items | self.items;
 
-    if (DoorShouldOpen()) {
-        self.touch = SUB_Null;
-        if (self.enemy)
-            self.enemy.touch = SUB_Null;
-        door_use();
-    }
+    door_use();
 };
 
 entity(vector fmins, vector fmaxs) spawn_field =

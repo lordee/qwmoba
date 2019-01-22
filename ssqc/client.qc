@@ -12,48 +12,14 @@ float modelindex_eyes;
 float modelindex_player;
 float modelindex_null;
 
-float (entity pe_player) Spy_CheckArea;
-
-void () TeamFortress_CheckTeamCheats;
-void (entity Viewer, float pc, float rpc) TeamFortress_PrintClassName;
-void () TeamFortress_RemoveTimers;
-void (float Suicided) TeamFortress_SetupRespawn;
-
-float (float pc) IsLegalClass;
-void () SetupTeamEqualiser;
-void () CeaseFire_think;
-
-void () RemoveGrenadeTimers;
-void () RemovePrimeTimers;
-void () RemoveGasTimers;
-void () RemoveGrenades;
-
-void (entity eng) Engineer_RemoveBuildings;
-
-void (string halias, float himpulse1, float himpulse2) TeamFortress_Alias;
-
 void (entity p) CheckAutoKick;
 void (entity p) KickCheater;
 
-void (entity p) TeamFortress_ExecClassScript;
-void (entity p) TeamFortress_ExecMapScript;
 
 void () PreMatch_Think;
 
-void () DumpClanScores;
-
-void (entity p) SetTeamName;
 
 void () autokick_think;
-float (float pf_team_no, float pf_class) CF_ClassIsRestricted;
-
-void (entity AD) ParseTFDetect;
-entity(float ino) Finditem;
-
-void (entity Item, entity AP, entity Goal) tfgoalitem_GiveToPlayer;
-
-void () CTF_FlagCheck;
-void (entity pl) Sniper_ZoomReset;
 
 string nextmap;
 
@@ -187,49 +153,7 @@ void () DecodeLevelParms = {
 
         nextmap = strzone(mapname);
 
-        ent = find(world, classname, "info_tfdetect");
-        if (ent != world) {
-
-            ParseTFDetect(ent);
-
-            if ((number_of_teams <= 0) || (number_of_teams >= 5))
-                number_of_teams = 4;
-
-        } else {
-
-            ent = find(world, classname, "info_player_team1");
-            if ((ent != world) || (CTF_Map == 1)) {
-
-                CTF_Map = TRUE;
-
-                ent = spawn();
-                ent.nextthink = time + 30;
-                ent.think = CTF_FlagCheck;
-
-                number_of_teams = 2;
-
-            } else
-                number_of_teams = 4;
-
-            team1lives = -1;
-            team2lives = -1;
-            team3lives = -1;
-            team4lives = -1;
-
-            illegalclasses1 = 0;
-            illegalclasses2 = 0;
-            illegalclasses3 = 0;
-            illegalclasses4 = 0;
-
-            team1maxplayers = 100;
-            team2maxplayers = 100;
-            team3maxplayers = 100;
-            team4maxplayers = 100;
-            civilianteams = 0;
-        }
         bprint(PRINT_HIGH, "Mapname: ", mapname, "\n");
-
-        SetupTeamEqualiser();
 
         team1frags = 0;
         team2frags = 0;
@@ -281,41 +205,6 @@ void () DecodeLevelParms = {
 
             }
 
-            cb_ceasefire_time = CF_GetSetting("cft", "ceasefire_time", "0");
-            if (cb_ceasefire_time != 0) {
-
-                cb_ceasefire_time = time + cb_ceasefire_time * 60;
-                if (cb_prematch_time < cb_ceasefire_time) {
-
-                    cb_prematch_time = cb_ceasefire_time + 5;
-                    if (timelimit &&
-                        ((time + timelimit) < cb_prematch_time)) {
-
-                        timelimit = timelimit + cb_ceasefire_time;
-                        ti = ceil(timelimit / 60);
-                        st = ftos(ti);
-                        cvar_set("timelimit", st);
-
-                    }
-
-                }
-                cease_fire = 1;
-                bprint(PRINT_HIGH, "Cease fire\n");
-
-                te = find(world, classname, "player");
-                while (te) {
-                    centerprint(te, "Cease fire\n");
-                    te.immune_to_check = time + 10;
-                    te.tfstate = te.tfstate | TFSTATE_CANT_MOVE;
-                    TeamFortress_SetSpeed(te);
-                    te = find(te, classname, "player");
-                }
-                te = spawn();
-                te.classname = "ceasefire";
-                te.think = CeaseFire_think;
-                te.nextthink = time + 5;
-
-            }
             game_locked = CF_GetSetting("lg", "locked_game", "off");
 
         } else
@@ -927,41 +816,23 @@ void () ClientKill = {
         return;
     }
 
-    Sniper_ZoomReset(self);
-
     set_suicide_frame();
     self.modelindex = modelindex_player;
 
     self.weaponmodel = "";
     self.view_ofs = '0 0 -8';
     self.movetype = MOVETYPE_NONE;
-    TeamFortress_RemoveTimers();
 
     // players can't suicide again for 10 seconds
     self.suicide_time = time + 5 + random() * 5;
 
-    if (self.clientkillfree == 1 && !self.has_throwngren && (self.has_changedteam || self.has_changedclass)) {
-        TeamFortress_SetupRespawn(FALSE);
-    } else {
-        bprint(PRINT_MEDIUM, self.netname, " suicides\n");
 
-        // If infected, give the medic a frag
-        if (self.tfstate & TFSTATE_INFECTED) {
-            te = find(world, classname, "timer");
-            while (te) {
-                if ((te.owner == self) && (te.think == BioInfection_Decay)) {
-                    logfrag(te, self);
-                    TF_AddFrags(te.enemy, 1);
-                }
-                te = find(te, classname, "timer");
-            }
-        } else
-            logfrag(self, self);
+    bprint(PRINT_MEDIUM, self.netname, " suicides\n");
 
-        TF_AddFrags(self, -1);
-        TeamFortress_SetupRespawn(TRUE);
-        self.th_die();
-    }
+    logfrag(self, self);
+
+    TF_AddFrags(self, -1);
+    self.th_die();
 
     self.clientkillforce = 0;
     self.clientkillfree = 0;
@@ -1148,9 +1019,6 @@ entity () SelectSpawnPoint =
 };
 
 void () PlayerDie;
-void () TeamFortress_SetHealth;
-void () TeamFortress_SetEquipment;
-void () TeamFortress_StartTimers;
 void () player_touch;
 
 void () PutClientInServer = {
@@ -1196,8 +1064,6 @@ void () PutClientInServer = {
 
     self.takedamage = 2;
 
-    SetTeamName(self);
-
     if (self.current_weaponslot && self.last_playerclass == self.playerclass)
         W_ChangeWeapon(self.current_weaponslot);
     else
@@ -1208,7 +1074,6 @@ void () PutClientInServer = {
     self.th_pain = player_pain;
     self.th_die = PlayerDie;
     self.height = 0;
-    Sniper_ZoomReset(self);
 
     self.deadflag = 0;
     self.pausetime = 0;
@@ -1225,13 +1090,6 @@ void () PutClientInServer = {
 
     if ((spot.classname == "info_player_teamspawn") &&
         (cb_prematch_time < time)) {
-        if (spot.items != 0) {
-            te = Finditem(spot.items);
-            if (te)
-                tfgoalitem_GiveToPlayer(te, self, self);
-            if (!(spot.goal_activation & TFGA_TOUCH))
-                spot.items = 0;
-        }
         if (spot.message) {
             centerprint(self, spot.message);
             if (!(spot.goal_activation & 2))
@@ -1285,13 +1143,6 @@ void () PutClientInServer = {
         TeamFortress_SetSpeed(self);
     }
 };
-
-//void () info_player_start = {
-//    if (CheckExistence() == FALSE) {
-//        dremove(self);
-//        return;
-//    }
-//};
 
 void () info_player_start2 = {
     if (CheckExistence() == FALSE) {
@@ -1391,9 +1242,6 @@ void () NextLevel = {
 void () CheckRules = {
     if ((timelimit && time >= timelimit) || (fraglimit && self.frags >= fraglimit)) {
         NextLevel();
-        RemoveGrenadeTimers();
-        RemovePrimeTimers();
-        RemoveGrenades();
     }
 };
 
@@ -1860,11 +1708,6 @@ void () PlayerPostThink = {
         }
     }
 
-    if (self.cheat_check <= time) {
-        TeamFortress_CheckTeamCheats();
-        self.cheat_check = time + 3;
-    }
-
     if (self.lobby == 1)
 	{
 		// if menu not showing, show it
@@ -1907,36 +1750,6 @@ void () ClientDisconnect = {
             " frags\n");
     sound(self, 4, "player/tornoff2.wav", 1, ATTN_NONE);
     self.has_disconnected = 1;
-    TeamFortress_RemoveTimers();
-    RemoveGasTimers();
-    Engineer_RemoveBuildings(self);
-    te = find(world, classname, "detpack");
-    while (te) {
-        if (te.owner == self) {
-            if (te.weaponmode == 1) {
-                TeamFortress_SetSpeed(te.enemy);
-                dremove(te.oldenemy);
-                dremove(te.observer_list);
-            }
-            dremove(te);
-            te = world;
-        }
-        te = find(te, classname, "detpack");
-    }
-    te = find(world, classname, "countdown_timer");
-    while (te) {
-        if (te.owner == self) {
-            if (te.weaponmode == 1) {
-                TeamFortress_SetSpeed(te.enemy);
-                dremove(te.oldenemy);
-                dremove(te.observer_list);
-            }
-            dremove(te);
-            te = world;
-        }
-        te = find(te, classname, "countdown_timer");
-    }
-    RemoveGrenades();
     if (clanbattle && (self.tf_id != 0)) {
         te = spawn();
         te.classname = "ghost";
@@ -2436,8 +2249,6 @@ string (entity pe_target, entity pe_attacker, float pf_deathmsg) GetDeathMessage
 
 void (entity targ, entity attacker) ClientObituary = {
     local string deathstring;
-
-    Sniper_ZoomReset(targ);
 
     if ((cb_prematch_time + 3) > time)
         return;
