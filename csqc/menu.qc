@@ -1,4 +1,5 @@
 void () ShowLobbyMenu;
+void () ShowLobbyChampMenu;
 
 void (vector boxpos, vector boxsize, string boxpic, string boxtext, vector boxrgb, float boxalpha) spawnbox =
 {
@@ -23,8 +24,11 @@ void (float menuitem) ShowMenu = {
                 mnu_active = menuitem;
                 switch (menuitem)
                 {
-                    case MNU_LOBBY:
+                    case MNU_LOBBYTEAM:
                         ShowLobbyMenu();
+                    break;
+                    case MNU_LOBBYCHAMP:
+                        ShowLobbyChampMenu();
                     break;
                     default:
                 }

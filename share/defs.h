@@ -218,4 +218,5 @@
 
 // qwmoba menus
 #define MNU_INACTIVE 0
-#define MNU_LOBBY 1
+#define MNU_LOBBYTEAM 1
+#define MNU_LOBBYCHAMP 2

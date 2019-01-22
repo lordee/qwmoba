@@ -1158,10 +1158,16 @@ void() PlayerPostThink =
 
 	W_WeaponFrame ();
 
-if (self.lobby == 1)
+	switch (self.menu)
 	{
-		// if menu not showing, show it
-		ShowMenu(self, MNU_LOBBY);
+		case MNU_LOBBYTEAM:
+			// if menu not showing, show it
+			ShowMenu(self, MNU_LOBBYTEAM);
+			break;
+		case MNU_LOBBYCHAMP:
+			ShowMenu(self, MNU_LOBBYCHAMP);
+			break;
+		default:
 	}
 };
 
@@ -1176,7 +1182,7 @@ called when a player connects to a server
 void() ClientConnect =
 {
 	// qwmoba
-    self.lobby = 1;
+    self.menu = MNU_LOBBYTEAM;
 	bprint (PRINT_HIGH, self.netname);
 	bprint (PRINT_HIGH, " entered the game\n");
 	

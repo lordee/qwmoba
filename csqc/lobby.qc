@@ -24,3 +24,6 @@ void () ShowLobbyMenu = {
     btn.team_no = 2;
 }
 
+void () ShowLobbyChampMenu = {
+
+}

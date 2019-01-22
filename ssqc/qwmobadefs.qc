@@ -1,5 +1,5 @@
 #include "../share/defs.h"
 
-.float lobby;
+.float menu;
 .float team_no;
 .float menu_active;

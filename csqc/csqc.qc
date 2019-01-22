@@ -6,9 +6,9 @@ void() CSQC_Parse_Event = {
     float first = readbyte(); 
     switch (first)
     {
-        case MNU_LOBBY:
+        case MNU_LOBBYTEAM:
             // open menu
-            ShowMenu(MNU_LOBBY);
+            ShowMenu(MNU_LOBBYTEAM);
         break;
         default:
     }
