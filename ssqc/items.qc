@@ -54,9 +54,7 @@ void() q_touch;
 
 void() q_touch =
 {
-local entity    stemp;
-local float     best;
-local string    s;
+	local string    s;
 
 	if (other.classname != "player")
 		return;
@@ -124,9 +122,7 @@ void() r_touch;
 
 void() r_touch =
 {
-local entity    stemp;
-local float     best;
-local string    s;
+	local string    s;
 
 	if (other.classname != "player")
 		return;
@@ -302,7 +298,6 @@ void() item_health =
 
 void() health_touch =
 {
-	local   float amount;
 	local   string  s;
 	
 	if (deathmatch == 4)
@@ -412,14 +407,14 @@ void() armor_touch =
 		type = 0.3;
 		value = 100;
 		bit = IT_ARMOR1;
-	}
-	if (self.classname == "item_armor2")
+	} 
+	else if (self.classname == "item_armor2")
 	{
 		type = 0.6;
 		value = 150;
 		bit = IT_ARMOR2;
 	}
-	if (self.classname == "item_armorInv")
+	else// (self.classname == "item_armorInv")
 	{
 		type = 0.8;
 		value = 200;
@@ -574,7 +569,7 @@ void() weapon_touch =
 	local   float   hadammo, best, new, old;
 	local   entity  stemp;
 	local   float   leave;
-
+	new = 0;
 	// For client weapon_switch
 	local   float   w_switch;
 
@@ -1107,9 +1102,6 @@ KEYS
 
 void() key_touch =
 {
-local entity    stemp;
-local float             best;
-
 	if (other.classname != "player")
 		return;
 	if (other.health <= 0)
@@ -1240,9 +1232,6 @@ END OF LEVEL RUNES
 
 void() sigil_touch =
 {
-local entity    stemp;
-local float             best;
-
 	if (other.classname != "player")
 		return;
 	if (other.health <= 0)
@@ -1313,9 +1302,6 @@ void() powerup_touch;
 
 void() powerup_touch =
 {
-local entity    stemp;
-local float             best;
-
 	if (other.classname != "player")
 		return;
 	if (other.health <= 0)

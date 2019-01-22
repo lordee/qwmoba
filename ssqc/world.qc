@@ -178,6 +178,9 @@ void() main =
 	precache_file2 ("maps/dm4.bsp");
 	precache_file2 ("maps/dm5.bsp");
 	precache_file2 ("maps/dm6.bsp");
+
+	precache_sound ("ogre/ogdrag.wav");
+	
 };
 
 
@@ -398,8 +401,6 @@ void() bodyque =
 
 void() InitBodyQue =
 {
-	local entity    e;
-	
 	bodyque_head = spawn();
 	bodyque_head.classname = "bodyque";
 	bodyque_head.owner = spawn();
