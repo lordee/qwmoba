@@ -4,9 +4,9 @@ fteextensions.qc
 qw.qc
 qwmobadefs.qc
 debug.qc
-
-
 subs.qc
+
+
 combat.qc
 items.qc
 weapons.qc
@@ -16,28 +16,12 @@ player.qc
 doors.qc
 buttons.qc
 triggers.qc
-tforttm.qc
+
 plats.qc
 misc.qc
 monsters.qc
-sentry.qc
 boss.qc
-scout.qc
-sniper.qc
-tsoldier.qc
-demoman.qc
-medic.qc
-pyro.qc
-spy.qc
-engineer.qc
-camera.qc
-clan.qc
-tfort.qc
-tforthlp.qc
-tfortmap.qc
 
-
-actions.qc
 spect.qc
 
 // qwmoba
