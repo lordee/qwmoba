@@ -17,7 +17,6 @@ void() CSQC_Parse_Event = {
 
 void(float apilevel, string enginename, float engineversion) CSQC_Init = {
     mnu_active = 0;
-    global_btn_no = 0; // only 0 if no button
 }
 
 void(float width, float height, float menushown) CSQC_UpdateView =

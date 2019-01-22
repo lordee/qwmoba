@@ -10,7 +10,6 @@
 float mnu_active;
 float vid_realwidth;
 float vid_realheight;
-float global_btn_no;
 
 typedef struct
 {
