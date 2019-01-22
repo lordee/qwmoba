@@ -2,11 +2,8 @@ qwprogs.dat
 defs.qc
 fteextensions.qc
 qw.qc
-q3defs.qc
 qwmobadefs.qc
 debug.qc
-status.qc
-menu.qc
 vote.qc
 help.qc
 subs.qc
@@ -23,10 +20,8 @@ tforttm.qc
 plats.qc
 misc.qc
 monsters.qc
-flare.qc
 sentry.qc
 boss.qc
-admin.qc
 scout.qc
 sniper.qc
 tsoldier.qc
@@ -44,7 +39,7 @@ ctf.qc
 coop.qc
 actions.qc
 spect.qc
-q3.qc
 
+// qwmoba
 qwmobamenu.qc
 endpoints.qc
