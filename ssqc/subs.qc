@@ -146,7 +146,7 @@ void () SUB_UseTargets = {
     }
     if ((activator.classname == "player") && (self.message != "")) {
 
-        CenterPrint(activator, self.message);
+        centerprint(activator, self.message);
         if (!self.noise)
             sound(activator, CHAN_VOICE, "misc/talk.wav", 1, ATTN_NORM);
     }

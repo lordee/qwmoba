@@ -310,8 +310,6 @@ void () W_FireSpanner = {
                     WriteCoord(MSG_MULTICAST, org_y);
                     WriteCoord(MSG_MULTICAST, org_z);
                     multicast(org, MULTICAST_PVS);
-
-                    W_SetCurrentAmmo(self);
                 }
                 return;
             }
@@ -540,7 +538,6 @@ void () W_FireMedikit = {
                     if (self.current_weapon == WEAP_MEDIKIT)
                         self.currentammo = self.ammo_cells;
 
-                    Status_Refresh(self);
                     T_Heal(trace_ent, healam, 1);
 
                     if (trace_ent.health > trace_ent.max_health) {
@@ -1133,7 +1130,6 @@ void () W_FireLightning = {
     if (self.waterlevel > 1) {
         cells = self.ammo_cells;
         self.ammo_cells = 0;
-        W_SetCurrentAmmo(self);
         deathmsg = DMSG_LIGHTNING;
         T_RadiusDamage(self, self, 35 * cells, world);
         return;
@@ -1439,354 +1435,17 @@ void () superspike_touch = {
     }
     dremove(self);
 };
-
-void (entity pl) W_SetCurrentAmmo = {
-    entity oldself;
-
-    if ((pl.health <= 0) || (pl.current_weapon == 0))
-        return;
-
-    if (!(self.tfstate & TFSTATE_AIMING) && !(self.tfstate & TFSTATE_CANT_MOVE))
-        player_run();
-
-    pl.items = pl.items - (pl.items & (IT_SHELLS | IT_NAILS | IT_ROCKETS | IT_CELLS));
-    pl.weapon = 0;
-
-    if (pl.current_weapon == WEAP_AXE) {
-        pl.currentammo = 0;
-        if (pl.playerclass == 8) {
-            if (pl.weaponmode == 0)
-                pl.weaponmodel = "progs/v_knife.mdl";
-            else
-                pl.weaponmodel = "progs/v_knife2.mdl";
-        } else
-            pl.weaponmodel = "progs/v_axe.mdl";
-        pl.weaponframe = 0;
-    } else if (pl.current_weapon == WEAP_SPANNER) {
-        pl.currentammo = pl.ammo_cells;
-        pl.weaponmodel = "progs/v_span.mdl";
-        pl.weaponframe = 0;
-    } else if (pl.current_weapon == WEAP_SHOTGUN) {
-        pl.currentammo = pl.ammo_shells;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_shot.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_SHELLS;
-        pl.weapon = IT_SHOTGUN;
-    } else if (pl.current_weapon == WEAP_SUPER_SHOTGUN) {
-        pl.currentammo = pl.ammo_shells;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_shot2.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_SHELLS;
-        pl.weapon = IT_SUPER_SHOTGUN;
-    } else if (pl.current_weapon == WEAP_NAILGUN) {
-        pl.currentammo = pl.ammo_nails;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_nail.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_NAILS;
-        pl.weapon = IT_NAILGUN;
-    } else if (pl.current_weapon == WEAP_SUPER_NAILGUN) {
-        pl.currentammo = pl.ammo_nails;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_nail2.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_NAILS;
-        pl.weapon = IT_SUPER_NAILGUN;
-    } else if (pl.current_weapon == WEAP_GRENADE_LAUNCHER) {
-        pl.currentammo = pl.ammo_rockets;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            if (pl.weaponmode == 0)
-                pl.weaponmodel = "progs/v_rock.mdl";
-            else
-                pl.weaponmodel = "progs/v_pipe.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.weapon = IT_GRENADE_LAUNCHER;
-        pl.items = pl.items | IT_ROCKETS;
-    } else if (pl.current_weapon == WEAP_ROCKET_LAUNCHER) {
-        pl.currentammo = pl.ammo_rockets;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_rock2.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_ROCKETS;
-        pl.weapon = IT_ROCKET_LAUNCHER;
-    } else if (pl.current_weapon == WEAP_SNIPER_RIFLE) {
-        pl.currentammo = pl.ammo_shells;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_srifle.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_SHELLS;
-        pl.weapon = IT_SHOTGUN;
-    } else if (pl.current_weapon == WEAP_AUTO_RIFLE) {
-        pl.currentammo = pl.ammo_shells;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_srifle.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_SHELLS;
-        pl.weapon = IT_SUPER_SHOTGUN;
-    } else if (pl.current_weapon == WEAP_ASSAULT_CANNON) {
-        pl.currentammo = pl.ammo_shells;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_asscan.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_SHELLS;
-        pl.weapon = IT_ROCKET_LAUNCHER;
-    } else if (pl.current_weapon == WEAP_FLAMETHROWER) {
-        pl.currentammo = pl.ammo_cells;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_flame.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_CELLS;
-        pl.weapon = IT_GRENADE_LAUNCHER;
-    } else if (pl.current_weapon == WEAP_INCENDIARY) {
-        pl.currentammo = pl.ammo_rockets;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_irock.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_ROCKETS;
-        pl.weapon = IT_ROCKET_LAUNCHER;
-    } else if (pl.current_weapon == WEAP_MEDIKIT) {
-        if (!old_medikit) {
-            pl.currentammo = pl.ammo_cells;
-            pl.items = pl.items | IT_CELLS;
-        } else
-            pl.currentammo = 0;
-        pl.weaponmodel = "progs/v_medi.mdl";
-        pl.weaponframe = 0;
-    } else if (pl.current_weapon == WEAP_TRANQ) {
-        pl.currentammo = pl.ammo_shells;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_tranq.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_SHELLS;
-        pl.weapon = IT_SHOTGUN;
-    } else if (pl.current_weapon == WEAP_LASER) {
-        pl.currentammo = pl.ammo_nails;
-        if (!(pl.tfstate & TFSTATE_RELOADING)) {
-            pl.weaponmodel = "progs/v_rail.mdl";
-            pl.weaponframe = 0;
-        }
-        pl.items = pl.items | IT_NAILS;
-        pl.weapon = IT_SHOTGUN;
-    } else {
-        pl.currentammo = 0;
-        pl.weaponmodel = "";
-        pl.weaponframe = 0;
-    }
-
-    if (pl.is_feigning) {
-        pl.weaponmodel = "";
-        pl.weaponframe = 0;
-    }
-
-    // refresh engineer build menu when ammo updated
-    if (pl.menu_input == Menu_Engineer_Input)
-        Menu_Engineer(pl);
-    else if (pl.menu_input == Menu_Drop_Input) {
-        oldself = self;
-        self = pl;
-        Menu_Drop();
-        self = oldself;
-    }
-};
-
-float () W_BestWeapon = {
-    local float it;
-
-    it = self.weapons_carried;
-    if ((self.ammo_cells >= 1 && it & WEAP_LIGHTNING) && self.waterlevel <= 1)
-        return WEAP_LIGHTNING;
-    else if ((self.ammo_cells >= 7 && self.ammo_shells >= 1) && it & WEAP_ASSAULT_CANNON)
-        return WEAP_ASSAULT_CANNON;
-    else if (self.ammo_cells >= 1 && it & WEAP_FLAMETHROWER)
-        return WEAP_FLAMETHROWER;
-    else if (self.ammo_nails >= 2 && it & WEAP_SUPER_NAILGUN)
-        return WEAP_SUPER_NAILGUN;
-    else if (self.ammo_shells >= 2 && it & WEAP_SUPER_SHOTGUN)
-        return WEAP_SUPER_SHOTGUN;
-    else if (self.ammo_nails >= 1 && it & WEAP_LASER)
-        return WEAP_LASER;
-    else if (self.ammo_nails >= 1 && it & WEAP_NAILGUN)
-        return WEAP_NAILGUN;
-    else if (self.ammo_shells >= 1 && it & WEAP_SHOTGUN)
-        return WEAP_SHOTGUN;
-    else if (self.ammo_shells >= 1 && it & WEAP_TRANQ)
-        return WEAP_TRANQ;
-    else if (it & WEAP_MEDIKIT)
-        return WEAP_MEDIKIT;
-    else if (it & WEAP_SPANNER)
-        return WEAP_SPANNER;
-    else if (it & WEAP_AXE)
-        return WEAP_AXE;
-
-    return 0;
-};
-
-float () W_BestWeaponSlot = {
-    local float weap;
-
-    weap = W_BestWeapon();
-
-    return W_GetSlot(weap);
-};
-
 void () W_ChangeToBestWeapon = {
     local float slot = W_BestWeaponSlot();
 
     W_WeaponSlot(slot);
 
-    //self.last_weaponslot = self.current_weaponslot;
-    //self.last_weapon = self.current_weapon;
-    //self.last_weaponmode = self.weaponmode;
     self.current_weaponslot = slot;
     self.current_weapon = self.next_weapon;
     self.weaponmode = self.next_weaponmode;
-    W_SetCurrentAmmo(self);
     W_WeaponState_Save(self);
     W_PrintWeaponMessage();
 }
-
-float () W_CheckNoAmmo = {
-    if (self.current_weapon == WEAP_AXE || self.current_weapon == WEAP_SPANNER
-                || self.current_weapon == WEAP_MEDIKIT)
-        return 1;
-    else if (self.current_weapon == WEAP_SUPER_NAILGUN && self.currentammo >= 4)
-        return 1;
-    else if (self.current_weapon == WEAP_INCENDIARY && self.currentammo >= 3)
-        return 1;
-    else if ((self.current_weapon == WEAP_SUPER_SHOTGUN || self.current_weapon == WEAP_NAILGUN)
-                && self.currentammo >= 2)
-        return 1;
-    else if (self.currentammo > 0)
-        return 1;
-
-    W_ChangeToBestWeapon();
-    return 0;
-};
-
-void () W_Reload_shotgun = {
-    self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & TFSTATE_RELOADING);
-    self.owner.weaponmodel = "progs/v_shot.mdl";
-    sprint(self.owner, PRINT_HIGH, "Finished reloading\n");
-    dremove(self);
-    W_WeaponState_Load(self.owner, 0);
-    Status_Refresh(self.owner);
-};
-
-void () W_Reload_super_shotgun = {
-    self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & TFSTATE_RELOADING);
-    self.owner.weaponmodel = "progs/v_shot2.mdl";
-    sprint(self.owner, PRINT_HIGH, "Finished reloading\n");
-    dremove(self);
-    W_WeaponState_Load(self.owner, 0);
-    Status_Refresh(self.owner);
-};
-
-void (entity pl) W_Reload_sniper_rifle = {
-    pl.reload_sniper_ticks = 0;
-    pl.tfstate = pl.tfstate - (pl.tfstate & TFSTATE_RELOADING);
-    pl.weaponmodel = "progs/v_srifle.mdl";
-    sprint(pl, PRINT_HIGH, "Finished reloading\n");
-    W_WeaponState_Load(pl, 0);
-    Status_Refresh(pl);
-};
-
-void () W_Reload_sniper_rifle_tick = {
-    self.owner.reload_sniper_ticks = self.owner.reload_sniper_ticks + 1;
-
-    if (self.owner.reload_sniper_ticks >= 4) {
-        W_Reload_sniper_rifle(self.owner);
-        dremove(self);
-        return;
-    }
-
-    Status_Refresh(self.owner);
-    self.nextthink = time + 1;
-}
-
-void () W_Reload_grenade_launcher = {
-    self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & TFSTATE_RELOADING);
-    if (self.owner.weaponmode == 0)
-        self.owner.weaponmodel = "progs/v_rock.mdl";
-    else
-        self.owner.weaponmodel = "progs/v_pipe.mdl";
-    sprint(self.owner, PRINT_HIGH, "Finished reloading\n");
-    dremove(self);
-    W_WeaponState_Load(self.owner, 0);
-    Status_Refresh(self.owner);
-};
-
-void () W_Reload_rocket_launcher = {
-    self.owner.tfstate = self.owner.tfstate - (self.owner.tfstate & TFSTATE_RELOADING);
-    self.owner.weaponmodel = "progs/v_rock2.mdl";
-    sprint(self.owner, PRINT_HIGH, "Finished reloading\n");
-    dremove(self);
-    W_WeaponState_Load(self.owner, 0);
-    Status_Refresh(self.owner);
-};
-
-float () CheckForReload = {
-    if (self.current_weapon == WEAP_SHOTGUN) {
-        if (self.reload_shotgun >= 8 && self.ammo_shells > 0) {
-            TeamFortress_ReloadCurrentWeapon();
-            return 1;
-        }
-    } else if (self.current_weapon == WEAP_SUPER_SHOTGUN) {
-        if (self.reload_super_shotgun >= 16 && self.ammo_shells > 0) {
-            TeamFortress_ReloadCurrentWeapon();
-            return 1;
-        }
-    } else if (self.current_weapon == WEAP_SNIPER_RIFLE) {
-        if (self.reload_sniper_rifle >= 1 && self.ammo_shells > 0 && sniperreload) {
-            TeamFortress_ReloadCurrentWeapon();
-            return 1;
-        }
-    } else if (self.current_weapon == WEAP_GRENADE_LAUNCHER) {
-        if ((self.reload_grenade_launcher >= 6) && (self.ammo_rockets > 0)) {
-            TeamFortress_ReloadCurrentWeapon();
-            return 1;
-        }
-    } else if (self.current_weapon == WEAP_ROCKET_LAUNCHER) {
-        if ((self.reload_rocket_launcher >= 4) && (self.ammo_rockets > 0)) {
-            TeamFortress_ReloadCurrentWeapon();
-            return 1;
-        }
-    }
-    return 0;
-};
-
-float (float weap) CheckForAmmo = {
-    if (weap == WEAP_SHOTGUN) {
-        if (self.reload_shotgun >= 1 && self.ammo_shells > self.reload_shotgun)
-            return 1;
-    } else if (weap == WEAP_SUPER_SHOTGUN) {
-        if (self.reload_super_shotgun >= 2 && self.ammo_shells > self.reload_super_shotgun)
-            return 1;
-    } else if (weap == WEAP_SNIPER_RIFLE) {
-        if (self.reload_sniper_rifle >= 1 && self.ammo_shells > self.reload_sniper_rifle && sniperreload)
-            return 1;
-    } else if (weap == WEAP_GRENADE_LAUNCHER) {
-        if (self.reload_grenade_launcher >= 1 && self.ammo_rockets > self.reload_grenade_launcher)
-            return 1;
-    } else if (weap == WEAP_ROCKET_LAUNCHER) {
-        if (self.reload_rocket_launcher >= 1 && self.ammo_rockets > self.reload_rocket_launcher)
-            return 1;
-    }
-    return 0;
-};
 
 void () player_axe1;
 void () player_axeb1;
@@ -1811,18 +1470,11 @@ void () player_medikitd1;
 void () W_Attack = {
     local float r;
 
-    if (!W_CheckNoAmmo())
-        return;
-
     if (self.has_disconnected == TRUE)
         return;
 
     if (self.tfstate & TFSTATE_RELOADING)
         return;
-
-    if ((self.is_undercover || (self.undercover_team != 0)) ||
-        (self.undercover_skin != 0))
-        Spy_RemoveDisguise(self);
 
     makevectors(self.v_angle);
     self.show_hostile = time + 1;
@@ -1844,44 +1496,28 @@ void () W_Attack = {
         sound(self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);
         player_axe1();
     } else if (self.current_weapon == WEAP_SHOTGUN) {
-        if (CheckForReload() == TRUE)
-            return;
         player_shot1();
         W_FireShotgun();
         self.reload_shotgun = self.reload_shotgun + 1;
-        Status_Refresh(self);
-        CheckForReload();
         Attack_Finished(0.5);
     } else if (self.current_weapon == WEAP_SUPER_SHOTGUN) {
-        if (CheckForReload() == TRUE)
-            return;
         player_shot1();
         W_FireSuperShotgun();
         self.reload_super_shotgun = self.reload_super_shotgun + 2;
-        Status_Refresh(self);
-        CheckForReload();
         Attack_Finished(0.7);
     } else if (self.current_weapon == WEAP_NAILGUN) {
         player_nail1();
     } else if (self.current_weapon == WEAP_SUPER_NAILGUN) {
         player_nail1();
     } else if (self.current_weapon == WEAP_GRENADE_LAUNCHER) {
-        if (CheckForReload() == TRUE)
-            return;
         player_rocket1();
         W_FireGrenade();
         self.reload_grenade_launcher = self.reload_grenade_launcher + 1;
-        Status_Refresh(self);
-        CheckForReload();
         Attack_Finished(0.6);
     } else if (self.current_weapon == WEAP_ROCKET_LAUNCHER) {
-        if (CheckForReload() == TRUE)
-            return;
         player_rocket1();
         W_FireRocket();
         self.reload_rocket_launcher = self.reload_rocket_launcher + 1;
-        Status_Refresh(self);
-        CheckForReload();
         Attack_Finished(0.8);
     } else if (self.current_weapon == WEAP_LIGHTNING) {
         player_light1();
@@ -1889,14 +1525,10 @@ void () W_Attack = {
         sound(self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
     } else if (self.current_weapon == WEAP_SNIPER_RIFLE) {
         if (self.flags & FL_ONGROUND) {
-            if (CheckForReload() == TRUE)
-                return;
             player_shot1();
             W_FireSniperRifle();
             if (sniperreload) {
                 self.reload_sniper_rifle = self.reload_sniper_rifle + 1;
-                Status_Refresh(self);
-                CheckForReload();
             }
             Attack_Finished(1.5);
         }
@@ -1911,7 +1543,6 @@ void () W_Attack = {
                 self.antispam_assault_cannon = time + 3;
             }
             W_ChangeWeapon(W_BestWeaponSlot());
-            W_SetCurrentAmmo(self);
             W_WeaponState_Save(self);
         } else {
             self.ammo_cells = self.ammo_cells - 7;
@@ -2205,8 +1836,6 @@ void (entity pl, float swap) W_WeaponState_Load = {
     pl.queue_weaponstate = 0;
 
     W_WeaponState_Save(pl);
-    W_SetCurrentAmmo(pl);
-    Status_Refresh(pl);
 }
 
 float (entity pl) W_WeaponState_Check = {
@@ -2257,8 +1886,6 @@ void (float inp) W_ChangeWeapon = {
     if (!self.is_quickfiring && !self.has_quickfired)
         W_WeaponState_Save(self);
 
-    W_SetCurrentAmmo(self);
-    Status_Refresh(self);
     self.queue_weaponslot = 0;
 };
 
@@ -2312,179 +1939,11 @@ void () PreMatchImpulses;
 void () DeadImpulses;
 
 void () ImpulseCommands = {
-    if ((self.last_impulse == TF_DETPACK) && self.impulse)
-        TeamFortress_SetDetpack(self.impulse);
+    
 
-    if ((cb_prematch_time > time) || cease_fire) {
-        PreMatchImpulses();
-        DeadImpulses();
-        self.impulse = 0;
-        return;
-    }
-    if (self.impulse == TF_SPECIAL_SKILL)
-        UseSpecialSkill();
+    
 
-    if (self.impulse == TF_NEXTTIP) {
-        self.display_tip = 0;
-        self.tip_type = 0;
-        self.tip_time = time;
-        Status_Refresh(self);
-    }
-
-    if (self.impulse == TF_WEAPLAST) {
-        if (self.playerclass == PC_SPY && self.is_undercover == 2)
-            CF_Spy_DisguiseStop();
-        else if (self.playerclass == PC_ENGINEER && self.is_building) {
-            TeamFortress_EngineerBuildStop();
-            CycleWeaponLast();
-        } else if (self.playerclass == PC_DEMOMAN && self.is_detpacking) {
-            TeamFortress_DetpackStop();
-            CycleWeaponLast();
-        }
-    } else if (self.impulse == TF_TOGGLEVOTE)
-        Vote_ToggleMenu(self);
-
-    if (!self.is_feigning) {
-        if (self.impulse == TF_GRENADE_1)
-            TeamFortress_PrimeGrenade(1);
-        else if (self.impulse == TF_GRENADE_2)
-            TeamFortress_PrimeGrenade(2);
-        else if (self.impulse == TF_GRENADE_PT_1)
-            TeamFortress_PrimeThrowGrenade(1);
-        else if (self.impulse == TF_GRENADE_PT_2)
-            TeamFortress_PrimeThrowGrenade(2);
-    }
-
-    if ((!self.is_building && !self.is_detpacking) && !self.is_feigning) {
-        if (self.impulse == TF_WEAPNEXT)
-            CycleWeaponNext();
-        else if (self.impulse == TF_WEAPPREV)
-            CycleWeaponPrev();
-        else if (self.impulse == TF_RELOAD)
-            TeamFortress_ReloadCurrentWeapon();
-        else if (self.impulse == TF_RELOAD_SLOT1)
-            TeamFortress_ReloadSlot(1);
-        else if (self.impulse == TF_RELOAD_SLOT2)
-            TeamFortress_ReloadSlot(2);
-        else if (self.impulse == TF_RELOAD_SLOT3)
-            TeamFortress_ReloadSlot(3);
-        else if (self.impulse == TF_RELOAD_NEXT)
-            TeamFortress_ReloadNext();
-        else if (self.impulse == TF_DETPACK_5)
-            TeamFortress_SetDetpack(5);
-        else if (self.impulse == TF_DETPACK_20)
-            TeamFortress_SetDetpack(20);
-        else if (self.impulse == TF_DETPACK_50)
-            TeamFortress_SetDetpack(50);
-        else if (self.impulse == TF_DROP_AMMO) {
-            Menu_Drop();
-        }
-    }
-
-    if (self.impulse == TF_INVENTORY)
-        TeamFortress_Inventory();
-    else if ((self.playerclass != 0) && (self.impulse == TF_MEDIC_HELPME))
-        TeamFortress_SaveMe();
-    else if (self.impulse == TF_GRENADE_T)
-        TeamFortress_ThrowGrenade();
-    else if (self.impulse == TF_GRENADE_SWITCH)
-        TeamFortress_GrenadeSwitch();
-    else if (self.impulse == TF_ID)
-        CF_Identify(self, 1);
-    else if (self.impulse == TF_ID_TEAM)
-        CF_Identify(self, 2);
-    else if (self.impulse == TF_ID_ENEMY)
-        CF_Identify(self, 3);
-    else if (self.impulse == TF_SHOW_IDS)
-        TeamFortress_ShowIDs();
-    else if ((self.playerclass != 0) && (self.impulse == TF_DROPFLAG))
-        DropGoalItems();
-    else if (self.impulse == TF_DISCARD)
-        TeamFortress_Discard();
-    else if (self.impulse == TF_DISCARD_DROP_AMMO)
-        TeamFortress_Discard_DropAmmo();
-    else if (self.impulse == TF_DASH)
-        CF_Scout_Dash();
-    else if (self.impulse == TF_PB_DETONATE)
-        TeamFortress_DetonatePipebombs(0);
-    else if (self.impulse == TF_DETPACK_STOP)
-        TeamFortress_DetpackStop();
-    else if (self.impulse == TF_MEDIC_AURA_TOGGLE)
-        CF_Medic_AuraToggle();
-    else if ((self.impulse == TF_ENGINEER_DETSENTRY) &&
-             (self.playerclass == PC_ENGINEER))
-        DestroyBuilding(self, "building_sentrygun");
-    else if ((self.impulse == TF_ENGINEER_DETDISP) &&
-             (self.playerclass == PC_ENGINEER))
-        DestroyBuilding(self, "building_dispenser");
-    else if ((self.impulse == 196) && (self.playerclass == PC_ENGINEER))
-        DestroyBuilding(self, "building_teleporter_exit");
-    else if ((self.impulse == 197) && (self.playerclass == PC_ENGINEER))
-        DestroyBuilding(self, "building_teleporter_entrance");
-    else if ((self.impulse == TF_SPY_SPY) && (self.playerclass == PC_SPY)) {
-        if (invis_only)
-            CF_Spy_Invisible();
-        else
-            Menu_Spy_Skin();
-    } else if ((self.impulse == TF_SPY_DIE) && (self.playerclass == PC_SPY))
-        CF_Spy_FeignDeath(0);
-    else if ((self.impulse == TF_SPY_SILENT_DIE) &&
-             (self.playerclass == PC_SPY))
-        CF_Spy_FeignDeath(1);
-    else if (self.impulse == TF_DISGUISE_RESET && self.playerclass == PC_SPY) {
-        CF_Spy_ChangeSkin(self, 8);
-        CF_Spy_ChangeColor(self, self.team_no);
-    } else if (self.impulse == TF_DISGUISE_SCOUT && self.playerclass == PC_SPY)
-        CF_Spy_ChangeSkin(self, 1);
-    else if (self.impulse == TF_DISGUISE_SNIPER && self.playerclass == PC_SPY)
-        CF_Spy_ChangeSkin(self, 2);
-    else if (self.impulse == TF_DISGUISE_SOLDIER && self.playerclass == PC_SPY)
-        CF_Spy_ChangeSkin(self, 3);
-    else if (self.impulse == TF_DISGUISE_DEMOMAN && self.playerclass == PC_SPY)
-        CF_Spy_ChangeSkin(self, 4);
-    else if (self.impulse == TF_DISGUISE_MEDIC && self.playerclass == PC_SPY)
-        CF_Spy_ChangeSkin(self, 5);
-    else if (self.impulse == TF_DISGUISE_HWGUY && self.playerclass == PC_SPY)
-        CF_Spy_ChangeSkin(self, 6);
-    else if (self.impulse == TF_DISGUISE_PYRO && self.playerclass == PC_SPY)
-        CF_Spy_ChangeSkin(self, 7);
-    else if (self.impulse == TF_DISGUISE_ENGINEER && self.playerclass == PC_SPY)
-        CF_Spy_ChangeSkin(self, 9);
-    else if (self.impulse == TF_DISGUISE_BLUE && self.playerclass == PC_SPY)
-        CF_Spy_ChangeColor(self, 1);
-    else if (self.impulse == TF_DISGUISE_RED && self.playerclass == PC_SPY)
-        CF_Spy_ChangeColor(self, 2);
-    else if (self.impulse == TF_DISGUISE_YELLOW && self.playerclass == PC_SPY)
-        CF_Spy_ChangeColor(self, 3);
-    else if (self.impulse == TF_DISGUISE_GREEN && self.playerclass == PC_SPY)
-        CF_Spy_ChangeColor(self, 4);
-    else if (self.impulse == TF_DISGUISE_ENEMY && self.playerclass == PC_SPY) {
-        if (number_of_teams > 2)
-            Menu_Spy_Color();
-        else if (self.team_no == 1)
-            CF_Spy_ChangeColor(self, 2);
-        else
-            CF_Spy_ChangeColor(self, 1);
-    } else if (self.impulse == TF_DISGUISE_LAST && self.playerclass == PC_SPY)
-        CF_Spy_DisguiseLast();
-    else if ((self.impulse == TF_DEMOMAN_DETPACK) &&
-             (self.playerclass == PC_DEMOMAN))
-        TeamFortress_DetpackMenu();
-    else if ((self.impulse == TF_ENGINEER_BUILD) &&
-             (self.playerclass == PC_ENGINEER))
-        TeamFortress_EngineerBuild();
-    else if (self.impulse == FLAG_INFO) {
-        if (CTF_Map == 1)
-            TeamFortress_CTF_FlagInfo();
-        else
-            TeamFortress_DisplayDetectionItems();
-    } else if (self.impulse == TF_DISPLAYLOCATION)
-        display_location();
-    else
-        DeadImpulses();
-
-    if (self.impulse == TF_DETPACK)
-        self.last_impulse = self.impulse;
+    DeadImpulses();
 
     self.impulse = 0;
 };
@@ -2509,129 +1968,10 @@ void () PreMatchImpulses = {
 };
 
 void () DeadImpulses = {
-    if (self.impulse == TF_SHOWTF)
-        TeamFortress_ShowTF();
-    else if (self.impulse == TF_CLASSHELP)
-        Help_Show();
-    else if (self.impulse == TF_SHOWLEGALCLASSES)
-        TeamFortress_DisplayLegalClasses();
-    else if ((self.impulse >= TF_CHANGEPC_SCOUT) && (self.impulse <= TF_CHANGEPC_RANDOM)) {
-        TeamFortress_ChangeClass(self.impulse - TF_CHANGEPC_SCOUT + 1);
-    } else if ((self.playerclass != 0) && (self.impulse == TF_CHANGETEAM)
-               && (deathmatch == 3) && (cb_prematch_time < time)) {
-        Menu_Team(0);
-    } else if ((self.playerclass != 0) && (self.impulse == TF_CHANGECLASS)
-               && (deathmatch == 3) && (cb_prematch_time < time)) {
-        Menu_Class(0);
-    } else if (self.is_admin == 1) {
-        if (self.impulse == 193)
-            Admin_CeaseFire();
-        else if (self.impulse == 192)
-            Admin_CountPlayers();
-        else if (self.impulse == 189)
-            Admin_CycleDeal();
-        else if ((self.impulse == 190) && (self.admin_mode == 1))
-            Admin_DoKick();
-        else if ((self.impulse == 191) && (self.admin_mode == 1))
-            Admin_DoBan();
-        else if ((self.impulse == 195) && (self.admin_mode == 1))
-            Admin_CycleDeal();
-        else if (self.impulse == 198)
-            Admin_ListIPs();
-    }
-    if (self.impulse == TF_HELP_MAP)
-        TeamFortress_HelpMap();
-    else if (self.impulse == TF_STATUS_QUERY)
-        TeamFortress_StatusQuery();
-    else if (self.impulse == TF_TEAM_1)
-        TeamFortress_TeamSet(1);
-    else if (self.impulse == TF_TEAM_2)
-        TeamFortress_TeamSet(2);
-    else if (self.impulse == TF_TEAM_3)
-        TeamFortress_TeamSet(3);
-    else if (self.impulse == TF_TEAM_4)
-        TeamFortress_TeamSet(4);
-    else if (self.impulse == TF_TEAM_SCORES)
-        TeamFortress_TeamShowScores(0);
-    else if (self.impulse == TF_TEAM_CLASSES)
-        TeamFortress_TeamShowMemberClasses(self);
-    else if ((self.playerclass == PC_SCOUT) && (self.impulse == TF_SCAN))
-        ScannerSwitch();
-    else if ((self.playerclass == PC_SCOUT) &&
-             (self.impulse == TF_SCAN_SOUND)) {
-        sprint(self, PRINT_HIGH, "Scanner sound: ");
-        if (self.tf_items_flags & 4) {
-            self.tf_items_flags = self.tf_items_flags - 4;
-            sprint(self, PRINT_HIGH, "off\n");
-        } else {
-            self.tf_items_flags = self.tf_items_flags | 4;
-            sprint(self, PRINT_HIGH, "on\n");
-        }
-    } else if ((self.playerclass == PC_SCOUT) && (self.impulse == TF_SCAN_ENEMY)) {
-        sprint(self, PRINT_HIGH, "Scanning for: ");
-        if (self.tf_items_flags & NIT_SCANNER_ENEMY) {
-            self.tf_items_flags = self.tf_items_flags - NIT_SCANNER_ENEMY;
-            if (self.tf_items_flags & NIT_SCANNER_FRIENDLY) {
-                sprint(self, PRINT_HIGH, "Friendlies only\n");
-            } else {
-                sprint(self, PRINT_HIGH, "Nothing\n");
-            }
-        } else {
-            self.tf_items_flags = self.tf_items_flags | NIT_SCANNER_ENEMY;
-            if (self.tf_items_flags & NIT_SCANNER_FRIENDLY) {
-                sprint(self, PRINT_HIGH, "Friendlies and enemies\n");
-            } else {
-                sprint(self, PRINT_HIGH, "Enemies only\n");
-            }
-            Status_Refresh(self);
-        }
-    } else if ((self.playerclass == PC_SCOUT) && (self.impulse == TF_SCAN_FRIENDLY)) {
-        sprint(self, PRINT_HIGH, "Scanning for: ");
-        if (self.tf_items_flags & NIT_SCANNER_FRIENDLY) {
-            self.tf_items_flags = self.tf_items_flags - NIT_SCANNER_FRIENDLY;
-            if (self.tf_items_flags & NIT_SCANNER_ENEMY) {
-                sprint(self, PRINT_HIGH, "Enemies only\n");
-            } else {
-                sprint(self, PRINT_HIGH, "Nothing\n");
-            }
-        } else {
-            self.tf_items_flags = self.tf_items_flags | NIT_SCANNER_FRIENDLY;
-            if (self.tf_items_flags & NIT_SCANNER_ENEMY) {
-                sprint(self, PRINT_HIGH, "Friendlies and enemies\n");
-            } else {
-                sprint(self, PRINT_HIGH, "Friendlies only\n");
-            }
-        }
-        Status_Refresh(self);
-    } else if (self.impulse == TF_ALIAS_CHECK) {
-        sprint(self, PRINT_HIGH, "Aliases checked\n");
-        self.got_aliases = 1;
-        self.impulse = 0;
-    }
+    return;
 };
 
 void () W_WeaponFrame = {
-    if (self.menu_input) {
-        if (self.impulse > 0 && self.impulse <= 10) {
-            Menu_Input(self.impulse);
-            return;
-        }
-    }
-
-    if (self.impulse == TF_CLASSMENU) {
-        if (self.playerclass == PC_ENGINEER)
-            Menu_Engineer(self);
-        else if (self.playerclass == PC_SCOUT)
-            Menu_Scout();
-        else if (self.playerclass == PC_SPY)
-            Menu_Spy(self);
-        else if (self.playerclass == PC_DEMOMAN)
-            TeamFortress_DetpackMenu();
-
-        self.impulse = 0;
-        return;
-    }
-
     if (self.is_feigning && self.impulse != TF_SPECIAL_SKILL && self.impulse != TF_MEDIC_HELPME)
         return;
 
@@ -2721,47 +2061,9 @@ void () W_WeaponFrame = {
 
     }
 
-    if (self.impulse == TF_CHANGETEAM) {
-        Menu_Team(0);
-        self.impulse = 0;
-        return;
-    } else if (self.impulse == TF_CHANGECLASS) {
-        Menu_Class(0);
-        self.impulse = 0;
-        return;
-    }
 
     if (intermission_running || cease_fire)
         return;
-
-    // hwguy assault cannon special
-    if (self.playerclass == PC_HVYWEAP) {
-        if (cannon_lock && (self.impulse == TF_LOCKON || self.impulse == TF_LOCKOFF)) {
-            if (self.impulse == TF_LOCKON)
-                self.tfstate = self.tfstate | TFSTATE_LOCK;
-            else if (self.impulse == TF_LOCKOFF)
-                self.tfstate = self.tfstate - (self.tfstate & TFSTATE_LOCK);
-            Status_Refresh(self);
-            self.impulse = 0;
-            return;
-        }
-    }
-
-    if (self.playerclass == PC_SNIPER) {
-        if (self.impulse == TF_SPECIAL_SKILL || self.impulse == TF_ZOOMTOGGLE) {
-            Sniper_ZoomToggle();
-            self.impulse = 0;
-            return;
-        } else if (self.impulse == TF_ZOOMIN || (self.is_zooming && self.impulse == TF_WEAPPREV)) {
-            Sniper_ZoomAdjust(1);
-            self.impulse = 0;
-            return;
-        } else if (self.impulse == TF_ZOOMOUT || (self.is_zooming && self.impulse == TF_WEAPNEXT)) {
-            Sniper_ZoomAdjust(0);
-            self.impulse = 0;
-            return;
-        }
-    }
 
     // class specials and grenade impulses always possible, also detpipe
     if (self.impulse == TF_SPECIAL_SKILL ||(self.impulse >= TF_GRENADE_1 && self.impulse <= TF_GRENADE_SWITCH)
@@ -2790,11 +2092,9 @@ void () W_WeaponFrame = {
                     self.heat = self.heat + 3;
                     if ((sniperpower) && (self.power_time < (time - 0.3))) {
                         self.power_time = time;
-                        Status_Refresh(self);
                     }
                 } else if ((sniperpower) && (!self.power_full)) {
                     self.power_full = 1;
-                    Status_Refresh(self);
                 }
             } else {
                 local vector tv = self.velocity;

@@ -164,7 +164,7 @@ void () door_touch = {
     }
     self.owner.attack_finished = time + 2;
     if (self.owner.message != "") {
-        CenterPrint(other, self.owner.message);
+        centerprint(other, self.owner.message);
         sound(other, CHAN_VOICE, "misc/talk.wav", 1, ATTN_NORM);
     }
     if (!self.items)
@@ -375,13 +375,7 @@ void () func_door = {
         self.noise1 = "doors/ddoor2.wav";
         self.noise2 = "doors/ddoor1.wav";
     }
-    // q3 fields
-    if (self.allowteams == "blue") {
-        self.team_no = 1;
-    }
-    if (self.allowteams == "red") {
-        self.team_no = 2;
-    }
+
     SetMovedir();
     self.max_health = self.health;
     self.solid = SOLID_BSP;
@@ -549,7 +543,7 @@ void () secret_touch = {
 
     self.attack_finished = time + 2;
     if (self.message) {
-        CenterPrint(other, self.message);
+        centerprint(other, self.message);
         sound(other, CHAN_BODY, "misc/talk.wav", 1, ATTN_NORM);
     }
 };

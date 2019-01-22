@@ -705,10 +705,7 @@ void () TF_MovePlayer = {
 };
 
 void () GotoNextMap = {
-    if (vote_result != string_null)
-        nextmap = strzone(vote_result);
-
-    if (nextmap != mapname || vote_result != string_null) {
+    if (nextmap != mapname) {
         changelevel(nextmap);
         already_chosen_map = time;
     }
@@ -796,18 +793,12 @@ void () execute_changelevel = {
 
     other = find(world, classname, "player");
     while (other != world) {
-        if (vote_result != string_null)
-            sprint(other, PRINT_HIGH, "Next up: ", vote_result, "\n");
         other.takedamage = DAMAGE_NO;
         other.solid = SOLID_NOT;
         other.movetype = MOVETYPE_NONE;
         other.modelindex = 0;
         other.caps = 0;
         other = find(other, classname, "player");
-    }
-    if (!clan_scores_dumped) {
-        DumpClanScores();
-        clan_scores_dumped = 1;
     }
 };
 
@@ -1201,66 +1192,12 @@ void () PutClientInServer = {
     self.immune_to_check = time + 10;
     self.fire_held_down = 0;
 
-    if (! self.last_playerclass)
-        self.last_playerclass = self.playerclass;
-
-    // remove prime timers to avoid getting an old grenade in your face
-    te = find(world, classname, "primetimer");
-    while (te != world) {
-        if (te.owner == self)
-            dremove(te);
-        te = find(te, classname, "primetimer");
-    }
-
     DecodeLevelParms();
-
-    if (self.playerclass == 0) {
-        if (TeamFortress_TeamIsCivilian(self.team_no)) {
-            TeamFortress_ChangeClass(11);
-        }
-    }
-    if ((deathmatch == 3) && (self.nextpc != 0)) {
-        self.playerclass = self.nextpc;
-        self.nextpc = 0;
-        if (self.playerclass == PC_RANDOM)
-            self.tfstate = self.tfstate | TFSTATE_RANDOMPC;
-        else {
-            self.tfstate =
-                self.tfstate - (self.tfstate & TFSTATE_RANDOMPC);
-            TeamFortress_ExecClassScript(self);
-        }
-    }
-
-    if (self.tfstate & TFSTATE_RANDOMPC) {
-        oldclass = self.playerclass;
-        self.playerclass = 1 + floor(random() * (10 - 1));
-        while (!IsLegalClass(self.playerclass) ||
-               (self.playerclass == oldclass)
-               || CF_ClassIsRestricted(self.team_no, self.playerclass)) {
-            self.playerclass = 1 + floor(random() * (10 - 1));
-        }
-        self.tfstate = TFSTATE_RANDOMPC;
-        TeamFortress_ExecClassScript(self);
-    } else
-        self.tfstate = 0;
-
-    if (self.playerclass != PC_ENGINEER)
-        Engineer_RemoveBuildings(self);
 
     self.takedamage = 2;
 
-    TeamFortress_PrintClassName(self, self.playerclass,
-                                self.tfstate & TFSTATE_RANDOMPC);
-    TeamFortress_SetEquipment();
-    TeamFortress_SetHealth();
-    TeamFortress_SetSpeed(self);
-    TeamFortress_SetSkin(self);
-    TeamFortress_StartTimers();
-
-    stuffcmd(self, "v_idlescale 0\n");
-    stuffcmd(self, "v_cshift; wait; bf\n");
     SetTeamName(self);
-    W_SetCurrentAmmo(self);
+
     if (self.current_weaponslot && self.last_playerclass == self.playerclass)
         W_ChangeWeapon(self.current_weaponslot);
     else
@@ -1296,7 +1233,7 @@ void () PutClientInServer = {
                 spot.items = 0;
         }
         if (spot.message) {
-            CenterPrint(self, spot.message);
+            centerprint(self, spot.message);
             if (!(spot.goal_activation & 2))
                 spot.message = string_null;
         }
@@ -1676,25 +1613,6 @@ void () CheckWaterJump = {
 };
 
 void () PlayerPreThink = {
-    if (self.impulse) {
-        if (self.impulse == TF_VOTENEXT) {
-            Vote_NextMap(self);
-            self.impulse = 0;
-        } else if (self.impulse == TF_VOTETRICK) {
-            Vote_TrickMap(self);
-            self.impulse = 0;
-        } else if (self.impulse == TF_VOTERACE) {
-            Vote_RaceMap(self);
-            self.impulse = 0;
-        } else if (self.impulse == TF_FORCENEXT) {
-            Vote_ForceNext(self);
-            self.impulse = 0;
-        }
-    }
-
-    if (self.cheat_level > 0) {
-        self.cheat_level = self.cheat_level - 1;
-    }
     if (intermission_running) {
         IntermissionThink();
         return;
@@ -1714,56 +1632,21 @@ void () PlayerPreThink = {
         PlayerDeathThink();
         return;
     }
-    if ((self.undercover_team || self.undercover_skin) ||
-        self.is_undercover) {
-        if (self.effects & (8 | 4)) {
-            sprint(self, PRINT_MEDIUM,
-                   "The glowing removes your disguise\n");
-            Spy_RemoveDisguise(self);
-        }
-    }
     if (self.deadflag == 1) {
         return;
     }
-    if (self.is_feigning) {
-        if (self.flags & FL_ONGROUND) {
-            // check area for entities - if found, bounce player forward
-            if (!self.feign_areachecked) {
-                local float check_area = Spy_CheckArea(self);
-                if (check_area == 1 || check_area == 3) {
-                    self.velocity = aim(self, 10000);
-                    self.velocity = self.velocity * 200;
-                    self.velocity_z = 200;
-                } else {
-                    self.feign_areachecked = 1;
-                    if (!(self.tfstate & TFSTATE_CANT_MOVE)) {
-                        self.movetype = MOVETYPE_NONE;
-                        self.tfstate = self.tfstate | TFSTATE_CANT_MOVE;
-                        TeamFortress_SetSpeed(self);
-                    }
-                }
-            }
-        }
-        if (self.waterlevel) {
-            if (self.waterlevel == 1) {
-                self.watertype = -3;
-                self.waterlevel = 3;
-            }
-            self.velocity_z = -100;
-        }
+    
+    if (self.button2) {
+        PlayerJump();
     } else {
-        if (self.button2) {
-            PlayerJump();
-        } else {
-            self.flags = self.flags | FL_JUMPRELEASED;
-        }
+        self.flags = self.flags | FL_JUMPRELEASED;
     }
+    
     if ((time < self.pausetime) || (cease_fire == 1)) {
         self.velocity = '0 0 0';
     }
     if (time > self.attack_finished && !self.currentammo && self.weapon > WEAP_AXE) {
         W_ChangeWeapon(W_BestWeaponSlot());
-        W_SetCurrentAmmo(self);
         W_WeaponState_Save(self);
     }
 };
@@ -1976,8 +1859,7 @@ void () PlayerPostThink = {
             self.cheat_check = time + 5;
         }
     }
-    if (time >= self.StatusRefreshTime)
-        RefreshStatusBar(self);
+
     if (self.cheat_check <= time) {
         TeamFortress_CheckTeamCheats();
         self.cheat_check = time + 3;
@@ -1999,7 +1881,6 @@ void (optional float csqcactive) ClientConnect = {
     // qwmoba
     self.lobby = 1;
 
-    stuffcmd(self, "set fortressone 1\n");
     bprint(PRINT_HIGH, self.netname, " entered the game\n");
 
     self.motd = 0;
@@ -2008,83 +1889,11 @@ void (optional float csqcactive) ClientConnect = {
     if (self.netname == string_null)
         KickCheater(self);
 
-    TeamFortress_Alias("id", TF_ID, 0);
-
-    TeamFortress_ExecMapScript(self);
-    self.has_disconnected = 0;
-
     if (intermission_running) {
         PutClientInIntermission();
         GotoNextMap();
     }
-
-    st2 = infokey(world, "apw");
-    if (st2 == string_null)
-        st2 = infokey(world, "adminpwd");
-
-    st = infokey(self, "apw");
-    if (st == string_null)
-        st = infokey(self, "adminpwd");
-
-    if ((st2 != string_null) && (st != string_null) && (st == st2)) {
-        self.is_admin = TRUE;
-        stuffcmd(self, "setinfo apw \"");
-        stuffcmd(self, "\"\n");
-        stuffcmd(self, "setinfo adminpwd \"");
-        stuffcmd(self, "\"\n");
-        TeamFortress_Alias("countplayers", 192, 0);
-        TeamFortress_Alias("deal", 189, 0);
-        TeamFortress_Alias("kick", 190, 0);
-        TeamFortress_Alias("ban", 191, 0);
-        TeamFortress_Alias("next", 195, 0);
-        TeamFortress_Alias("ceasefire", 193, 0);
-        TeamFortress_Alias("listips", 198, 0);
-    } else
-        self.is_admin = FALSE;
-
-    if (clanbattle && (self.has_disconnected != 1)) {
-        got_one = 0;
-        st = infokey(self, "tf_id");
-        self.tf_id = stof(st);
-        if ((st != string_null) && (self.tf_id != 0)) {
-            sprint(self, PRINT_HIGH, "Welcome back!\n");
-            te = find(world, classname, "ghost");
-            while (te) {
-                if (te.tf_id == self.tf_id) {
-                    got_one = 1;
-                    TeamFortress_TeamSet(te.team_no);
-                    self.frags = te.frags;
-                    self.real_frags = te.real_frags;
-                    if (!(toggleflags & TFLAG_TEAMFRAGS) &&
-                        !(toggleflags & TFLAG_FULLTEAMSCORE)) {
-                        self.frags = self.real_frags;
-                    }
-                    self.playerclass = te.playerclass;
-                    self.tfstate = te.tfstate;
-                    dremove(te);
-                    te = world;
-                } else
-                    te = find(te, classname, "ghost");
-            }
-        }
-        if (!got_one) {
-            if (game_locked && (cb_prematch_time < time)) {
-                sprint(self, PRINT_HIGH,
-                       "Closed server. Clan battle in progress.\n");
-                KickCheater(self);
-                return;
-            }
-            last_id = last_id + 20 + random() * 10;
-            self.tf_id = rint(random() * 10 + last_id);
-            st = ftos(self.tf_id);
-            stuffcmd(self, "setinfo tf_id ");
-            stuffcmd(self, st);
-            stuffcmd(self, "\n");
-            sprint(self, PRINT_HIGH, "Your battle ID is ", st, "\n");
-        }
-    }
-    if (cb_prematch_time > time)
-        sprint(self, PRINT_HIGH, "Currently in prematch time\n");
+   
 };
 
 void () ClientDisconnect = {
