@@ -5,6 +5,7 @@
 .string btn_img;
 .float btn_flags;
 .float btn_no;
+.float team_no;
 
 // menu stuff
 float mnu_active;

@@ -49,9 +49,9 @@ entity (float btnID) GetButton = {
     }
 }
 
-void (string button_text, void () btnMethod, vector button_spawnpos, string button_image, vector button_size, float button_flags, float btnID) CreateButton =
+entity (string button_text, void () btnMethod, vector button_spawnpos, string button_image, vector button_size, float button_flags, float btnID) CreateButton =
 {
-   local entity newbutton;
+   entity newbutton;
    
    newbutton = spawn();
    newbutton.classname = "gui_button";
@@ -62,6 +62,8 @@ void (string button_text, void () btnMethod, vector button_spawnpos, string butt
    newbutton.btn_flags = button_flags;
    newbutton.btn_no = btnID;
    newbutton.think = btnMethod;
+
+   return newbutton;
 }
 
 float () MouseOnButton = {
