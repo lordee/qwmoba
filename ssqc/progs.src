@@ -4,8 +4,8 @@ fteextensions.qc
 qw.qc
 qwmobadefs.qc
 debug.qc
-vote.qc
-help.qc
+
+
 subs.qc
 combat.qc
 items.qc
@@ -35,8 +35,8 @@ clan.qc
 tfort.qc
 tforthlp.qc
 tfortmap.qc
-ctf.qc
-coop.qc
+
+
 actions.qc
 spect.qc
 
