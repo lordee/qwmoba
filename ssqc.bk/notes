@@ -1,4 +1,0 @@
-ClientConnect
-putclientinserver //respawn and directly after ClientConnect
-
-playerpostthink // each frame - do menu for lobby here
