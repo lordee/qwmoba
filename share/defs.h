@@ -216,7 +216,22 @@
 #define AS_MELEE	3
 #define AS_MISSILE	4
 
+// qwmoba commands
+#define MNU_OPEN    1
+
 // qwmoba menus
 #define MNU_INACTIVE 0
 #define MNU_LOBBYTEAM 1
 #define MNU_LOBBYCHAMP 2
+
+// champs
+#define CHAMP_ASHE      0
+#define CHAMP_CAITLYN   1
+#define CHAMP_ALISTAR   2
+#define CHAMP_TARIC     3
+#define CHAMP_MASTERYI  4
+#define CHAMP_WARWICK   5
+#define CHAMP_GAREN     6
+#define CHAMP_KAYLE     7
+#define CHAMP_AHRI      8
+#define CHAMP_VEIGAR    9

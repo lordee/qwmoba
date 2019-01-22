@@ -1144,17 +1144,11 @@ void() PlayerPostThink =
 
 	W_WeaponFrame ();
 
-	switch (self.menu)
-	{
-		case MNU_LOBBYTEAM:
-			// if menu not showing, show it
-			ShowMenu(self, MNU_LOBBYTEAM);
-			break;
-		case MNU_LOBBYCHAMP:
-			ShowMenu(self, MNU_LOBBYCHAMP);
-			break;
-		default:
-	}
+	// if there's a menu set, make sure it's activated
+	// send this even when 0
+	ShowMenu(self, self.menu);
+	
+	
 };
 
 

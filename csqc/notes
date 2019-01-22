@@ -1,1 +1,3 @@
 entity thelocalplayer = findfloat(world, entnum, player_localentnum); 
+
+#qc on irc.anynet.org

@@ -6,6 +6,7 @@
 .float btn_flags;
 .float btn_no;
 .float team_no;
+.float champ;
 
 // menu stuff
 float mnu_active;
@@ -19,3 +20,4 @@ typedef struct
 } MouseStruct;
 
 MouseStruct Mouse;
+

@@ -11,40 +11,6 @@ void (float menu) AckMenu = {
     sendevent("AckMenu", "f", menu);
 }
 
-void (float menuitem) ShowMenu = {
-
-    // no active menu
-    if (vid_realwidth != 0)
-    {
-        if (mnu_active == MNU_INACTIVE)
-        {
-            // a different menu is/was active, now we change it or send ACK if same
-            if (mnu_active != menuitem)
-            {
-                mnu_active = menuitem;
-                switch (menuitem)
-                {
-                    case MNU_LOBBYTEAM:
-                        ShowLobbyMenu();
-                    break;
-                    case MNU_LOBBYCHAMP:
-                        ShowLobbyChampMenu();
-                    break;
-                    default:
-                }
-            }
-            else 
-            {
-                AckMenu(mnu_active);
-            }
-        }
-        else 
-        {
-            AckMenu(mnu_active);
-        }
-    }
-}
-
 void () ClearMenu = {
     setcursormode(FALSE);
     entity button;
@@ -57,6 +23,39 @@ void () ClearMenu = {
 		button = find(button, classname, "gui_button");
 	}
 }
+
+void (float menuitem) ShowMenu = {
+
+    // no active menu
+    if (vid_realwidth != 0)
+    {
+        // a different menu is/was active, now we change it or send ACK if same
+        if (mnu_active != menuitem)
+        {
+            ClearMenu();
+            setcursormode(TRUE);
+            mnu_active = menuitem;
+            switch (menuitem)
+            {
+                case MNU_LOBBYTEAM:
+                    ShowLobbyMenu();
+                break;
+                case MNU_LOBBYCHAMP:
+                    ShowLobbyChampMenu();
+                break;
+                case MNU_INACTIVE:
+                    setcursormode(FALSE);
+                default:
+            }
+        }
+        else 
+        {
+            AckMenu(mnu_active);
+        }
+    }
+}
+
+
 
 entity (float btnID) GetButton = {
     entity button;

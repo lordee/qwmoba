@@ -4,6 +4,7 @@ void (entity player, float menutype) ShowMenu = {
     {
         msg_entity = player;
         WriteByte(MSG_MULTICAST, SVC_CGAMEPACKET); 
+        WriteByte(MSG_MULTICAST, MNU_OPEN); 
         WriteByte(MSG_MULTICAST, menutype); 
         multicast('0 0 0', MULTICAST_ONE); 
     }
