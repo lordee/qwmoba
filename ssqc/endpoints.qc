@@ -1,3 +1,4 @@
+// qwmoba
 void (float team) Cmd_JoinTeam_f = {
     self.team_no = team;
     self.menu = MNU_LOBBYCHAMP;

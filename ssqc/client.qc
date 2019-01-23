@@ -476,14 +476,18 @@ void() PutClientInServer =
 
 	DecodeLevelParms ();
 	
+    SetupChamp();
+
 	W_SetCurrentAmmo ();
+
+
 
 	self.attack_finished = time;
 	self.th_pain = player_pain;
 	self.th_die = PlayerDie;
 	
 	self.deadflag = DEAD_NO;
-// paustime is set by teleporters to keep the player from moving a while
+// pausetime is set by teleporters to keep the player from moving a while
 	self.pausetime = 0;
 	
 	spot = SelectSpawnPoint ();

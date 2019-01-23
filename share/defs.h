@@ -236,3 +236,19 @@
 #define CHAMP_KAYLE     8
 #define CHAMP_AHRI      9
 #define CHAMP_VEIGAR    10
+
+// champ weapons
+#define ASHE_WEAPON     1
+
+// champ skills
+#define ASHE_SKILLONE   1
+#define ASHE_SKILLTWO   2
+#define ASHE_SKILLTHREE   3
+#define ASHE_SKILLFOUR   4
+
+// ashe defs
+#define ASHE_BASEAD     50
+#define ASHE_BASEHEALTH 500
+#define ASHE_MOVESPEED  330
+#define ASHE_ADGROWTH   3
+#define ASHE_BASEATTACKSPEED    1

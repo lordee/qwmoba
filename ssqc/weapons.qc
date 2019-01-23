@@ -898,6 +898,12 @@ void() W_SetCurrentAmmo =
 		self.weaponmodel = "progs/v_axe.mdl";
 		self.weaponframe = 0;
 	}
+    else if (self.weapon == ASHE_WEAPON)
+	{
+		self.currentammo = 0
+		self.weaponmodel = "progs/v_shot.mdl";
+		self.weaponframe = 0;
+	}
 	else if (self.weapon == IT_SHOTGUN)
 	{
 		self.currentammo = self.ammo_shells;
@@ -972,14 +978,6 @@ float() W_BestWeapon =
 	else if(self.ammo_shells >= 1 && (it & IT_SHOTGUN)  )
 		return IT_SHOTGUN;
 		
-/*
-	if(self.ammo_rockets >= 1 && (it & IT_ROCKET_LAUNCHER) )
-		return IT_ROCKET_LAUNCHER;
-	else if(self.ammo_rockets >= 1 && (it & IT_GRENADE_LAUNCHER) )
-		return IT_GRENADE_LAUNCHER;
-
-*/
-
 	return IT_AXE;
 };
 
