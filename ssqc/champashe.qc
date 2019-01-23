@@ -23,8 +23,17 @@ void () AsheAttackTouch = {
 		other.deathtype = "asheattack";
 		T_Damage (other, self, self.owner, self.owner.attackdamage);
 
-        // apply a slow for ashe attacks
-        T_ApplyDebuff(other, DEBUFF_SLOW, ASHE_AASLOW);
+        
+
+		
+		// if targ is slowed by ashe, add a stack
+		NotImplementedException();
+
+		// apply frost stack to ashe
+		self.owner.stacks = self.owner.stacks + 1;
+
+		// apply a slow for ashe attacks
+        T_ApplyDebuff(other, DEBUFF_SLOW, AASLOW_ASHE, AASLOW_VALUE_ASHE);
 	}
 	else
 	{
@@ -50,12 +59,9 @@ void () AsheAttack = {
 	newmis.voided=0;
 	newmis.owner = self;
 	newmis.movetype = MOVETYPE_BOUNCE;
-    // newmis.movetype = MOVETYPE_FLYMISSILE;
 	newmis.solid = SOLID_BBOX;
 	newmis.classname = "asheattack";
 		
-// set newmis speed     
-
 	makevectors (self.v_angle);
 
 	if (self.v_angle_x)
@@ -79,3 +85,31 @@ void () AsheAttack = {
 }
 
 
+void () SkillOne_Ashe = {
+	// do checks for frost stacks
+	float s;
+	s = self.stacks;
+
+	// if five frost stacks then allow cast
+	if (s >= 5)
+	{
+		// take off mana
+		// show cast clientside
+		// change model of attack
+		// buff attack speed
+		NotImplementedException();
+	}
+	else
+	{
+		sprint(self, PRINT_HIGH, "You need 5 frost stacks on a target before you can cast this");
+	}
+}
+void () SkillTwo_Ashe = {
+	
+}
+void () SkillThree_Ashe = {
+	
+}
+void () SkillFour_Ashe = {
+	
+}

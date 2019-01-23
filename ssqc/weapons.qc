@@ -898,7 +898,7 @@ void() W_SetCurrentAmmo =
 		self.weaponmodel = "progs/v_axe.mdl";
 		self.weaponframe = 0;
 	}
-    else if (self.weapon == ASHE_WEAPON)
+    else if (self.weapon == WEAPON_ASHE)
 	{
 		self.currentammo = 0;
 		self.weaponmodel = "progs/v_shot.mdl";
@@ -1011,7 +1011,7 @@ void() W_Attack =
     float attacktime;
     switch (self.weapon)
     {
-        case ASHE_WEAPON:
+        case WEAPON_ASHE:
             player_shot1();
             attacktime = 1 / self.attackspeed;
             self.attack_finished = time + attacktime;
@@ -1077,299 +1077,36 @@ void() W_Attack =
 
 /*
 ============
-W_ChangeWeapon
-
-============
-*/
-void() W_ChangeWeapon =
-{
-	local   float   it, am, fl;
-	
-	it = self.items;
-	am = 0;
-	fl = 0;
-	
-	if (self.impulse == 1)
-	{
-		fl = IT_AXE;
-	}
-	else if (self.impulse == 2)
-	{
-		fl = IT_SHOTGUN;
-		if (self.ammo_shells < 1)
-			am = 1;
-	}
-	else if (self.impulse == 3)
-	{
-		fl = IT_SUPER_SHOTGUN;
-		if (self.ammo_shells < 2)
-			am = 1;
-	}               
-	else if (self.impulse == 4)
-	{
-		fl = IT_NAILGUN;
-		if (self.ammo_nails < 1)
-			am = 1;
-	}
-	else if (self.impulse == 5)
-	{
-		fl = IT_SUPER_NAILGUN;
-		if (self.ammo_nails < 2)
-			am = 1;
-	}
-	else if (self.impulse == 6)
-	{
-		fl = IT_GRENADE_LAUNCHER;
-		if (self.ammo_rockets < 1)
-			am = 1;
-	}
-	else if (self.impulse == 7)
-	{
-		fl = IT_ROCKET_LAUNCHER;
-		if (self.ammo_rockets < 1)
-			am = 1;
-	}
-	else if (self.impulse == 8)
-	{
-		fl = IT_LIGHTNING;
-		if (self.ammo_cells < 1)
-			am = 1;
-	}
-
-	self.impulse = 0;
-	
-	if (!(self.items & fl))
-	{       // don't have the weapon or the ammo
-		sprint (self, PRINT_HIGH, "no weapon.\n");
-		return;
-	}
-	
-	if (am)
-	{       // don't have the ammo
-		sprint (self, PRINT_HIGH, "not enough ammo.\n");
-		return;
-	}
-
-//
-// set weapon, set ammo
-//
-	self.weapon = fl;               
-	W_SetCurrentAmmo ();
-};
-
-/*
-============
-CheatCommand
-============
-*/
-void() CheatCommand =
-{
-//      if (deathmatch || coop)
-		return;
-
-	self.ammo_rockets = 100;
-	self.ammo_nails = 200;
-	self.ammo_shells = 100;
-	self.items = self.items | 
-		IT_AXE |
-		IT_SHOTGUN |
-		IT_SUPER_SHOTGUN |
-		IT_NAILGUN |
-		IT_SUPER_NAILGUN |
-		IT_GRENADE_LAUNCHER |
-		IT_ROCKET_LAUNCHER |
-		IT_KEY1 | IT_KEY2;
-
-	self.ammo_cells = 200;
-	self.items = self.items | IT_LIGHTNING;
-
-	self.weapon = IT_ROCKET_LAUNCHER;
-	self.impulse = 0;
-	W_SetCurrentAmmo ();
-};
-
-/*
-============
-CycleWeaponCommand
-
-Go to the next weapon with ammo
-============
-*/
-void() CycleWeaponCommand =
-{
-	local   float   it, am;
-	
-	it = self.items;
-	self.impulse = 0;
-
-	while (1)
-	{
-		am = 0;
-
-		if (self.weapon == IT_LIGHTNING)
-		{
-			self.weapon = IT_AXE;
-		}
-		else if (self.weapon == IT_AXE)
-		{
-			self.weapon = IT_SHOTGUN;
-			if (self.ammo_shells < 1)
-				am = 1;
-		}
-		else if (self.weapon == IT_SHOTGUN)
-		{
-			self.weapon = IT_SUPER_SHOTGUN;
-			if (self.ammo_shells < 2)
-				am = 1;
-		}               
-		else if (self.weapon == IT_SUPER_SHOTGUN)
-		{
-			self.weapon = IT_NAILGUN;
-			if (self.ammo_nails < 1)
-				am = 1;
-		}
-		else if (self.weapon == IT_NAILGUN)
-		{
-			self.weapon = IT_SUPER_NAILGUN;
-			if (self.ammo_nails < 2)
-				am = 1;
-		}
-		else if (self.weapon == IT_SUPER_NAILGUN)
-		{
-			self.weapon = IT_GRENADE_LAUNCHER;
-			if (self.ammo_rockets < 1)
-				am = 1;
-		}
-		else if (self.weapon == IT_GRENADE_LAUNCHER)
-		{
-			self.weapon = IT_ROCKET_LAUNCHER;
-			if (self.ammo_rockets < 1)
-				am = 1;
-		}
-		else if (self.weapon == IT_ROCKET_LAUNCHER)
-		{
-			self.weapon = IT_LIGHTNING;
-			if (self.ammo_cells < 1)
-				am = 1;
-		}
-	
-		if ( (self.items & self.weapon) && am == 0)
-		{
-			W_SetCurrentAmmo ();
-			return;
-		}
-	}
-
-};
-
-
-/*
-============
-CycleWeaponReverseCommand
-
-Go to the prev weapon with ammo
-============
-*/
-void() CycleWeaponReverseCommand =
-{
-	local   float   it, am;
-	
-	it = self.items;
-	self.impulse = 0;
-
-	while (1)
-	{
-		am = 0;
-
-		if (self.weapon == IT_LIGHTNING)
-		{
-			self.weapon = IT_ROCKET_LAUNCHER;
-			if (self.ammo_rockets < 1)
-				am = 1;
-		}
-		else if (self.weapon == IT_ROCKET_LAUNCHER)
-		{
-			self.weapon = IT_GRENADE_LAUNCHER;
-			if (self.ammo_rockets < 1)
-				am = 1;
-		}
-		else if (self.weapon == IT_GRENADE_LAUNCHER)
-		{
-			self.weapon = IT_SUPER_NAILGUN;
-			if (self.ammo_nails < 2)
-				am = 1;
-		}
-		else if (self.weapon == IT_SUPER_NAILGUN)
-		{
-			self.weapon = IT_NAILGUN;
-			if (self.ammo_nails < 1)
-				am = 1;
-		}
-		else if (self.weapon == IT_NAILGUN)
-		{
-			self.weapon = IT_SUPER_SHOTGUN;
-			if (self.ammo_shells < 2)
-				am = 1;
-		}               
-		else if (self.weapon == IT_SUPER_SHOTGUN)
-		{
-			self.weapon = IT_SHOTGUN;
-			if (self.ammo_shells < 1)
-				am = 1;
-		}
-		else if (self.weapon == IT_SHOTGUN)
-		{
-			self.weapon = IT_AXE;
-		}
-		else if (self.weapon == IT_AXE)
-		{
-			self.weapon = IT_LIGHTNING;
-			if (self.ammo_cells < 1)
-				am = 1;
-		}
-	
-		if ( (it & self.weapon) && am == 0)
-		{
-			W_SetCurrentAmmo ();
-			return;
-		}
-	}
-
-};
-
-
-/*
-============
-ServerflagsCommand
-
-Just for development
-============
-*/
-void() ServerflagsCommand =
-{
-	serverflags = serverflags * 2 + 1;
-};
-
-
-/*
-============
 ImpulseCommands
 
 ============
 */
+void () ChangeSkill;
 void() ImpulseCommands =
 {
-	if (self.impulse >= 1 && self.impulse <= 8)
-		W_ChangeWeapon ();
-
-	if (self.impulse == 9)
-		CheatCommand ();
-	if (self.impulse == 10)
-		CycleWeaponCommand ();
-	if (self.impulse == 11)
-		ServerflagsCommand ();
-	if (self.impulse == 12)
-		CycleWeaponReverseCommand ();
+	switch (self.impulse)
+	{
+		case SKILLONE:			
+		case SKILLTWO:
+		case SKILLTHREE:
+		case SKILLFOUR:
+			ChangeSkill();
+			break;
+		case SKILL_USEACTIVE:
+			UseSkill(self.activeskill);
+			break;
+		case SKILL_USEONE:
+			UseSkill(self.skillone);
+			break;
+		case SKILL_USETWO:
+			UseSkill(self.skilltwo);
+			break;
+		case SKILL_USETHREE:
+			UseSkill(self.skillthree);
+			break;
+		case SKILL_USEFOUR:
+			UseSkill(self.skillfour);
+	}
 
 	self.impulse = 0;
 };

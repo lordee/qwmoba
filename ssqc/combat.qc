@@ -322,6 +322,16 @@ void(entity attacker, float damage) T_BeamDamage =
 	}
 };
 
-void (entity targ, float debuff, float value) T_ApplyDebuff = {
-    
+void (entity targ, float debuffcategory, float debufftype, float value) T_ApplyDebuff = {
+    switch (debuffcategory)
+	{
+		case DEBUFF_SLOW:
+			float s;
+			s = targ.speed;
+			s = s * ((100 - value) / 100);
+			targ.speed = s;
+			break;
+	}
+
+	targ.debufftype = targ.debufftype | AASLOW_ASHE;
 }

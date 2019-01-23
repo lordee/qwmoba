@@ -12,3 +12,6 @@
 .float skilltwo;
 .float skillthree;
 .float skillfour;
+.float activeskill;
+
+.float debufftype;

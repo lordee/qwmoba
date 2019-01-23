@@ -238,21 +238,36 @@
 #define CHAMP_VEIGAR    10
 
 // champ weapons
-#define ASHE_WEAPON     1
+#define WEAPON_ASHE     1
+
+// impulse defines
+#define SKILLONE    1
+#define SKILLTWO    2
+#define SKILLTHREE    3
+#define SKILLFOUR    4
+#define SKILL_USEACTIVE 1
+#define SKILL_USEONE    2
+#define SKILL_USETWO    3
+#define SKILL_USETHREE   4
+#define SKILL_USEFOUR    5
+
 
 // champ skills
-#define ASHE_SKILLONE   1
-#define ASHE_SKILLTWO   2
-#define ASHE_SKILLTHREE   3
-#define ASHE_SKILLFOUR   4
+#define SKILLONE_ASHE   1
+#define SKILLTWO_ASHE   2
+#define SKILLTHREE_ASHE  3
+#define SKILLFOUR_ASHE   4
 
 // ashe defs
-#define ASHE_BASEAD     50
-#define ASHE_BASEHEALTH 500
-#define ASHE_BASESPEED  330
-#define ASHE_ADGROWTH   3
-#define ASHE_BASEATTACKSPEED    1
-#define ASHE_AASLOW       30 // percent
+#define BASEAD_ASHE     50
+#define BASEHEALTH_ASHE 500
+#define BASESPEED_ASHE  330
+#define ADGROWTH_ASHE   3
+#define BASEATTACKSPEED_ASHE    1
+#define AASLOW_VALUE_ASHE       30 // percent
 
-// debuffs
+// debuff category
 #define DEBUFF_SLOW     1
+
+// debuff type
+#define AASLOW_ASHE     1
