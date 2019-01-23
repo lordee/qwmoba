@@ -453,6 +453,9 @@ PutClientInServer
 called each time a player enters a new level
 ============
 */
+//qwmoba
+void () SetupChamp;
+
 void() PutClientInServer =
 {
 	local   entity spot;

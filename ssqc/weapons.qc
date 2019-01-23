@@ -900,7 +900,7 @@ void() W_SetCurrentAmmo =
 	}
     else if (self.weapon == ASHE_WEAPON)
 	{
-		self.currentammo = 0
+		self.currentammo = 0;
 		self.weaponmodel = "progs/v_shot.mdl";
 		self.weaponframe = 0;
 	}
@@ -996,6 +996,10 @@ void()  player_shot1;
 void()  player_nail1;
 void()  player_light1;
 void()  player_rocket1;
+
+// qwmoba
+void () AsheAttack;
+
 
 void() W_Attack =
 {

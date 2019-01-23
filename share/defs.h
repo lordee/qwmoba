@@ -249,7 +249,7 @@
 // ashe defs
 #define ASHE_BASEAD     50
 #define ASHE_BASEHEALTH 500
-#define ASHE_MOVESPEED  330
+#define ASHE_BASESPEED  330
 #define ASHE_ADGROWTH   3
 #define ASHE_BASEATTACKSPEED    1
 #define ASHE_AASLOW       30 // percent

@@ -1,42 +1,3 @@
-void () AsheAttack = {
-	
-	sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
-
-	msg_entity = self;
-	WriteByte (MSG_ONE, SVC_SMALLKICK);
-
-	newmis = spawn ();
-	newmis.voided=0;
-	newmis.owner = self;
-	newmis.movetype = MOVETYPE_BOUNCE;
-    // newmis.movetype = MOVETYPE_FLYMISSILE;
-	newmis.solid = SOLID_BBOX;
-	newmis.classname = "asheattack";
-		
-// set newmis speed     
-
-	makevectors (self.v_angle);
-
-	if (self.v_angle_x)
-		newmis.velocity = v_forward*1000 + v_up * 200 + crandom()*v_right*10 + crandom()*v_up*10;
-	else
-	{
-		newmis.velocity = aim(self, 10000);
-		newmis.velocity = newmis.velocity * 1000;
-		newmis.velocity_z = 200;
-	}
-
-	newmis.angles = vectoangles(newmis.velocity);
-	
-	newmis.touch = AsheAttackTouch;
-	newmis.nextthink = time + 6;
-	newmis.think = SUB_Remove;
-
-	setmodel (newmis, "progs/spike.mdl");
-	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);             
-	setorigin (newmis, self.origin);
-}
-
 void () AsheAttackTouch = {
     if (other == self.owner)
 		return;
@@ -77,3 +38,44 @@ void () AsheAttackTouch = {
 
 	remove(self);
 }
+
+void () AsheAttack = {
+	
+	sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
+
+	msg_entity = self;
+	WriteByte (MSG_ONE, SVC_SMALLKICK);
+
+	newmis = spawn ();
+	newmis.voided=0;
+	newmis.owner = self;
+	newmis.movetype = MOVETYPE_BOUNCE;
+    // newmis.movetype = MOVETYPE_FLYMISSILE;
+	newmis.solid = SOLID_BBOX;
+	newmis.classname = "asheattack";
+		
+// set newmis speed     
+
+	makevectors (self.v_angle);
+
+	if (self.v_angle_x)
+		newmis.velocity = v_forward*1000 + v_up * 200 + crandom()*v_right*10 + crandom()*v_up*10;
+	else
+	{
+		newmis.velocity = aim(self, 10000);
+		newmis.velocity = newmis.velocity * 1000;
+		newmis.velocity_z = 200;
+	}
+
+	newmis.angles = vectoangles(newmis.velocity);
+	
+	newmis.touch = AsheAttackTouch;
+	newmis.nextthink = time + 6;
+	newmis.think = SUB_Remove;
+
+	setmodel (newmis, "progs/spike.mdl");
+	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);             
+	setorigin (newmis, self.origin);
+}
+
+
