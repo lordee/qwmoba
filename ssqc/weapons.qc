@@ -981,22 +981,6 @@ float() W_BestWeapon =
 	return IT_AXE;
 };
 
-float() W_CheckNoAmmo =
-{
-	if (self.currentammo > 0)
-		return TRUE;
-
-	if (self.weapon == IT_AXE)
-		return TRUE;
-	
-	self.weapon = W_BestWeapon ();
-
-	W_SetCurrentAmmo ();
-	
-// drop the weapon down
-	return FALSE;
-};
-
 /*
 ============
 W_Attack
@@ -1017,11 +1001,21 @@ void() W_Attack =
 {
 	local   float   r;
 
-	if (!W_CheckNoAmmo ())
-		return;
-
 	makevectors     (self.v_angle);                 // calculate forward angle for velocity
 	self.show_hostile = time + 1;   // wake monsters up
+
+    float attacktime;
+    switch (self.weapon)
+    {
+        case ASHE_WEAPON:
+            player_shot1();
+            attacktime = 1 / self.attackspeed;
+            self.attack_finished = time + attacktime;
+            AsheAttack();
+            break;
+    }
+
+    return;
 
 	if (self.weapon == IT_AXE)
 	{
@@ -1039,7 +1033,7 @@ void() W_Attack =
 	}
 	else if (self.weapon == IT_SHOTGUN)
 	{
-		player_shot1 ();
+		player_shot1();
 		self.attack_finished = time + 0.5;
 		W_FireShotgun ();
 	}

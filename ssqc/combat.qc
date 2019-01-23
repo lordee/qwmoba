@@ -131,7 +131,7 @@ The damage is coming from inflictor, but get mad at attacker
 This should be the only function that ever reduces health.
 ============
 */
-void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
+void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 {
 	local   vector  dir;
 	local   entity  oldself;
@@ -139,20 +139,11 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 	local   float   take;
 	local   string  attackerteam, targteam;
 
-
 	if (!targ.takedamage)
 		return;
 
 // used by buttons and triggers to set activator for target firing
 	damage_attacker = attacker;
-
-
-// check for quad damage powerup on the attacker
-	if (attacker.super_damage_finished > time && inflictor.classname != "door")
-	if (deathmatch == 4)
-		damage = damage * 8;
-	else
-		damage = damage * 4;
 
 // save damage based on the target's armor level
 
@@ -185,12 +176,11 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 	{
 		dir = targ.origin - (inflictor.absmin + inflictor.absmax) * 0.5;
 		dir = normalize(dir);
-		// Set kickback for smaller weapons
-//Zoid -- use normal NQ kickback
-//		// Read: only if it's not yourself doing the damage
-//		if ( (damage < 60) & ((attacker.classname == "player") & (targ.classname == "player")) & ( attacker.netname != targ.netname)) 
-//			targ.velocity = targ.velocity + dir * damage * 11;
-//		else                        
+
+		// Read: only if it's not yourself doing the damage
+		if ( (damage < 60) & ((attacker.classname == "player") & (targ.classname == "player")) & ( attacker.netname != targ.netname)) 
+			targ.velocity = targ.velocity + dir * damage * 11;
+		else                        
 		// Otherwise, these rules apply to rockets and grenades                        
 		// for blast velocity
 			targ.velocity = targ.velocity + dir * damage * 8;
@@ -199,21 +189,6 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 		if ( (rj > 1) & ((attacker.classname == "player") & (targ.classname == "player")) & ( attacker.netname == targ.netname)) 
 			targ.velocity = targ.velocity + dir * damage * rj;
 
-	}
-
-
-
-// check for godmode or invincibility
-	if (targ.flags & FL_GODMODE)
-		return;
-	if (targ.invincible_finished >= time)
-	{
-		if (self.invincible_sound < time)
-		{
-			sound (targ, CHAN_ITEM, "items/protect3.wav", 1, ATTN_NORM);
-			self.invincible_sound = time + 2;
-		}
-		return;
 	}
 
 // team play damage avoidance
@@ -347,3 +322,6 @@ void(entity attacker, float damage) T_BeamDamage =
 	}
 };
 
+void (entity targ, float debuff, float value) T_ApplyDebuff = {
+    
+}

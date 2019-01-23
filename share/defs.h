@@ -252,3 +252,7 @@
 #define ASHE_MOVESPEED  330
 #define ASHE_ADGROWTH   3
 #define ASHE_BASEATTACKSPEED    1
+#define ASHE_AASLOW       30 // percent
+
+// debuffs
+#define DEBUFF_SLOW     1

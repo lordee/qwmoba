@@ -1345,6 +1345,14 @@ void(entity targ, entity attacker) ClientObituary =
 				logfrag (attacker, targ);
 				attacker.frags = attacker.frags + 1;
 
+                switch (targ.deathtype)
+                {
+                    case "asheattack":
+                        deathstring = " is pierced by ";
+                        deathstring2 = "'s arrow\n";
+                    break;
+                }
+
 				rnum = attacker.weapon;
 				if (targ.deathtype == "nail")
 				{
