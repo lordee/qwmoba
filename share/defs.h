@@ -269,7 +269,11 @@
 #define AASPEED_VALUE_ASHE      30 // percent
 #define AASPEED_LIFETIME_ASHE   1
 #define AASPEED_TICKRATE_ASHE   5
-#define SKILLONE_ASHE_COOLDOWN  20;
+#define SKILLONE_ASHE_COOLDOWN  20
+#define SKILLTWO_ASHE_COOLDOWN  20
+#define MSSLOW_SKILLTWO_VALUE_ASHE  30 // percent
+#define MSSLOW_SKILLTWO_LIFETIME_ASHE   1
+#define MSSLOW_SKILLTWO_TICKRATE_ASHE   5
 
 // buff category
 #define DEBUFF_MSSLOW       1
@@ -278,3 +282,4 @@
 // buff type
 #define MSSLOW_ASHE     1
 #define AASPEED_ASHE    2
+#define MSSLOW_SKILLTWO_ASHE     3

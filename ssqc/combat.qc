@@ -384,7 +384,7 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
     
     switch (type)
     {
-        case AASLOW_ASHE:
+        case MSSLOW_ASHE:
             newbuff.health = AASLOW_LIFETIME_ASHE; // lifetime of debuff
             newbuff.nextthinkinterval = AASLOW_TICKRATE_ASHE; // this isn't needed but use for examples later on
             newbuff.nextthink = time + AASLOW_TICKRATE_ASHE;
@@ -393,6 +393,11 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
             newbuff.health = AASPEED_LIFETIME_ASHE; 
             newbuff.nextthinkinterval = AASPEED_TICKRATE_ASHE; 
             newbuff.nextthink = time + AASPEED_TICKRATE_ASHE;
+            break;
+        case MSSLOW_SKILLTWO_ASHE:
+            newbuff.health = MSSLOW_SKILLTWO_LIFETIME_ASHE; 
+            newbuff.nextthinkinterval = MSSLOW_SKILLTWO_TICKRATE_ASHE; 
+            newbuff.nextthink = time + MSSLOW_SKILLTWO_TICKRATE_ASHE;
             break;
         default:
             newbuff.health = 10; // 10 ticks of nextthink
