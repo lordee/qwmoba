@@ -33,3 +33,4 @@
 .float buffcategory;
 .float nextthinkinterval;
 .float buffvalue;
+.float stunned;

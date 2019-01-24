@@ -104,7 +104,7 @@ void () AsheAttack = {
 
     while (buff)
     {
-        if (buff.owner == self && buff.buffcategory == AASPEED_ASHE)
+        if (buff.owner == self && buff.buffcategory == AASPEED_SKILLONE_ASHE)
         {
             sound (self, CHAN_WEAPON, "weapons/spike2.wav", 1, ATTN_NORM);
 	        setmodel (newmis, "progs/ashearrowbuff.mdl");
@@ -131,7 +131,7 @@ void () SkillOne_Ashe = {
             self.mana = self.mana - self.skillonemanacost;
             // show cast clientside
             // buff attack speed
-            T_ApplyBuff(self, BUFF_AASPEED, AASPEED_ASHE, AASPEED_VALUE_ASHE);
+            T_ApplyBuff(self, BUFF_AASPEED, AASPEED_SKILLONE_ASHE, SKILLONE_VALUE_ASHE);
             self.skillonecooldown = time + SKILLONE_COOLDOWN_ASHE;
         }
         else
@@ -186,7 +186,7 @@ void () AsheSkillTwoTouch = {
 
             if (slowed == 0)
             {
-                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_SKILLTWO_ASHE, MSSLOW_SKILLTWO_VALUE_ASHE);
+                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_SKILLTWO_ASHE, SKILLTWO_VALUE_ASHE);
                 T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_ASHE, 0); // for frost stacks
                 T_Damage (other, self, self.owner, self.owner.skilltwodamage);
             }
@@ -272,7 +272,43 @@ void () SkillThree_Ashe = {
 }
 
 void () AsheSkillFourTouch = {
-    remove(self);
+    if (other == self.owner)
+		return;
+
+	if (self.voided) {
+		return;
+	}
+	self.voided = 1;
+
+	if (other.solid == SOLID_TRIGGER)
+		return; // trigger field, do nothing
+
+	if (pointcontents(self.origin) == CONTENT_SKY)
+	{
+		remove(self);
+		return;
+	}
+
+    if (other.classname == "player" && other.takedamage)
+    {
+        spawn_touchblood (self.owner.skillfourdamage);
+		other.deathtype = "asheskillfour";
+		
+        // apply stun in radius
+        T_ApplyBuff(other, DEBUFF_STUN, STUN_SKILLFOUR_ASHE, SKILLFOUR_VALUE_ASHE);
+        T_Damage (other, self, self.owner, self.owner.skilltwodamage);
+    }
+    else
+	{
+		WriteByte (MSG_MULTICAST, SVC_TEMPENTITY);
+		WriteByte (MSG_MULTICAST, TE_SPIKE);
+		WriteCoord (MSG_MULTICAST, self.origin_x);
+		WriteCoord (MSG_MULTICAST, self.origin_y);
+		WriteCoord (MSG_MULTICAST, self.origin_z);
+		multicast (self.origin, MULTICAST_PHS);
+	}
+
+	remove(self);
 }
 
 void () SkillFour_Ashe = {

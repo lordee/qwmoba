@@ -1000,9 +1000,12 @@ void()  player_rocket1;
 // qwmoba
 void () AsheAttack;
 
-
 void() W_Attack =
 {
+	if (self.stunned)
+	{
+		return;
+	}
 	local   float   r;
 
 	makevectors     (self.v_angle);                 // calculate forward angle for velocity
@@ -1085,9 +1088,9 @@ void () ChangeSkill;
 void (float skill) UseSkill;
 void() ImpulseCommands =
 {
-	if (self.impulse != 0)
+	if (self.stunned)
 	{
-		sprint(self, PRINT_HIGH, "impulsing\n");
+		return;
 	}
 	switch (self.impulse)
 	{

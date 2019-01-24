@@ -340,7 +340,6 @@ void () BuffThink = {
         value = self.buffvalue;
 		entity targ = self.owner;
 
-
         // remove buff
         switch (self.buffcategory)
         {
@@ -354,7 +353,10 @@ void () BuffThink = {
                 s = s / ((100 + value) / 100);
                 targ.attackspeed = s;
                 break;
-            default:
+			case DEBUFF_STUN:
+				targ.stunned = FALSE;
+				targ.movetype = MOVETYPE_WALK;
+			default:
         }
         remove(self);
     }
@@ -375,6 +377,10 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
             s = s * ((100 + value) / 100);
             targ.attackspeed = s;
             break;
+		case DEBUFF_STUN:
+			targ.stunned = TRUE;
+			targ.movetype = MOVETYPE_NONE;
+			break;
 	}
 	entity newbuff;
 	newbuff = spawn();
@@ -393,16 +399,21 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
             newbuff.nextthinkinterval = AASLOW_TICKRATE_ASHE; // this isn't needed but use for examples later on
             newbuff.nextthink = time + AASLOW_TICKRATE_ASHE;
             break;
-        case AASPEED_ASHE:
-            newbuff.health = AASPEED_LIFETIME_ASHE; 
-            newbuff.nextthinkinterval = AASPEED_TICKRATE_ASHE; 
-            newbuff.nextthink = time + AASPEED_TICKRATE_ASHE;
+        case AASPEED_SKILLONE_ASHE:
+            newbuff.health = SKILLONE_LIFETIME_ASHE; 
+            newbuff.nextthinkinterval = SKILLONE_TICKRATE_ASHE; 
+            newbuff.nextthink = time + SKILLONE_TICKRATE_ASHE;
             break;
         case MSSLOW_SKILLTWO_ASHE:
-            newbuff.health = MSSLOW_SKILLTWO_LIFETIME_ASHE; 
-            newbuff.nextthinkinterval = MSSLOW_SKILLTWO_TICKRATE_ASHE; 
-            newbuff.nextthink = time + MSSLOW_SKILLTWO_TICKRATE_ASHE;
+            newbuff.health = SKILLTWO_LIFETIME_ASHE; 
+            newbuff.nextthinkinterval = SKILLTWO_TICKRATE_ASHE; 
+            newbuff.nextthink = time + SKILLTWO_TICKRATE_ASHE;
             break;
+		case STUN_SKILLFOUR_ASHE:
+			newbuff.health = SKILLFOUR_LIFETIME_ASHE; 
+            newbuff.nextthinkinterval = SKILLFOUR_TICKRATE_ASHE; 
+            newbuff.nextthink = time + SKILLFOUR_TICKRATE_ASHE;
+			break;
         default:
             newbuff.health = 10; // 10 ticks of nextthink
             newbuff.nextthinkinterval = .1;
