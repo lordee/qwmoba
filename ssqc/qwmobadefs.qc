@@ -14,5 +14,22 @@
 .float skillfour;
 .float activeskill;
 .float mana;
+.float stacks;
+.float skillonedamage;
+.float skillonecooldown;
+.float skillonemanacost;
+.float skilltwodamage;
+.float skilltwocooldown;
+.float skilltwomanacost;
+.float skillthreedamage;
+.float skillthreecooldown;
+.float skillthreemanacost;
+.float skillfourdamage;
+.float skillfourcooldown;
+.float skillfourmanacost;
 
+// buff fields
 .float bufftype;
+.float buffcategory;
+.float nextthinkinterval;
+.float buffvalue;

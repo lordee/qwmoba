@@ -1,3 +1,5 @@
+void (entity targ, float cat, float type, float value) T_ApplyBuff;
+
 void () AsheAttackTouch = {
     if (other == self.owner)
 		return;
@@ -24,7 +26,7 @@ void () AsheAttackTouch = {
 		T_Damage (other, self, self.owner, self.owner.attackdamage);
 
 		// if targ is slowed by ashe already, add a stack
-        if (other.classname = "player" || other.classname = "creep")
+        if (other.classname == "player" || other.classname == "creep")
         {
             entity buff;
             float slowed;
@@ -33,7 +35,7 @@ void () AsheAttackTouch = {
             buff = find(world, classname, "buff");
             while (buff)
             {
-                if (buff.owner == other && buff.buff == AASLOW_ASHE)
+                if (buff.owner == other && buff.bufftype == MSSLOW_ASHE)
                 {
                     // apply frost stack to ashe
                     self.owner.stacks = self.owner.stacks + 1;
@@ -46,7 +48,7 @@ void () AsheAttackTouch = {
             if (slowed == 0)
             {
                 // apply a slow for ashe attacks
-                T_ApplyBuff(other, DEBUFF_SLOW, AASLOW_ASHE, AASLOW_VALUE_ASHE);
+                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_ASHE, AASLOW_VALUE_ASHE);
             }
         }
 	}
@@ -101,7 +103,7 @@ void () AsheAttack = {
 
     while (buff)
     {
-        if (buff.owner == self && buff.buff == AASPEED_ASHE)
+        if (buff.owner == self && buff.buffcategory == AASPEED_ASHE)
         {
             sound (self, CHAN_WEAPON, "weapons/spike2.wav", 1, ATTN_NORM);
 	        setmodel (newmis, "progs/missile.mdl");
@@ -116,7 +118,7 @@ void () AsheAttack = {
 
 
 void () SkillOne_Ashe = {
-
+    sprint(self, PRINT_HIGH, "trying to cast skill one\n");
     if (CanCast(self.skillonecooldown, self.skillonemanacost))
     {
          // do checks for frost stacks
@@ -130,7 +132,7 @@ void () SkillOne_Ashe = {
             // show cast clientside
             // buff attack speed
             T_ApplyBuff(self, BUFF_AASPEED, AASPEED_ASHE, AASPEED_VALUE_ASHE);
-            self.skillonecooldown = time + SKILLONE_ASHE_COOLDOWN;
+            self.skillonecooldown = time + SKILLONE_COOLDOWN_ASHE;
         }
         else
         {
@@ -165,7 +167,7 @@ void () AsheSkillTwoTouch = {
 		other.deathtype = "asheskilltwo";
 		
 		// if this has already hit, don't damage/slow
-        if (other.classname = "player" || other.classname = "creep")
+        if (other.classname == "player" || other.classname == "creep")
         {
             entity buff;
             float slowed;
@@ -174,7 +176,7 @@ void () AsheSkillTwoTouch = {
             buff = find(world, classname, "buff");
             while (buff)
             {
-                if (buff.owner == other && buff.buff == AASLOW_ASHE)
+                if (buff.owner == other && buff.bufftype == MSSLOW_SKILLTWO_ASHE)
                 {
                     slowed = 1;
                     break;
@@ -207,13 +209,15 @@ void () AsheSkillTwoTouch = {
 }
 
 void () SkillTwo_Ashe = {
+    sprint(self, PRINT_HIGH, "trying to cast skill two\n");
 	if (CanCast(self.skilltwocooldown, self.skilltwomanacost))
     {
         self.mana = self.mana - self.skilltwomanacost;
+        self.skilltwocooldown = time + SKILLTWO_COOLDOWN_ASHE;
 
         float num, ang;
         num = 11;
-        ang = 180 / num;
+        ang = floor(1800 / num);
 
         while (num > 0)
         {
@@ -228,22 +232,24 @@ void () SkillTwo_Ashe = {
 
             if (self.v_angle_x)
             {
-                mis.velocity = v_forward*1000 + v_up * 200 + crandom()*v_right*10 + crandom()*v_up*10;
+                if (num < 6)
+                {
+                    mis.velocity = v_forward*1000 + v_up * 200 + (v_right * (num * ang) * -1) + crandom()*v_up*10;
+                }
+                else if (num > 6)
+                {
+                    mis.velocity = v_forward*1000 + v_up * 200 + v_right * ((num - 6) * ang) + crandom()*v_up*10;
+                }
+                else
+                {
+                    mis.velocity = v_forward*1000 + v_up * 200 + crandom()*v_right*10 + crandom()*v_up*10;
+                }
             }
             else
             {
                 mis.velocity = aim(self, 10000);
                 mis.velocity = newmis.velocity * 1000;
                 mis.velocity_z = 200;
-            }
-            
-            if (num < 6)
-            {
-                mis.velocity_y = newmis.velocity_y - (num * ang);
-            }
-            else if (num > 6)
-            {
-                mis.velocity_y = newmis.velocity_y + ((num - 6) * ang);
             }
 
             mis.angles = vectoangles(newmis.velocity);
@@ -254,6 +260,7 @@ void () SkillTwo_Ashe = {
             setmodel (mis, "progs/spike.mdl");
             setsize (mis, VEC_ORIGIN, VEC_ORIGIN);
             setorigin (mis, self.origin);
+            num = num - 1;
         }
 
         sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
@@ -263,5 +270,5 @@ void () SkillThree_Ashe = {
 	sprint(self, PRINT_HIGH, "Not implemented\n");
 }
 void () SkillFour_Ashe = {
-	
+	sprint(self, PRINT_HIGH, "Not implemented\n");
 }

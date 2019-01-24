@@ -33,8 +33,6 @@ void() info_intermission =
 	self.angles = self.mangle;      // so C can get at it
 };
 
-
-
 void() SetChangeParms =
 {
 	if (self.health <= 0)

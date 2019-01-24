@@ -338,6 +338,9 @@ void () BuffThink = {
     {
         float s, value;
         value = self.buffvalue;
+		entity targ = self.owner;
+
+
         // remove buff
         switch (self.buffcategory)
         {
@@ -373,14 +376,16 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
             targ.attackspeed = s;
             break;
 	}
-
+	entity newbuff;
 	newbuff = spawn();
     newbuff.owner = targ;
     newbuff.classname = "buff";
-    newbuff.bufftype = type;
     newbuff.buffcategory = cat;
+	newbuff.bufftype = type;
+    
     newbuff.buffvalue = value;
     newbuff.think = BuffThink;
+
     
     switch (type)
     {

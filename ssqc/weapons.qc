@@ -1082,8 +1082,13 @@ ImpulseCommands
 ============
 */
 void () ChangeSkill;
+void (float skill) UseSkill;
 void() ImpulseCommands =
 {
+	if (self.impulse != 0)
+	{
+		sprint(self, PRINT_HIGH, "impulsing\n");
+	}
 	switch (self.impulse)
 	{
 		case SKILLONE:			
