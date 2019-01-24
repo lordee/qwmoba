@@ -74,6 +74,7 @@ void () AsheAttack = {
 	newmis.owner = self;
 	newmis.movetype = MOVETYPE_BOUNCE;
 	newmis.solid = SOLID_BBOX;
+    newmis.effects = EF_BLUE;
 	newmis.classname = "asheattack";
 		
 	makevectors (self.v_angle);
@@ -99,14 +100,14 @@ void () AsheAttack = {
     buff = find(world, classname, "buff");
 
     sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
-	setmodel (newmis, "progs/spike.mdl");
+	setmodel (newmis, "progs/ashearrow.mdl");
 
     while (buff)
     {
         if (buff.owner == self && buff.buffcategory == AASPEED_ASHE)
         {
             sound (self, CHAN_WEAPON, "weapons/spike2.wav", 1, ATTN_NORM);
-	        setmodel (newmis, "progs/missile.mdl");
+	        setmodel (newmis, "progs/ashearrowbuff.mdl");
             break;
         }
         buff = find(world, classname, "buff");
@@ -118,7 +119,6 @@ void () AsheAttack = {
 
 
 void () SkillOne_Ashe = {
-    sprint(self, PRINT_HIGH, "trying to cast skill one\n");
     if (CanCast(self.skillonecooldown, self.skillonemanacost))
     {
          // do checks for frost stacks
@@ -210,7 +210,6 @@ void () AsheSkillTwoTouch = {
 }
 
 void () SkillTwo_Ashe = {
-    sprint(self, PRINT_HIGH, "trying to cast skill two\n");
 	if (CanCast(self.skilltwocooldown, self.skilltwomanacost))
     {
         self.mana = self.mana - self.skilltwomanacost;
@@ -229,6 +228,7 @@ void () SkillTwo_Ashe = {
             mis.movetype = MOVETYPE_BOUNCE;
             mis.solid = SOLID_BBOX;
             mis.classname = "asheskilltwo";
+            mis.effects = EF_BLUE;
             makevectors (self.v_angle);
 
             if (self.v_angle_x)
@@ -253,12 +253,12 @@ void () SkillTwo_Ashe = {
                 mis.velocity_z = 200;
             }
 
-            mis.angles = vectoangles(newmis.velocity);
+            mis.angles = vectoangles(mis.velocity);
             mis.touch = AsheSkillTwoTouch;
             mis.nextthink = time + 6;
             mis.think = SUB_Remove;
             
-            setmodel (mis, "progs/spike.mdl");
+            setmodel (mis, "progs/ashearrow.mdl");
             setsize (mis, VEC_ORIGIN, VEC_ORIGIN);
             setorigin (mis, self.origin);
             num = num - 1;
@@ -270,6 +270,38 @@ void () SkillTwo_Ashe = {
 void () SkillThree_Ashe = {
 	sprint(self, PRINT_HIGH, "Not implemented\n");
 }
+
+void () AsheSkillFourTouch = {
+    remove(self);
+}
+
 void () SkillFour_Ashe = {
-	sprint(self, PRINT_HIGH, "Not implemented\n");
+	if (CanCast(self.skillfourcooldown, self.skillfourmanacost))
+    {
+        self.mana = self.mana - self.skillfourmanacost;
+        self.skillfourcooldown = time + SKILLFOUR_COOLDOWN_ASHE;
+            
+        newmis = spawn ();
+        newmis.voided = 0;
+        newmis.owner = self;
+        newmis.movetype = MOVETYPE_FLYMISSILE;
+        newmis.solid = SOLID_BBOX;
+        newmis.effects = EF_BLUE;
+        newmis.classname = "asheskillfour";
+        makevectors (self.v_angle);
+
+        newmis.velocity = aim(self, 1000);
+        newmis.velocity = newmis.velocity * 1000;
+        newmis.angles = vectoangles(newmis.velocity);
+
+        newmis.touch = AsheSkillFourTouch;
+        newmis.nextthink = time + 60;
+        newmis.think = SUB_Remove;
+        
+        setmodel (newmis, "progs/asheultimate.mdl");
+        setsize (newmis, '0 0 0', '0 0 0');             
+        setorigin (newmis, self.origin + v_forward*8 + '0 0 16');
+
+        sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
+    }
 }
