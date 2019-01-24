@@ -74,7 +74,7 @@ void (float cooldown, float manacost) CanCast = {
     }
     else
     {
-        sprint(self, PRINT_HIGH, "This skill is still on cooldown");
+        sprint(self, PRINT_HIGH, "This skill is on cooldown\n");
         return FALSE;
     }
 }
