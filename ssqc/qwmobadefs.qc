@@ -14,4 +14,4 @@
 .float skillfour;
 .float activeskill;
 
-.float debufftype;
+.float bufftype;

@@ -322,16 +322,81 @@ void(entity attacker, float damage) T_BeamDamage =
 	}
 };
 
-void (entity targ, float debuffcategory, float debufftype, float value) T_ApplyDebuff = {
-    switch (debuffcategory)
+// qwmoba
+void () BuffThink = {
+    float h;
+    h = self.health - 1;
+
+    if (h > 0)
+    {
+        self.health = h;
+        self.nextthink = time + self.nextthinkinterval;
+
+        // apply buff again (health damage etc)
+    }
+    else
+    {
+        float s, value;
+        value = self.buffvalue;
+        // remove buff
+        switch (self.buffcategory)
+        {
+            case DEBUFF_MSSLOW:
+                s = targ.speed;
+                s = s / ((100 - value) / 100);
+                targ.speed = s;
+                break;
+            case BUFF_AASPEED:
+                s = targ.attackspeed;
+                s = s / ((100 + value) / 100);
+                targ.attackspeed = s;
+                break;
+            default:
+        }
+        remove(self);
+    }
+}
+
+void (entity targ, float cat, float type, float value) T_ApplyBuff = {
+    float s;
+    s = 0;
+    switch (cat)
 	{
-		case DEBUFF_SLOW:
-			float s;
+		case DEBUFF_MSSLOW:
 			s = targ.speed;
 			s = s * ((100 - value) / 100);
 			targ.speed = s;
 			break;
+        case BUFF_AASPEED:
+            s = targ.attackspeed;
+            s = s * ((100 + value) / 100);
+            targ.attackspeed = s;
+            break;
 	}
 
-	targ.debufftype = targ.debufftype | AASLOW_ASHE;
+	newbuff = spawn();
+    newbuff.owner = targ;
+    newbuff.classname = "buff";
+    newbuff.bufftype = type;
+    newbuff.buffcategory = cat;
+    newbuff.buffvalue = value;
+    newbuff.think = BuffThink;
+    
+    switch (type)
+    {
+        case AASLOW_ASHE:
+            newbuff.health = AASLOW_LIFETIME_ASHE; // lifetime of debuff
+            newbuff.nextthinkinterval = AASLOW_TICKRATE_ASHE; // this isn't needed but use for examples later on
+            newbuff.nextthink = time + AASLOW_TICKRATE_ASHE;
+            break;
+        case AASPEED_ASHE:
+            newbuff.health = AASPEED_LIFETIME_ASHE; 
+            newbuff.nextthinkinterval = AASPEED_TICKRATE_ASHE; 
+            newbuff.nextthink = time + AASPEED_TICKRATE_ASHE;
+            break;
+        default:
+            newbuff.health = 10; // 10 ticks of nextthink
+            newbuff.nextthinkinterval = .1;
+            newbuff.nextthink = time + .1;
+    }
 }

@@ -265,9 +265,16 @@
 #define ADGROWTH_ASHE   3
 #define BASEATTACKSPEED_ASHE    1
 #define AASLOW_VALUE_ASHE       30 // percent
+#define AASLOW_LIFETIME_ASHE   1
+#define AASLOW_TICKRATE_ASHE   1
+#define AASPEED_VALUE_ASHE      30 // percent
+#define AASPEED_LIFETIME_ASHE   1
+#define AASPEED_TICKRATE_ASHE   5
 
-// debuff category
-#define DEBUFF_SLOW     1
+// buff category
+#define DEBUFF_MSSLOW       1
+#define BUFF_AASPEED        2
 
 // debuff type
-#define AASLOW_ASHE     1
+#define MSSLOW_ASHE     1
+#define AASPEED_ASHE    2

@@ -23,17 +23,26 @@ void () AsheAttackTouch = {
 		other.deathtype = "asheattack";
 		T_Damage (other, self, self.owner, self.owner.attackdamage);
 
-        
+		// if targ is slowed by ashe already, add a stack
+        if (other.classname = "player" || other.classname = "creep")
+        {
+            entity buff;
 
-		
-		// if targ is slowed by ashe, add a stack
-		NotImplementedException();
+            buff = find(world, classname, "buff");
+            while (buff)
+            {
+                if (buff.owner == other && buff.buff == AASLOW_ASHE)
+                {
+                    // apply frost stack to ashe
+                    self.owner.stacks = self.owner.stacks + 1;
+                    break;
+                }
+                buff = find(world, classname, "buff");
+            }	
 
-		// apply frost stack to ashe
-		self.owner.stacks = self.owner.stacks + 1;
-
-		// apply a slow for ashe attacks
-        T_ApplyDebuff(other, DEBUFF_SLOW, AASLOW_ASHE, AASLOW_VALUE_ASHE);
+            // apply a slow for ashe attacks
+            T_ApplyBuff(other, DEBUFF_SLOW, AASLOW_ASHE, AASLOW_VALUE_ASHE);
+        }
 	}
 	else
 	{
@@ -49,14 +58,13 @@ void () AsheAttackTouch = {
 }
 
 void () AsheAttack = {
-	
 	sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
 
 	msg_entity = self;
 	WriteByte (MSG_ONE, SVC_SMALLKICK);
 
 	newmis = spawn ();
-	newmis.voided=0;
+	newmis.voided = 0;
 	newmis.owner = self;
 	newmis.movetype = MOVETYPE_BOUNCE;
 	newmis.solid = SOLID_BBOX;
@@ -94,14 +102,22 @@ void () SkillOne_Ashe = {
 	if (s >= 5)
 	{
 		// take off mana
-		// show cast clientside
-		// change model of attack
-		// buff attack speed
-		NotImplementedException();
+        if (self.mana >= self.skillonemanacost)
+        {
+            self.mana = self.mana - self.skillonemanacost;
+            // show cast clientside
+            // change model of attack
+            // buff attack speed
+            T_ApplyBuff(self, BUFF_AASPEED, AASPEED_ASHE, AASPEED_VALUE_ASHE);
+        }
+        else
+        {
+            sprint(self, PRINT_HIGH, "Not enough mana\n");
+        }
 	}
 	else
 	{
-		sprint(self, PRINT_HIGH, "You need 5 frost stacks on a target before you can cast this");
+		sprint(self, PRINT_HIGH, "You need 5 frost stacks on a target before you can cast this\n");
 	}
 }
 void () SkillTwo_Ashe = {
