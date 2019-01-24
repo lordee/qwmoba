@@ -187,6 +187,7 @@ void () AsheSkillTwoTouch = {
             if (slowed == 0)
             {
                 T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_SKILLTWO_ASHE, MSSLOW_SKILLTWO_VALUE_ASHE);
+                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_ASHE, 0); // for frost stacks
                 T_Damage (other, self, self.owner, self.owner.skilltwodamage);
             }
         }

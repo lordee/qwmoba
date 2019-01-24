@@ -385,7 +385,6 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
     
     newbuff.buffvalue = value;
     newbuff.think = BuffThink;
-
     
     switch (type)
     {
