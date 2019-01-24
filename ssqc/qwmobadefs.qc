@@ -13,5 +13,6 @@
 .float skillthree;
 .float skillfour;
 .float activeskill;
+.float mana;
 
 .float bufftype;

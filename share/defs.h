@@ -251,7 +251,6 @@
 #define SKILL_USETHREE   4
 #define SKILL_USEFOUR    5
 
-
 // champ skills
 #define SKILLONE_ASHE   1
 #define SKILLTWO_ASHE   2
