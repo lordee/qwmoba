@@ -108,33 +108,40 @@ void () AsheAttack = {
 
 
 void () SkillOne_Ashe = {
-	// do checks for frost stacks
-	float s;
-	s = self.stacks;
 
-	// if five frost stacks then allow cast
-	if (s >= 5)
-	{
-		// take off mana
-        if (self.mana >= self.skillonemanacost)
+    if (CanCast(self.skillonecooldown, self.skillonemanacost))
+    {
+         // do checks for frost stacks
+        float s;
+        s = self.stacks;
+
+        // if five frost stacks then allow cast
+        if (s >= 5)
         {
             self.mana = self.mana - self.skillonemanacost;
             // show cast clientside
             // buff attack speed
             T_ApplyBuff(self, BUFF_AASPEED, AASPEED_ASHE, AASPEED_VALUE_ASHE);
+            self.skillonecooldown = time + SKILLONE_ASHE_COOLDOWN;
         }
         else
         {
-            sprint(self, PRINT_HIGH, "Not enough mana\n");
+            sprint(self, PRINT_HIGH, "You need 5 frost stacks on a target before you can cast this\n");
         }
-	}
-	else
-	{
-		sprint(self, PRINT_HIGH, "You need 5 frost stacks on a target before you can cast this\n");
-	}
+    }
 }
+
 void () SkillTwo_Ashe = {
-	
+	if (CanCast(self.skilltwocooldown, self.skilltwomanacost))
+    {
+        self.mana = self.mana - self.skilltwomanacost;
+        newmis = spawn ();
+        newmis.voided = 0;
+        newmis.owner = self;
+        newmis.movetype = MOVETYPE_BOUNCE;
+        newmis.solid = SOLID_BBOX;
+        newmis.classname = "asheskilltwo";
+    }
 }
 void () SkillThree_Ashe = {
 	

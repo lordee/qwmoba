@@ -46,14 +46,35 @@ void (float skill) UseSkill = {
         case SKILLONE_ASHE:
             SkillOne_Ashe();
         break;
-        case SKILLTwo_ASHE:
+        case SKILLTWO_ASHE:
             SkillTwo_Ashe();
         break;
-        case SKILLThree_ASHE:
+        case SKILLTHREE_ASHE:
             SkillThree_Ashe();
         break;
-        case SKILLFour_ASHE:
+        case SKILLFOUR_ASHE:
             SkillFour_Ashe();
         break;
     }   
+}
+
+void (float cooldown, float manacost) CanCast = {
+    if (cooldown <= time)
+    {
+        // take off mana
+        if (self.mana >= manacost)
+        {
+           return TRUE;
+        }
+        else
+        {
+            sprint(self, PRINT_HIGH, "Not enough mana\n");
+            return FALSE;
+        }
+    }
+    else
+    {
+        sprint(self, PRINT_HIGH, "This skill is still on cooldown");
+        return FALSE;
+    }
 }
