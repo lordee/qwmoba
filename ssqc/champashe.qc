@@ -58,8 +58,6 @@ void () AsheAttackTouch = {
 }
 
 void () AsheAttack = {
-	sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
-
 	msg_entity = self;
 	WriteByte (MSG_ONE, SVC_SMALLKICK);
 
@@ -87,8 +85,24 @@ void () AsheAttack = {
 	newmis.nextthink = time + 6;
 	newmis.think = SUB_Remove;
 
+    entity buff;
+    buff = find(world, classname, "buff");
+
+    sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
 	setmodel (newmis, "progs/spike.mdl");
-	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);             
+
+    while (buff)
+    {
+        if (buff.owner == self && buff.buff == AASPEED_ASHE)
+        {
+            sound (self, CHAN_WEAPON, "weapons/spike2.wav", 1, ATTN_NORM);
+	        setmodel (newmis, "progs/missile.mdl");
+            break;
+        }
+        buff = find(world, classname, "buff");
+    }
+    
+	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);
 	setorigin (newmis, self.origin);
 }
 
@@ -106,7 +120,6 @@ void () SkillOne_Ashe = {
         {
             self.mana = self.mana - self.skillonemanacost;
             // show cast clientside
-            // change model of attack
             // buff attack speed
             T_ApplyBuff(self, BUFF_AASPEED, AASPEED_ASHE, AASPEED_VALUE_ASHE);
         }

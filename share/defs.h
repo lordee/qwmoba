@@ -275,6 +275,6 @@
 #define DEBUFF_MSSLOW       1
 #define BUFF_AASPEED        2
 
-// debuff type
+// buff type
 #define MSSLOW_ASHE     1
 #define AASPEED_ASHE    2
