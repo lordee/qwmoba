@@ -260,7 +260,7 @@ void () SkillTwo_Ashe = {
     }
 }
 void () SkillThree_Ashe = {
-	
+	sprint(self, PRINT_HIGH, "Not implemented\n");
 }
 void () SkillFour_Ashe = {
 	
