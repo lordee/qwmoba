@@ -305,3 +305,12 @@
 #define AASPEED_SKILLONE_ASHE    2
 #define MSSLOW_SKILLTWO_ASHE     3
 #define STUN_SKILLFOUR_ASHE     4
+
+
+// creeps
+#define CREEP_MELEE         1
+#define CREEP_RANGE         2
+#define CREEP_CANNON        3
+#define CREEP_SUPER         4
+#define CREEP_SPAWNOFFSET_X     400
+#define CREEP_SPAWNOFFSET_Y     200
