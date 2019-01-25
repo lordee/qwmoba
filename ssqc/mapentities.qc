@@ -154,6 +154,35 @@ void () info_qwmwavemanager = {
 
 // tower, inhibs, base
 void () GoalThink = {
+    self.nextthink = time + REGEN_TICKTIME;
+    
+    if (self.deadflag == DEAD_DEAD && self.type != STRUCTURE_INHIB)
+    {
+        return;
+    }
+
+    switch (self.type)
+    {
+        case STRUCTURE_TOWER:
+            // check if any enemy in range, shoot them
+            break;
+        case STRUCTURE_INHIB:
+            if (self.deadflag == DEAD_DEAD)
+            {
+                if (self.deadtime >= time)
+                {
+                    self.deadflag = DEAD_NO;
+                    self.health = self.max_health;
+                    bprint("Team ", ftos(self.team_no), "'s inhibitor has respawned");
+                }
+                else
+                {
+                    return;
+                }
+            }
+            break;
+    }
+
     self.health = self.health + self.healthregen;
     self.mana = self.mana + self.manaregen;
 
@@ -165,7 +194,6 @@ void () GoalThink = {
     {
         self.mana = self.max_mana;
     }
-    self.nextthink = time + REGEN_TICKTIME;
 }
 
 void () item_qwmgoal = {
