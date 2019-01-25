@@ -334,16 +334,23 @@ entity() SelectSpawnPoint =
     if (team_no != 0)
     {
         // find team spawnpoint
-        spot = find(world, classname, "info_player_teamspawn");
+        string search;
+        switch (self.team_no)
+        {
+            case 1:
+                search = "teamspawnone";
+                break;
+            case 2:
+                search = "teamspawntwo"
+                break;
+        }
+        spot = find(world, team_str, search);
         if (spot)
         {
-            if (spot.team_no == self.team_no)
+            lrspot = spot;
+            if (CheckSpawnPoint(spot.origin))
             {
-                lrspot = spot;
-                 if (CheckSpawnPoint(spot.origin))
-                 {
-                     return spot;
-                 }
+                return spot;
             }
         }
         return spot;
