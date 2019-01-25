@@ -303,7 +303,20 @@ void() ClientKill =
 
 float(vector v) CheckSpawnPoint =
 {
-	return FALSE;
+	local entity at_spot;
+
+    at_spot = findradius(orig, 60);
+    while (at_spot != world) {
+        if ((at_spot.classname == "player") && (at_spot.deadflag == 0)) {
+            if (at_spot.team_no == self.team_no)
+                return 0;
+            else
+                return 1;
+        }
+        at_spot = at_spot.chain;
+    }
+
+    return 1;
 };
 
 /*
@@ -315,74 +328,50 @@ Returns the entity to spawn at
 */
 entity() SelectSpawnPoint =
 {
-	local   entity spot, thing;
-	local   float   numspots, totalspots;
-	local   float   pcount;
-	local entity spots;
+    entity spot, lrspot;
 
-	numspots = 0;
-	totalspots = 0;
+    // a team is selected
+    if (team_no != 0)
+    {
+        // find team spawnpoint
+        spot = find(world, classname, "info_player_teamspawn");
+        if (spot)
+        {
+            if (spot.team_no == self.team_no)
+            {
+                lrspot = spot;
+                 if (CheckSpawnPoint(spot.origin))
+                 {
+                     return spot;
+                 }
+            }
+        }
+        return spot;
+    }
 
-// testinfo_player_start is only found in regioned levels
-	spot = find (world, classname, "testplayerstart");
-	if (spot)
-		return spot;
-		
-// choose a info_player_deathmatch point
+    // otherwise find deathmatch spawn
+    spot = find(world, classname, "info_player_deathmatch");
+    attempts = 0;
+    while (spot && (attempts < 100)) {
+        lrspot = spot;
+        attempts = attempts + 1;
+        if (CheckSpawnPoint(spot.origin) || (attempts >= 10)) {
+            return spot;
+        }
+        spot = find(spot, classname, "info_player_deathmatch");
+    }
 
-// ok, find all spots that don't have players nearby
+    // otherwise info_player_start
+    spot = find(world, classname, "info_player_start");
+    if (spot) {
+        return spot;
+    }
 
-	spots = world;
-	spot = find (world, classname, "info_player_deathmatch");       
-	while (spot)
-	{
-		totalspots = totalspots + 1;
-
-		thing=findradius(spot.origin, 84);
-		pcount=0;               
-		while (thing)
-		{
-			if (thing.classname == "player")
-				pcount=pcount + 1;                      
-			thing=thing.chain;      
-		}
-		if (pcount == 0) {
-			spot.goalentity = spots;
-			spots = spot;
-			numspots = numspots + 1;
-		}
-
-		// Get the next spot in the chain
-		spot = find (spot, classname, "info_player_deathmatch");                
-	}
-	totalspots=totalspots - 1;
-	if (!numspots) {
-		// ack, they are all full, just pick one at random
-//		bprint (PRINT_HIGH, "Ackk! All spots are full. Selecting random spawn spot\n");
-		totalspots = rint((random() * totalspots));
-		spot = find (world, classname, "info_player_deathmatch");       
-		while (totalspots > 0) {
-			totalspots = totalspots - 1;
-			spot = find (spot, classname, "info_player_deathmatch");
-		}
-		return spot;
-	}
-		
-// We now have the number of spots available on the map in numspots
-
-	// Generate a random number between 1 and numspots
-
-	numspots = numspots - 1;
-	
-	numspots = rint((random() * numspots ) );
-
-	spot = spots;
-	while (numspots > 0) {
-		spot = spot.goalentity;
-		numspots = numspots - 1;
-	}
-	return spot;
-
+    if (!lrspot)
+    {
+        error("SelectSpawnPoint: no spawns on level\n");
+    }
+    return lrspot;
 };
 void() DecodeLevelParms;
 void() PlayerDie;
@@ -480,8 +469,6 @@ void() PutClientInServer =
     SetupChamp();
 
 	W_SetCurrentAmmo ();
-
-
 
 	self.attack_finished = time;
 	self.th_pain = player_pain;
