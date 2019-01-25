@@ -1,5 +1,5 @@
-void (float type, vector org) SpawnCreep = {
+/*void (float type, vector org) SpawnCreep = {
     entity creep;
 
-    
-}
+
+}*/

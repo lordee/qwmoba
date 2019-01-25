@@ -251,6 +251,9 @@
 #define SKILL_USETHREE   8
 #define SKILL_USEFOUR    9
 
+// global rules
+#define REGEN_TICKTIME  .5
+
 // champ skills
 #define SKILLONE_ASHE   1
 #define SKILLTWO_ASHE   2
@@ -314,3 +317,8 @@
 #define CREEP_SUPER         4
 #define CREEP_SPAWNOFFSET_X     400
 #define CREEP_SPAWNOFFSET_Y     200
+
+// builds
+#define STRUCTURE_NEXUS     1
+#define STRUCTURE_INHIB     2
+#define STRUCTURE_TOWER     3

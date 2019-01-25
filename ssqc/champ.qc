@@ -4,12 +4,17 @@ void () SkillThree_Ashe;
 void () SkillFour_Ashe;
 
 void () SetupChamp = {
+    self.regentick = time + REGEN_TICKTIME;
     switch (self.champ)
     {
         case CHAMP_ASHE:
             self.attackdamage = BASEAD_ASHE;
             self.health = BASEHEALTH_ASHE;
+            self.max_health = BASEHEALTH_ASHE;
+            self.healthregen = BASEHEALTH_REGEN_ASHE; // per second
             self.mana = BASEMANA_ASHE;
+            self.max_mana = BASEMANA_ASHE;
+            self.manaregen = BASEMANA_REGEN_ASHE;
             self.speed = BASESPEED_ASHE;
             self.weapon = WEAPON_ASHE;
             self.attackspeed = BASEATTACKSPEED_ASHE;
@@ -21,7 +26,7 @@ void () SetupChamp = {
             self.skilltwomanacost = SKILLTWO_MANACOST_ASHE;
             self.skilltwocooldown = SKILLTWO_COOLDOWN_ASHE;
             self.skilltwodamage = SKILLTWO_DAMAGE_ASHE;
-            self.skillthree= SKILLTHREE_ASHE;
+            self.skillthree = SKILLTHREE_ASHE;
             self.skillthreemanacost = SKILLTHREE_MANACOST_ASHE;
             self.skillthreecooldown = SKILLTHREE_COOLDOWN_ASHE;
             self.skillthreedamage = SKILLTHREE_DAMAGE_ASHE;

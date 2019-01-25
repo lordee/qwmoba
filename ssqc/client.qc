@@ -892,6 +892,11 @@ void() PlayerPreThink =
 		return;                                 // the think tics
 	}
 
+    if (self.stunned)
+    {
+        return;
+    }
+
 	if (self.view_ofs == '0 0 0')
 		return;         // intermission or finale
 
@@ -1142,6 +1147,24 @@ void() PlayerPostThink =
 	}
 
 	self.jump_flag = self.velocity_z;
+
+    // qwmoba
+    if (self.regentick >= time)
+    {
+        self.health = self.health + self.healthregen;
+        self.mana = self.mana + self.manaregen;
+        self.regentick = time + REGEN_TICKTIME;
+
+        if (self.health > self.max_health)
+        {
+            self.health = self.max_health;
+        }
+        if (self.mana > self.max_mana)
+        {
+            self.mana = self.max_mana;
+        }
+    }
+
 
 	CheckPowerups ();
 

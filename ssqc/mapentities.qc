@@ -153,7 +153,47 @@ void () info_qwmwavemanager = {
 }
 
 // tower, inhibs, base
-item_qwmgoal
+void () GoalThink = {
+    self.health = self.health + self.healthregen;
+    self.mana = self.mana + self.manaregen;
+
+    if (self.health > self.max_health)
+    {
+        self.health = self.max_health;
+    }
+    if (self.mana > self.max_mana)
+    {
+        self.mana = self.max_mana;
+    }
+    self.nextthink = time + REGEN_TICKTIME;
+}
+
+void () item_qwmgoal = {
+    if ((self.team_no <= 0) || (self.team_no >= 3)) {
+        objerror
+            ("error: bad team_no associated with item_qwmgoal\n");
+        remove(self);
+        return;
+    }
+
+    switch (self.type)
+    {
+        case STRUCTURE_NEXUS:
+            self.health = 4000;
+            self.healthregion = 10;
+            break;
+        case STRUCTURE_INHIB:
+            self.health = 3000;
+            self.healthregion = 10;
+            break;
+        case STRUCTURE_TOWER:
+            self.health = 2000;
+            break;
+    }
+    self.think = GoalThink;
+    self.nextthink = time + REGEN_TICKTIME;
+}
+
 
 // player/team spawn
 void () info_player_teamspawn = {
