@@ -19,16 +19,16 @@ float (float team) NumInhibsDown = {
 }
 
 float (float team, float lanenum) InhibDown = {
-    entity item;
-    item = find(world, classname, "item_qwmgoal");
+    entity inhib;
+    inhib = find(world, classname, "item_qwmgoal");
 
-    while (item)
+    while (inhib)
     {
-        if (item.type == STRUCTURE_INHIB)
+        if (inhib.type == STRUCTURE_INHIB)
         {
-            if (item.lane == lanenum && item.team_no == team)
+            if (inhib.lane == lanenum && inhib.team_no == team)
             {
-                if (item.deadflag == DEAD_DEAD)
+                if (inhib.deadflag == DEAD_DEAD)
                 {
                     return TRUE;
                 }
@@ -112,7 +112,7 @@ void () WaveThink = {
         else if (self.wave % 3 == 0)
         {
             // if inhibitor is down, cannon is super minion
-            if (InhibDown(teamcheck, lane))
+            if (InhibDown(teamcheck, lanenum))
             {
                 SpawnCreep(CREEP_SUPER, org);
             }
@@ -173,7 +173,8 @@ void () GoalThink = {
                 {
                     self.deadflag = DEAD_NO;
                     self.health = self.max_health;
-                    bprint("Team ", ftos(self.team_no), "'s inhibitor has respawned");
+                    
+                    bprint(PRINT_HIGH, "Team ", ftos(self.team_no), "'s inhibitor has respawned");
                 }
                 else
                 {
@@ -207,15 +208,15 @@ void () item_qwmgoal = {
     switch (self.type)
     {
         case STRUCTURE_NEXUS:
-            self.health = 4000;
-            self.healthregion = 10;
+            self.health = HEALTH_NEXUS;
+            self.healthregen = HEALTH_REGEN_NEXUS;
             break;
         case STRUCTURE_INHIB:
-            self.health = 3000;
-            self.healthregion = 10;
+            self.health = HEALTH_INHIB;
+            self.healthregen = HEALTH_REGEN_INHIB;
             break;
         case STRUCTURE_TOWER:
-            self.health = 2000;
+            self.health = HEALTH_TOWER;
             break;
     }
     self.think = GoalThink;
@@ -235,16 +236,16 @@ void () info_player_teamspawn = {
     switch (self.team_no)
     {
         case 1:
-            self.team_str = "teamspawnone"
+            self.team_str = "teamspawnone";
             break;
         case 2:
-            self.team_str = "teamspawntwo"
+            self.team_str = "teamspawntwo";
             break;
     }
 }
 
 // shop
-info_qwmgoal
+//info_qwmgoal
 
 // waypoints
-info_qwmgoal
+//info_qwmgoal

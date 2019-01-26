@@ -44,3 +44,5 @@
 .float lane;
 .float type;
 .string team_str;
+.float wave;
+.float deadtime;
