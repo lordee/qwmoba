@@ -1,24 +1,24 @@
 float (float team) NumInhibsDown = {
-    entity item;
+    entity inhib;
     float num;
-    item = find(world, classname, "item_qwmgoal");
+    inhib = find(world, classname, "item_qwmgoal");
 
-    while (item)
+    while (inhib)
     {
-        if (item.type == STRUCTURE_INHIB)
+        if (inhib.type == STRUCTURE_INHIB)
         {
-            if (item.deadflag == DEAD_DEAD && item.team_no == team)
+            if (inhib.deadflag == DEAD_DEAD && inhib.team_no == team)
             {
                 num = num + 1;
             }
         }
-        inhib = find(world, classname, "item_qwmgoal");
+        inhib = find(inhib, classname, "item_qwmgoal");
     }
 
     return num;
 }
 
-float (float team, float lane) InhibDown = {
+float (float team, float lanenum) InhibDown = {
     entity item;
     item = find(world, classname, "item_qwmgoal");
 
@@ -26,7 +26,7 @@ float (float team, float lane) InhibDown = {
     {
         if (item.type == STRUCTURE_INHIB)
         {
-            if (item.lane == lane && item.team_no == team)
+            if (item.lane == lanenum && item.team_no == team)
             {
                 if (item.deadflag == DEAD_DEAD)
                 {
@@ -63,10 +63,10 @@ void () WaveThink = {
     while (spawn)
     {
         // every wave has 3 melee, 3 range
-        float spawnnum, lane;
+        float spawnnum, lanenum;
         vector org;
         spawnnum = 6;
-        lane = spawn.lane;
+        lanenum = spawn.lane;
         
         while (spawnnum > 0)
         {   

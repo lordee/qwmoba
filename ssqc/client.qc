@@ -4,7 +4,7 @@ void (entity player, float menutype) ShowMenu;
 // prototypes
 void () W_WeaponFrame;
 void() W_SetCurrentAmmo;
-void() player_pain;
+void (entity et, float f) player_pain;
 void() player_stand1;
 void (vector org) spawn_tfog;
 void (vector org, entity death_owner) spawn_tdeath;
@@ -301,7 +301,7 @@ void() ClientKill =
 	respawn ();
 };
 
-float(vector v) CheckSpawnPoint =
+float(vector orig) CheckSpawnPoint =
 {
 	local entity at_spot;
 
@@ -329,20 +329,23 @@ Returns the entity to spawn at
 entity() SelectSpawnPoint =
 {
     entity spot, lrspot;
+	float attempts;
 
     // a team is selected
     if (team_no != 0)
     {
         // find team spawnpoint
         string search;
+		search = "";
         switch (self.team_no)
         {
             case 1:
                 search = "teamspawnone";
                 break;
             case 2:
-                search = "teamspawntwo"
+                search = "teamspawntwo";
                 break;
+			default:
         }
         spot = find(world, team_str, search);
         if (spot)
@@ -373,7 +376,7 @@ entity() SelectSpawnPoint =
     if (spot) {
         return spot;
     }
-
+	
     if (!lrspot)
     {
         error("SelectSpawnPoint: no spawns on level\n");

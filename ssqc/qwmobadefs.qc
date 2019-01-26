@@ -14,6 +14,10 @@
 .float skillfour;
 .float activeskill;
 .float mana;
+.float max_mana;
+.float regentick;
+.float healthregen;
+.float manaregen;
 .float stacks;
 .float skillonedamage;
 .float skillonecooldown;
@@ -34,3 +38,9 @@
 .float nextthinkinterval;
 .float buffvalue;
 .float stunned;
+
+
+// npc fields
+.float lane;
+.float type;
+.string team_str;
