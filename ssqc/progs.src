@@ -25,4 +25,8 @@ endpoints.qc
 champ.qc
 champashe.qc
 mapentities.qc
+creep_melee.qc
+creep_range.qc
+creep_cannon.qc
+creep_super.qc
 creep.qc
