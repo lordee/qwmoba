@@ -210,17 +210,25 @@ void () item_qwmgoal = {
         case STRUCTURE_NEXUS:
             self.health = HEALTH_NEXUS;
             self.healthregen = HEALTH_REGEN_NEXUS;
+            self.think = GoalThink;
+            self.nextthink = time + REGEN_TICKTIME;
             break;
         case STRUCTURE_INHIB:
             self.health = HEALTH_INHIB;
             self.healthregen = HEALTH_REGEN_INHIB;
+            self.think = GoalThink;
+            self.nextthink = time + REGEN_TICKTIME;
             break;
         case STRUCTURE_TOWER:
             self.health = HEALTH_TOWER;
+            self.think = GoalThink;
+            self.nextthink = time + REGEN_TICKTIME;
+            break;
+        case STRUCTURE_SHOP:
+            self.takedamage = FALSE;
             break;
     }
-    self.think = GoalThink;
-    self.nextthink = time + REGEN_TICKTIME;
+    
 }
 
 
@@ -244,8 +252,9 @@ void () info_player_teamspawn = {
     }
 }
 
-// shop
-//info_qwmgoal
-
 // waypoints
 //info_qwmgoal
+
+void () info_qwmgoal = {
+
+}

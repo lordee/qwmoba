@@ -298,8 +298,6 @@
 #define SKILLFOUR_DAMAGE_ASHE  100
 #define SKILLFOUR_MANACOST_ASHE  200
 
-
-
 // buff category
 #define DEBUFF_MSSLOW       1
 #define DEBUFF_STUN         3
@@ -311,7 +309,6 @@
 #define MSSLOW_SKILLTWO_ASHE     3
 #define STUN_SKILLFOUR_ASHE     4
 
-
 // creeps
 #define CREEP_MELEE         1
 #define CREEP_RANGE         2
@@ -319,13 +316,21 @@
 #define CREEP_SUPER         4
 #define CREEP_SPAWNOFFSET_X     400
 #define CREEP_SPAWNOFFSET_Y     200
+#define CREEP_MELEE_BASEHEALTH  400
+#define CREEP_RANGE_BASEHEALTH  300
+#define CREEP_CANNON_BASEHEALTH  500
+#define CREEP_SUPER_BASEHEALTH  1000
 
 // builds
 #define STRUCTURE_NEXUS     1
 #define STRUCTURE_INHIB     2
 #define STRUCTURE_TOWER     3
+#define STRUCTURE_SHOP      4
 #define HEALTH_REGEN_NEXUS  10
 #define HEALTH_REGEN_INHIB  10
 #define HEALTH_NEXUS  4000
 #define HEALTH_INHIB  3000
 #define HEALTH_TOWER  2000
+
+// info_qwmgoal
+#define INFO_WAYPOINT   1
