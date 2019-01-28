@@ -42,7 +42,7 @@ void()	knight_stand7	=[	$stand7,	knight_stand8	] {ai_stand();};
 void()	knight_stand8	=[	$stand8,	knight_stand9	] {ai_stand();};
 void()	knight_stand9	=[	$stand9,	knight_stand1	] {ai_stand();};
 
-void()	knight_walk1	=[	$walk1,		knight_walk2	] {
+/*void()	knight_walk1	=[	$walk1,		knight_walk2	] {
 if (random() < 0.2)
 	sound (self, CHAN_VOICE, "knight/idle.wav", 1,  ATTN_IDLE);
 ai_walk(3);};
@@ -58,7 +58,7 @@ void()	knight_walk10	=[	$walk10,	knight_walk11	] {ai_walk(3);};
 void()	knight_walk11	=[	$walk11,	knight_walk12	] {ai_walk(2);};
 void()	knight_walk12	=[	$walk12,	knight_walk13	] {ai_walk(3);};
 void()	knight_walk13	=[	$walk13,	knight_walk14	] {ai_walk(4);};
-void()	knight_walk14	=[	$walk14,	knight_walk1	] {ai_walk(3);};
+void()	knight_walk14	=[	$walk14,	knight_walk1	] {ai_walk(3);};*/
 
 
 void()	knight_run1	=[	$runb1,		knight_run2	] {
@@ -103,8 +103,7 @@ void()	knight_atk4	=[	$attackb4,		knight_atk5	] {ai_charge(0);};
 void()	knight_atk5	=[	$attackb5,		knight_atk6	] {ai_charge(3);};
 void()	knight_atk6	=[	$attackb6,		knight_atk7	] {ai_charge(4); ai_melee();};
 void()	knight_atk7	=[	$attackb7,		knight_atk8	] {ai_charge(1); ai_melee();};
-void()	knight_atk8	=[	$attackb8,		knight_atk9	] {ai_charge(3);
-ai_melee();};
+void()	knight_atk8	=[	$attackb8,		knight_atk9	] {ai_charge(3); ai_melee();};
 void()	knight_atk9	=[	$attackb9,		knight_atk10] {ai_charge(1);};
 void()	knight_atk10=[	$attackb10,		knight_run1	] {ai_charge(5);};
 
@@ -115,7 +114,7 @@ void()	knight_pain1	=[	$pain1,		knight_pain2	] {};
 void()	knight_pain2	=[	$pain2,		knight_pain3	] {};
 void()	knight_pain3	=[	$pain3,		knight_run1	] {};
 
-void()	knight_painb1	=[	$painb1,	knight_painb2	] {ai_painforward(0);};
+/*void()	knight_painb1	=[	$painb1,	knight_painb2	] {ai_painforward(0);};
 void()	knight_painb2	=[	$painb2,	knight_painb3	] {ai_painforward(3);};
 void()	knight_painb3	=[	$painb3,	knight_painb4	] {};
 void()	knight_painb4	=[	$painb4,	knight_painb5	] {};
@@ -125,7 +124,7 @@ void()	knight_painb7	=[	$painb7,	knight_painb8	] {ai_painforward(2);};
 void()	knight_painb8	=[	$painb8,	knight_painb9	] {ai_painforward(5);};
 void()	knight_painb9	=[	$painb9,	knight_painb10	] {ai_painforward(5);};
 void()	knight_painb10	=[	$painb10,	knight_painb11	] {ai_painforward(0);};
-void()	knight_painb11	=[	$painb11,	knight_run1	] {};
+void()	knight_painb11	=[	$painb11,	knight_run1	] {};*/
 
 void(entity attacker, float damage)	knight_pain =
 {
@@ -137,7 +136,10 @@ void(entity attacker, float damage)	knight_pain =
 	r = random();
 	
 	sound (self, CHAN_VOICE, "knight/khurt.wav", 1, ATTN_NORM);
-	if (r < 0.85)
+	knight_pain1 ();
+	self.pain_finished = time + 1;
+
+	/*if (r < 0.85)
 	{
 		knight_pain1 ();
 		self.pain_finished = time + 1;
@@ -146,7 +148,7 @@ void(entity attacker, float damage)	knight_pain =
 	{
 		knight_painb1 ();
 		self.pain_finished = time + 1;
-	}
+	}*/
 	
 };
 

@@ -7,10 +7,10 @@ void () CreepThink = {
         if (self.enemy.deadflag == DEAD_NO)
         {
             // if target out of range
-            if (OutOfRange(self, self.enemy))
+            if (QWM_OutOfRange(self, self.enemy))
             {
                 // if travelled too far since started attacking
-                if (TravelledTooFar(self))
+                if (QWM_TravelledTooFar(self))
                 {
                     // clear enemy
                     self.enemy = world;
@@ -26,7 +26,7 @@ void () CreepThink = {
             else
             {
                 // otherwise attack    
-                CreepAttack(self);
+                QWM_CreepAttack(self);
             }       
         }
         else
@@ -38,7 +38,7 @@ void () CreepThink = {
     {
         // if not attacking anything
         // if enemy player, creep, building in range, target it (closest first)    
-        if (FindTarget(self))
+        if (QWM_FindTarget(self))
         {
             self.enemy = GetTarget(self);
             self.attackstartorigin = self.origin;

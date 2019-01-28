@@ -30,7 +30,7 @@ $frame paind9 paind10 paind11 paind12 paind13 paind14 paind15 paind16
 $frame paind17 paind18 paind19
 
 
-void() Laser_Touch =
+void() QWM_Laser_Touch =
 {
 	local vector org;
 	
@@ -63,7 +63,7 @@ void() Laser_Touch =
 	remove(self);	
 };
 
-void(vector org, vector vec) LaunchLaser =
+void(vector org, vector vec) QWM_LaunchLaser =
 {
 	local	vector	vec;
 		
@@ -88,7 +88,7 @@ void(vector org, vector vec) LaunchLaser =
 
 	newmis.nextthink = time + 5;
 	newmis.think = SUB_Remove;
-	newmis.touch = Laser_Touch;
+	newmis.touch = QWM_Laser_Touch;
 };
 
 
@@ -102,7 +102,7 @@ void() enforcer_fire =
 	
 	org = self.origin + v_forward * 30 + v_right * 8.5 + '0 0 16';
 
-	LaunchLaser(org, self.enemy.origin - self.origin);
+	QWM_LaunchLaser(org, self.enemy.origin - self.origin);
 };
 
 //============================================================================
