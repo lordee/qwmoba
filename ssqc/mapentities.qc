@@ -44,6 +44,7 @@ float (float team, float lanenum) InhibDown = {
     return FALSE;
 }
 
+void (float type, vector org) SpawnCreep;
 // creep spawn
 void () WaveThink = {
     self.wave = self.wave + 1;

@@ -310,6 +310,7 @@
 #define STUN_SKILLFOUR_ASHE     4
 
 // creeps
+#define STATE_
 #define CREEP_MELEE         1
 #define CREEP_RANGE         2
 #define CREEP_CANNON        3

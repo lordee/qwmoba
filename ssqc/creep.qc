@@ -1,3 +1,59 @@
+
+
+void () CreepThink = {
+    // if have a target that is alive
+    if (self.enemy)
+    {
+        if (self.enemy.deadflag == DEAD_NO)
+        {
+            // if target out of range
+            if (OutOfRange(self, self.enemy))
+            {
+                // if travelled too far since started attacking
+                if (TravelledTooFar(self))
+                {
+                    // clear enemy
+                    self.enemy = world;
+                    self.ideal_yaw = vectoyaw(self.movetarget.origin - self.origin);
+                    self.th_run();
+                }
+                else
+                {
+                    self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
+                    self.th_run();
+                }
+            }
+            else
+            {
+                // otherwise attack    
+                CreepAttack(self);
+            }       
+        }
+        else
+        {
+            self.enemy = world;
+        }
+    }
+    else
+    {
+        // if not attacking anything
+        // if enemy player, creep, building in range, target it (closest first)    
+        if (FindTarget(self))
+        {
+            self.enemy = GetTarget(self);
+            self.attackstartorigin = self.origin;
+        }
+        else
+        {
+            // otherwise move towards waypoint    
+            self.ideal_yaw = vectoyaw(self.movetarget.origin - self.origin);
+            self.th_run();
+        }
+    }
+
+    self.nextthink = time + .5;
+}
+
 void (float type, vector org) SpawnCreep = {
     entity creep;
 
@@ -14,20 +70,20 @@ void (float type, vector org) SpawnCreep = {
             precache_sound ("knight/sword2.wav");
             precache_sound ("knight/idle.wav");
 
-            self.solid = SOLID_SLIDEBOX;
-            self.movetype = MOVETYPE_STEP;
+            creep.solid = SOLID_SLIDEBOX;
+            creep.movetype = MOVETYPE_STEP;
 
-            setmodel (self, "progs/knight.mdl");
+            setmodel (creep, "progs/knight.mdl");
 
-            setsize (self, '-16 -16 -24', '16 16 40');
-            self.health = CREEP_MELEE_BASEHEALTH;
+            setsize (creep, '-16 -16 -24', '16 16 40');
+            creep.health = CREEP_MELEE_BASEHEALTH;
 
-            self.th_stand = knight_stand1;
-            self.th_walk = knight_walk1;
-            self.th_run = knight_run1;
-            self.th_melee = knight_atk1;
-            self.th_pain = knight_pain;
-            self.th_die = knight_die;
+            creep.th_stand = knight_stand1;
+            creep.th_walk = knight_walk1;
+            creep.th_run = knight_run1;
+            creep.th_melee = knight_atk1;
+            creep.th_pain = knight_pain;
+            creep.th_die = knight_die;
             
             walkmonster_start ();
             break;
@@ -47,22 +103,20 @@ void (float type, vector org) SpawnCreep = {
             precache_sound2 ("enforcer/sight3.wav");
             precache_sound2 ("enforcer/sight4.wav");
             
-            self.solid = SOLID_SLIDEBOX;
-            self.movetype = MOVETYPE_STEP;
+            creep.solid = SOLID_SLIDEBOX;
+            creep.movetype = MOVETYPE_STEP;
 
-            setmodel (self, "progs/enforcer.mdl");
+            setmodel (creep, "progs/enforcer.mdl");
 
-            setsize (self, '-16 -16 -24', '16 16 40');
-            self.health = CREEP_RANGE_BASEHEALTH;
+            setsize (creep, '-16 -16 -24', '16 16 40');
+            creep.health = CREEP_RANGE_BASEHEALTH;
 
-            self.th_stand = enf_stand1;
-            self.th_walk = enf_walk1;
-            self.th_run = enf_run1;
-            self.th_pain = enf_pain;
-            self.th_die = enf_die;
-            self.th_missile = enf_atk1;
-
-            walkmonster_start();
+            creep.th_stand = enf_stand1;
+            creep.th_walk = enf_walk1;
+            creep.th_run = enf_run1;
+            creep.th_pain = enf_pain;
+            creep.th_die = enf_die;
+            creep.th_missile = enf_atk1;
             break;
         case CREEP_CANNON:
             precache_model ("progs/ogre.mdl");
@@ -77,23 +131,21 @@ void (float type, vector org) SpawnCreep = {
             precache_sound ("ogre/ogsawatk.wav");
             precache_sound ("ogre/ogwake.wav");
 
-            self.solid = SOLID_SLIDEBOX;
-            self.movetype = MOVETYPE_STEP;
+            creep.solid = SOLID_SLIDEBOX;
+            creep.movetype = MOVETYPE_STEP;
 
-            setmodel (self, "progs/ogre.mdl");
+            setmodel (creep, "progs/ogre.mdl");
 
-            setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
-            self.health = CREEP_CANNON_BASEHEALTH;
+            setsize (creep, VEC_HULL2_MIN, VEC_HULL2_MAX);
+            creep.health = CREEP_CANNON_BASEHEALTH;
 
-            self.th_stand = ogre_stand1;
-            self.th_walk = ogre_walk1;
-            self.th_run = ogre_run1;
-            self.th_die = ogre_die;
-            self.th_melee = ogre_melee;
-            self.th_missile = ogre_nail1;
-            self.th_pain = ogre_pain;
-            
-            walkmonster_start();
+            creep.th_stand = ogre_stand1;
+            creep.th_walk = ogre_walk1;
+            creep.th_run = ogre_run1;
+            creep.th_die = ogre_die;
+            creep.th_melee = ogre_melee;
+            creep.th_missile = ogre_nail1;
+            creep.th_pain = ogre_pain;            
             break;
         case CREEP_SUPER:
             precache_model2 ("progs/hknight.mdl");
@@ -113,23 +165,27 @@ void (float type, vector org) SpawnCreep = {
             precache_sound ("knight/sword1.wav");
             precache_sound ("knight/sword2.wav");
             
-            self.solid = SOLID_SLIDEBOX;
-            self.movetype = MOVETYPE_STEP;
+            creep.solid = SOLID_SLIDEBOX;
+            creep.movetype = MOVETYPE_STEP;
 
-            setmodel (self, "progs/hknight.mdl");
+            setmodel (creep, "progs/hknight.mdl");
 
-            setsize (self, '-16 -16 -24', '16 16 40');
-            self.health = CREEP_SUPER_BASEHEALTH;
+            setsize (creep, '-16 -16 -24', '16 16 40');
+            creep.health = CREEP_SUPER_BASEHEALTH;
 
-            self.th_stand = hknight_stand1;
-            self.th_walk = hknight_walk1;
-            self.th_run = hknight_run1;
-            self.th_melee = hknight_melee;
-            self.th_missile = hknight_magicc1;
-            self.th_pain = hknight_pain;
-            self.th_die = hknight_die;
+            creep.th_stand = hknight_stand1;
+            creep.th_walk = hknight_walk1;
+            creep.th_run = hknight_run1;
+            creep.th_melee = hknight_melee;
+            creep.th_missile = hknight_magicc1;
+            creep.th_pain = hknight_pain;
+            creep.th_die = hknight_die;
             
-            walkmonster_start ();
             break;
     }
+
+    setorigin(creep, org);
+    self.takedamage = DAMAGE_AIM;
+    self.nextthink = time + 0.5;
+	self.think = CreepThink;
 }
