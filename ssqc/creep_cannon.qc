@@ -43,6 +43,13 @@ $frame pull1 pull2 pull3 pull4 pull5 pull6 pull7 pull8 pull9 pull10 pull11
 //=============================================================================
 
 
+void()	s_explode1	=	[0,		s_explode2] {};
+void()	s_explode2	=	[1,		s_explode3] {};
+void()	s_explode3	=	[2,		s_explode4] {};
+void()	s_explode4	=	[3,		s_explode5] {};
+void()	s_explode5	=	[4,		s_explode6] {};
+void()	s_explode6	=	[5,		SUB_Remove] {};
+
 void() OgreGrenadeExplode =
 {
 	T_RadiusDamage (self, self.owner, self.owner.attackdamage, world, "ogregrenade");

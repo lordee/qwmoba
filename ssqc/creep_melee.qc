@@ -216,3 +216,16 @@ void() knight_die =
 	else
 		knight_dieb1 ();
 };
+
+void() knight_attack =
+{
+	local float		len;
+	
+// decide if now is a good swing time
+	len = vlen(self.enemy.origin+self.enemy.view_ofs - (self.origin+self.view_ofs));
+	
+	if (len<80)
+		knight_atk1 ();
+	else
+		knight_runatk1 ();
+};

@@ -8,7 +8,7 @@ entity	sight_entity;
 float	sight_entity_time;
 
 float	enemy_yaw;
-float	enemy_vis, enemy_infront;//, enemy_range;
+float	enemy_vis, enemy_infront, enemy_range;
 
 
 void(float dist) ai_forward =
@@ -148,7 +148,7 @@ void() ai_melee =
 		
 	delta = self.enemy.origin - self.origin;
 
-	if (vlen(delta) > 60)
+	if (vlen(delta) > CREEP_MELEE_RANGE)
 		return;
 		
 	T_Damage (self.enemy, self, self, self.attackdamage);
@@ -190,91 +190,9 @@ void() ai_melee_side =
 	T_Damage (self.enemy, self, self, self.attackdamage);
 };
 
-/*
-===========
-FindTarget
-
-Self is currently not attacking anything, so try to find a target
-
-Returns TRUE if an enemy was sighted
-
-When a player fires a missile, the point of impact becomes a fakeplayer so
-that monsters that see the impact will respond as if they had seen the
-player.
-
-To avoid spending too much time, only a single client (or fakeclient) is
-checked each frame.  This means multi player games will have slightly
-slower noticing monsters.
-============
-*/
-float() FindTarget =
-{
-	local entity	client;
-	local float		r;
-
-// if the first spawnflag bit is set, the monster will only wake up on
-// really seeing the player, not another monster getting angry
-
-// spawnflags & 3 is a big hack, because zombie crucified used the first
-// spawn flag prior to the ambush flag, and I forgot about it, so the second
-// spawn flag works as well
-	if (sight_entity_time >= time - 0.1 && !(self.spawnflags & 3) )
-	{
-		client = sight_entity;
-		if (client.enemy == self.enemy)
-			return;
-	}
-	else
-	{
-		client = checkclient ();
-		if (!client)
-			return FALSE;	// current check entity isn't in PVS
-	}
-
-	if (client == self.enemy)
-		return FALSE;
-
-	if (client.flags & FL_NOTARGET)
-		return FALSE;
-	if (client.items & IT_INVISIBILITY)
-		return FALSE;
-
-	r = range (client);
-	if (r == RANGE_FAR)
-		return FALSE;
-		
-	if (!visible (client))
-		return FALSE;
-
-	if (r == RANGE_NEAR)
-	{
-		if (client.show_hostile < time && !infront (client))
-			return FALSE;
-	}
-	else if (r == RANGE_MID)
-	{
-		if ( /* client.show_hostile < time || */ !infront (client))
-			return FALSE;
-	}
+float () TravelledTooFar = {
 	
-//
-// got one
-//
-	self.enemy = client;
-	if (self.enemy.classname != "player")
-	{
-		self.enemy = self.enemy.enemy;
-		if (self.enemy.classname != "player")
-		{
-			self.enemy = world;
-			return FALSE;
-		}
-	}
-	
-	FoundTarget ();
-
-	return TRUE;
-};
+}
 
 /*
 =============
@@ -339,6 +257,40 @@ void() ai_run_missile =
 	}
 };
 
+entity () QWM_GetTarget = {
+    // if within certain range, target closest
+    entity targ, closest;
+    string search;
+    float dist, closedist;
+    search = self.team_no == 1 ? "team2" : "team1";
+    targ = find(world, team_str, search);
+    closest = targ;
+    closedist = targ ? vlen(targ.origin - self.origin) : 0;
+    
+    while (targ)
+    {
+        // if targ is player, building, creep
+        if (targ.classname == "player" || targ.classname == "creep"
+         || targ.classname == "item_qwmgoal")
+        {
+            dist = vlen(targ.origin - self.origin);
+            closedist = (closedist > dist) ? dist : closedist;
+        }
+
+        targ = find(targ, team_str, search);
+    }
+
+    // now test if it's within aggression range
+    if (closedist <= CREEP_AGRO_RANGE)
+    {
+        return closest;
+    }
+    else
+    {
+        return world;
+    }
+}
+
 /*
 =============
 ai_run
@@ -346,6 +298,186 @@ ai_run
 The monster has an enemy it is trying to kill
 =============
 */
+
+void () QWM_gowaypoint = {
+	entity wp, closest;
+	float dist, closedist;
+
+	wp = find(world, classname, "info_qwmgoal");
+	closest = wp;
+	closedist = wp ? vlen(wp.origin - self.origin) : 0;
+	while (wp)
+	{
+		dist = vlen(wp.origin - self.origin);
+		if (dist < closedist)
+		{
+			closest = wp;
+			closedist = dist;
+		} 
+
+		wp = find(wp, classname, "info_qwmgoal");
+	}
+
+
+	self.movetarget = closest;
+
+	if (self.movetarget)
+		self.th_walk ();
+	else
+		self.th_stand();
+}
+
+float () QWM_TravelledTooFar = {
+	float dist;
+	dist = vlen(self.attackstartorigin - self.origin);
+
+	if (dist > CREEP_CHASE_DISTANCE)
+	{
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
+/*
+=============
+range
+
+returns the range catagorization of an entity reletive to self
+0	melee range, will become hostile even if back is turned
+1	visibility and infront, or visibility and show hostile
+2	infront and show hostile
+3	only triggered by damage
+=============
+*/
+float(entity targ) range =
+{
+local vector	spot1, spot2;
+local float		r;	
+	spot1 = self.origin + self.view_ofs;
+	spot2 = targ.origin + targ.view_ofs;
+	
+	r = vlen (spot1 - spot2);
+	if (r < 120)
+		return RANGE_MELEE;
+	if (r < 500)
+		return RANGE_NEAR;
+	if (r < 1000)
+		return RANGE_MID;
+	return RANGE_FAR;
+};
+
+/*
+===========
+SoldierCheckAttack
+
+The player is in view, so decide to move or launch an attack
+Returns FALSE if movement should continue
+============
+*/
+float() RangeCheckAttack =
+{
+	local vector	spot1, spot2;	
+	local entity	targ;
+	local float		chance;
+
+	targ = self.enemy;
+	
+// see if any entities are in the way of the shot
+	spot1 = self.origin + self.view_ofs;
+	spot2 = targ.origin + targ.view_ofs;
+
+	traceline (spot1, spot2, FALSE, self);
+
+	if (trace_inopen && trace_inwater)
+		return FALSE;			// sight line crossed contents
+
+	if (trace_ent != targ)
+		return FALSE;	// don't have a clear shot
+			
+	
+// missile attack
+	if (time < self.attack_finished)
+		return FALSE;
+		
+	if (enemy_range == RANGE_FAR)
+		return FALSE;
+		
+	self.th_missile ();
+	self.attack_finished = 1 / CREEP_RANGE_ATTACKSPEED;
+	self.lefty = !self.lefty;
+
+	return TRUE;
+};
+
+/*
+===========
+CheckAttack
+
+The player is in view, so decide to move or launch an attack
+Returns FALSE if movement should continue
+============
+*/
+void () knight_attack;
+float() MeleeCheckAttack =
+{
+	local vector	spot1, spot2;	
+	local entity	targ;
+	local float		chance;
+
+	targ = self.enemy;
+	
+// see if any entities are in the way of the shot
+	spot1 = self.origin + self.view_ofs;
+	spot2 = targ.origin + targ.view_ofs;
+
+	traceline (spot1, spot2, FALSE, self);
+
+	if (trace_ent != targ)
+		return FALSE;		// don't have a clear shot
+			
+	if (trace_inopen && trace_inwater)
+		return FALSE;			// sight line crossed contents
+
+	if (enemy_range == RANGE_MELEE)
+	{	// melee attack
+		if (self.th_melee)
+		{
+			if (self.type == CREEP_MELEE)
+				knight_attack();
+			else
+				self.th_melee ();
+			return TRUE;
+		}
+	}
+	
+	return FALSE;
+};
+
+float() CheckAnyAttack =
+{
+	if (!enemy_vis)
+		return TRUE;
+
+	switch (self.type)
+	{
+		case CREEP_MELEE:
+			return MeleeCheckAttack();
+			break;
+		case CREEP_RANGE:
+			return RangeCheckAttack();
+			break;
+		case CREEP_CANNON:
+			return RangeCheckAttack();
+			break;
+		case CREEP_SUPER:
+			return MeleeCheckAttack();
+			break;
+	}
+};
+
 void(float dist) ai_run =
 {
 	local	vector	delta;
@@ -353,27 +485,39 @@ void(float dist) ai_run =
 	local	float	direct, ang_rint, ang_floor, ang_ceil;
 	
 	movedist = dist;
-// see if the enemy is dead
+	// see if the enemy is dead
 	if (self.enemy.health <= 0)
 	{
 		self.enemy = world;
-	// FIXME: look all around for other targets
-		if (self.oldenemy.health > 0)
+
+		// find a new target within range
+        self.enemy = QWM_GetTarget();
+
+		// if enemy in range
+		if (self.enemy)
 		{
-			self.enemy = self.oldenemy;
-			HuntTarget ();
+			self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
+			self.attackstartorigin = self.origin;
 		}
 		else
 		{
-			if (self.movetarget)
-				self.th_walk ();
-			else
-				self.th_stand ();
+			// no enemy, move towards waypoint
+			// get waypoint
+			QWM_gowaypoint();
 			return;
 		}
 	}
 
-	self.show_hostile = time + 1;		// wake up other monsters
+	// if travelled too far since started attacking
+	if (QWM_TravelledTooFar())
+	{
+		// clear enemy
+		self.enemy = world;
+		self.ideal_yaw = vectoyaw(self.movetarget.origin - self.origin);
+		self.nextthink = time + 0.1;
+		self.think = self.th_run;
+		return;
+	}
 
 // check knowledge of enemy
 	enemy_vis = visible(self.enemy);
@@ -381,7 +525,7 @@ void(float dist) ai_run =
 		self.search_time = time + 5;
 
 	enemy_infront = infront(self.enemy);
-	//enemy_range = range(self.enemy);
+	enemy_range = range(self.enemy);
 	enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
 	
 	if (self.attack_state == AS_MISSILE)

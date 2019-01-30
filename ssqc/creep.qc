@@ -1,63 +1,22 @@
 
-
-void () CreepThink = {
-    // if have a target that is alive
-    if (self.enemy)
+void () QWM_CreepAttack = {
+    switch (self.attack_state)
     {
-        if (self.enemy.deadflag == DEAD_NO)
-        {
-            // if target out of range
-            if (QWM_OutOfRange(self, self.enemy))
-            {
-                // if travelled too far since started attacking
-                if (QWM_TravelledTooFar(self))
-                {
-                    // clear enemy
-                    self.enemy = world;
-                    self.ideal_yaw = vectoyaw(self.movetarget.origin - self.origin);
-                    self.th_run();
-                }
-                else
-                {
-                    self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
-                    self.th_run();
-                }
-            }
-            else
-            {
-                // otherwise attack    
-                QWM_CreepAttack(self);
-            }       
-        }
-        else
-        {
-            self.enemy = world;
-        }
+        case AS_MELEE:
+            ai_run_melee();
+            break;
+        case AS_MISSILE:
+            ai_run_missile();
+            break;
     }
-    else
-    {
-        // if not attacking anything
-        // if enemy player, creep, building in range, target it (closest first)  
-        self.enemy = QWM_GetTarget(self);
-        if (self.enemy)
-        {
-            self.attackstartorigin = self.origin;
-        }
-        else
-        {
-            // otherwise move towards waypoint    
-            self.ideal_yaw = vectoyaw(self.movetarget.origin - self.origin);
-            self.th_run();
-        }
-    }
-
-    self.nextthink = time + .5;
 }
 
-void (float type, vector org) SpawnCreep = {
+void (float t, vector org) SpawnCreep = {
     entity creep;
+    creep = spawn();
+    creep.type = t;
 
-    switch (type)
+    switch (t)
     {
         case CREEP_MELEE:
             precache_model ("progs/knight.mdl");
@@ -77,14 +36,13 @@ void (float type, vector org) SpawnCreep = {
 
             setsize (creep, '-16 -16 -24', '16 16 40');
             creep.health = CREEP_MELEE_BASEHEALTH;
-
             creep.th_stand = knight_stand1;
-            creep.th_walk = knight_walk1;
+            creep.th_walk = SUB_Null;
             creep.th_run = knight_run1;
             creep.th_melee = knight_atk1;
-            creep.th_pain = knight_pain;
+            creep.th_pain = SUB_Null_pain;
             creep.th_die = knight_die;
-            
+            creep.attack_state = AS_MELEE;            
             break;
         case CREEP_RANGE:
             precache_model2 ("progs/enforcer.mdl");
@@ -109,13 +67,13 @@ void (float type, vector org) SpawnCreep = {
 
             setsize (creep, '-16 -16 -24', '16 16 40');
             creep.health = CREEP_RANGE_BASEHEALTH;
-
             creep.th_stand = enf_stand1;
             creep.th_walk = SUB_Null;
             creep.th_run = enf_run1;
             creep.th_pain = SUB_Null_pain;
             creep.th_die = enf_die;
             creep.th_missile = enf_atk1;
+            creep.attack_state = AS_MISSILE;
             break;
         case CREEP_CANNON:
             precache_model ("progs/ogre.mdl");
@@ -137,7 +95,6 @@ void (float type, vector org) SpawnCreep = {
 
             setsize (creep, VEC_HULL2_MIN, VEC_HULL2_MAX);
             creep.health = CREEP_CANNON_BASEHEALTH;
-
             creep.th_stand = ogre_stand1;
             creep.th_walk = SUB_Null;
             creep.th_run = ogre_run1;
@@ -145,6 +102,7 @@ void (float type, vector org) SpawnCreep = {
             creep.th_melee = SUB_Null;
             creep.th_missile = ogre_nail1;
             creep.th_pain = SUB_Null_pain;            
+            creep.attack_state = AS_MISSILE;
             break;
         case CREEP_SUPER:
             precache_model2 ("progs/hknight.mdl");
@@ -171,7 +129,6 @@ void (float type, vector org) SpawnCreep = {
 
             setsize (creep, '-16 -16 -24', '16 16 40');
             creep.health = CREEP_SUPER_BASEHEALTH;
-
             creep.th_stand = hknight_stand1;
             creep.th_walk = SUB_Null;
             creep.th_run = hknight_run1;
@@ -179,12 +136,12 @@ void (float type, vector org) SpawnCreep = {
             creep.th_missile = hknight_magicc1;
             creep.th_pain = hknight_pain;
             creep.th_die = hknight_die;
-            
-            break;
+            creep.attack_state = AS_MELEE;
     }
 
     setorigin(creep, org);
-    self.takedamage = DAMAGE_AIM;
-    self.nextthink = time + 0.5;
-	self.think = CreepThink;
+    creep.takedamage = DAMAGE_AIM;
+    creep.nextthink = time + 0.5;
+	creep.think = creep.th_run;
+    creep.classname = "creep";
 }

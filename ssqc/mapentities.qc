@@ -127,20 +127,36 @@ void () WaveThink = {
 }
 
 void () info_creep_teamspawn = {
-    if ((self.team_no <= 0) || (self.team_no >= 3)) {
-        objerror
+    switch (self.team_no)
+    {
+        case 1:
+            self.team_str = "team1";
+            break;
+        case 2:
+            self.team_str = "team2";
+            break;
+        default:
+            objerror
             ("error: bad team_no associated with info_creep_teamspawn\n");
-        remove(self);
-        return;
+            remove(self);
+            return;
     }
 }
 
 void () info_qwmwavemanager = {
-    if ((self.team_no <= 0) || (self.team_no >= 3)) {
-        objerror
-            ("error: bad team_no associated with info_creep_teamspawn\n");
-        remove(self);
-        return;
+    switch (self.team_no)
+    {
+        case 1:
+            self.team_str = "team1";
+            break;
+        case 2:
+            self.team_str = "team2";
+            break;
+        default:
+            objerror
+            ("error: bad team_no associated with info_qwmwavemanager\n");
+            remove(self);
+            return;
     }
 
     // setup timer
@@ -199,11 +215,19 @@ void () GoalThink = {
 }
 
 void () item_qwmgoal = {
-    if ((self.team_no <= 0) || (self.team_no >= 3)) {
-        objerror
+    switch (self.team_no)
+    {
+        case 1:
+            self.team_str = "team1";
+            break;
+        case 2:
+            self.team_str = "team2";
+            break;
+        default:
+            objerror
             ("error: bad team_no associated with item_qwmgoal\n");
-        remove(self);
-        return;
+            remove(self);
+            return;
     }
 
     switch (self.type)
@@ -229,19 +253,11 @@ void () item_qwmgoal = {
             self.takedamage = FALSE;
             break;
     }
-    
 }
 
 
 // player/team spawn
 void () info_player_teamspawn = {
-    if ((self.team_no <= 0) || (self.team_no >= 3)) {
-        objerror
-            ("error: bad team_no associated with info_player_teamspawn\n");
-        remove(self);
-        return;
-    }
-
     switch (self.team_no)
     {
         case 1:
@@ -250,6 +266,11 @@ void () info_player_teamspawn = {
         case 2:
             self.team_str = "teamspawntwo";
             break;
+        default:
+            objerror
+            ("error: bad team_no associated with info_player_teamspawn\n");
+            remove(self);
+            return;
     }
 }
 
@@ -257,5 +278,18 @@ void () info_player_teamspawn = {
 //info_qwmgoal
 
 void () info_qwmgoal = {
-
+    switch (self.team_no)
+    {
+        case 1:
+            self.team_str = "team1";
+            break;
+        case 2:
+            self.team_str = "team2";
+            break;
+        default:
+            objerror
+            ("error: bad team_no associated with info_qwmgoal\n");
+            remove(self);
+            return;
+    }
 }

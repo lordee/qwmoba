@@ -310,7 +310,10 @@
 #define STUN_SKILLFOUR_ASHE     4
 
 // creeps
-#define STATE_
+#define CREEP_AGRO_RANGE    1000
+#define CREEP_CHASE_DISTANCE    2500
+#define CREEP_MELEE_RANGE   60
+#define CREEP_RANGE_ATTACKSPEED 1
 #define CREEP_MELEE         1
 #define CREEP_RANGE         2
 #define CREEP_CANNON        3
