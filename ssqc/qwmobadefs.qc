@@ -46,3 +46,4 @@
 .string team_str;
 .float wave;
 .float deadtime;
+.vector attackstartorigin

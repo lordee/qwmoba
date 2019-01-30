@@ -37,10 +37,10 @@ void () CreepThink = {
     else
     {
         // if not attacking anything
-        // if enemy player, creep, building in range, target it (closest first)    
-        if (QWM_FindTarget(self))
+        // if enemy player, creep, building in range, target it (closest first)  
+        self.enemy = QWM_GetTarget(self);
+        if (self.enemy)
         {
-            self.enemy = GetTarget(self);
             self.attackstartorigin = self.origin;
         }
         else
@@ -85,7 +85,6 @@ void (float type, vector org) SpawnCreep = {
             creep.th_pain = knight_pain;
             creep.th_die = knight_die;
             
-            walkmonster_start ();
             break;
         case CREEP_RANGE:
             precache_model2 ("progs/enforcer.mdl");
@@ -112,9 +111,9 @@ void (float type, vector org) SpawnCreep = {
             creep.health = CREEP_RANGE_BASEHEALTH;
 
             creep.th_stand = enf_stand1;
-            creep.th_walk = enf_walk1;
+            creep.th_walk = SUB_Null;
             creep.th_run = enf_run1;
-            creep.th_pain = enf_pain;
+            creep.th_pain = SUB_Null_pain;
             creep.th_die = enf_die;
             creep.th_missile = enf_atk1;
             break;
@@ -140,12 +139,12 @@ void (float type, vector org) SpawnCreep = {
             creep.health = CREEP_CANNON_BASEHEALTH;
 
             creep.th_stand = ogre_stand1;
-            creep.th_walk = ogre_walk1;
+            creep.th_walk = SUB_Null;
             creep.th_run = ogre_run1;
             creep.th_die = ogre_die;
-            creep.th_melee = ogre_melee;
+            creep.th_melee = SUB_Null;
             creep.th_missile = ogre_nail1;
-            creep.th_pain = ogre_pain;            
+            creep.th_pain = SUB_Null_pain;            
             break;
         case CREEP_SUPER:
             precache_model2 ("progs/hknight.mdl");
@@ -174,7 +173,7 @@ void (float type, vector org) SpawnCreep = {
             creep.health = CREEP_SUPER_BASEHEALTH;
 
             creep.th_stand = hknight_stand1;
-            creep.th_walk = hknight_walk1;
+            creep.th_walk = SUB_Null;
             creep.th_run = hknight_run1;
             creep.th_melee = hknight_melee;
             creep.th_missile = hknight_magicc1;

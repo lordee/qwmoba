@@ -48,8 +48,8 @@ void() QWM_Laser_Touch =
 
 	if (other.health)
 	{
-		SpawnBlood (org, self.velocity*0.2, 15);
-		T_Damage (other, self, self.owner, 15);
+		SpawnBlood (org, self.attackdamage);
+		T_Damage (other, self, self.owner, self.attackdamage);
 	}
 	else
 	{
@@ -65,8 +65,6 @@ void() QWM_Laser_Touch =
 
 void(vector org, vector vec) QWM_LaunchLaser =
 {
-	local	vector	vec;
-		
 	if (self.classname == "monster_enforcer")
 		sound (self, CHAN_WEAPON, "enforcer/enfire.wav", 1, ATTN_NORM);
 
@@ -115,7 +113,7 @@ void()	enf_stand5	=[	$stand5,	enf_stand6	] {ai_stand();};
 void()	enf_stand6	=[	$stand6,	enf_stand7	] {ai_stand();};
 void()	enf_stand7	=[	$stand7,	enf_stand1	] {ai_stand();};
 
-void()	enf_walk1	=[	$walk1 ,	enf_walk2	] {
+/*void()	enf_walk1	=[	$walk1 ,	enf_walk2	] {
 if (random() < 0.2)
 	sound (self, CHAN_VOICE, "enforcer/idle1.wav", 1, ATTN_IDLE);
 ai_walk(2);};
@@ -133,7 +131,7 @@ void()	enf_walk12	=[	$walk12,	enf_walk13	] {ai_walk(1);};
 void()	enf_walk13	=[	$walk13,	enf_walk14	] {ai_walk(2);};
 void()	enf_walk14	=[	$walk14,	enf_walk15	] {ai_walk(3);};
 void()	enf_walk15	=[	$walk15,	enf_walk16	] {ai_walk(4);};
-void()	enf_walk16	=[	$walk16,	enf_walk1	] {ai_walk(2);};
+void()	enf_walk16	=[	$walk16,	enf_walk1	] {ai_walk(2);};*/
 
 void()	enf_run1	=[	$run1  ,	enf_run2	] {
 if (random() < 0.2)
@@ -160,11 +158,9 @@ void()	enf_atk10	=[	$attack6,	enf_atk11	] {enforcer_fire();};
 void()	enf_atk11	=[	$attack7,	enf_atk12	] {ai_face();};
 void()	enf_atk12	=[	$attack8,	enf_atk13	] {ai_face();};
 void()	enf_atk13	=[	$attack9,	enf_atk14	] {ai_face();};
-void()	enf_atk14	=[	$attack10,	enf_run1	] {ai_face();
-SUB_CheckRefire (enf_atk1);
-};
+void()	enf_atk14	=[	$attack10,	enf_run1	] {ai_face();};
 
-void()	enf_paina1	=[	$paina1,	enf_paina2	] {};
+/*void()	enf_paina1	=[	$paina1,	enf_paina2	] {};
 void()	enf_paina2	=[	$paina2,	enf_paina3	] {};
 void()	enf_paina3	=[	$paina3,	enf_paina4	] {};
 void()	enf_paina4	=[	$paina4,	enf_run1	] {};
@@ -202,9 +198,9 @@ void()	enf_paind15	=[	$paind15,	enf_paind16	] {};
 void()	enf_paind16	=[	$paind16,	enf_paind17	] {ai_pain(1);};
 void()	enf_paind17	=[	$paind17,	enf_paind18	] {ai_pain(1);};
 void()	enf_paind18	=[	$paind18,	enf_paind19	] {};
-void()	enf_paind19	=[	$paind19,	enf_run1	] {};
+void()	enf_paind19	=[	$paind19,	enf_run1	] {};*/
 
-void(entity attacker, float damage)	enf_pain =
+/*void(entity attacker, float damage)	enf_pain =
 {
 	local float r;
 
@@ -238,7 +234,7 @@ void(entity attacker, float damage)	enf_pain =
 		self.pain_finished = time + 2;
 		enf_paind1 ();
 	}
-};
+};*/
 
 //============================================================================
 

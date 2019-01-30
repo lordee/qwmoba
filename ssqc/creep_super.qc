@@ -85,16 +85,13 @@ if ( vlen (self.origin - self.enemy.origin) < 80)
 	return;		// use regular attack
 
 // charge		
-	SUB_AttackFinished (2);
 	hknight_char_a1 ();
-
 };
 
 void() CheckContinueCharge =
 {
 	if (time > self.attack_finished)
 	{
-		SUB_AttackFinished (3);
 		hknight_run1 ();
 		return;		// done charging
 	}
@@ -117,7 +114,7 @@ void()	hknight_stand8	=[	$stand8,	hknight_stand9	] {ai_stand();};
 void()	hknight_stand9	=[	$stand9,	hknight_stand1	] {ai_stand();};
 
 //===========================================================================
-
+/*
 void()	hknight_walk1	=[	$walk1,		hknight_walk2	] {
 hk_idle_sound();
 ai_walk(2);};
@@ -140,7 +137,7 @@ void()	hknight_walk17	=[	$walk17,	hknight_walk18	] {ai_walk(3);};
 void()	hknight_walk18	=[	$walk18,	hknight_walk19	] {ai_walk(3);};
 void()	hknight_walk19	=[	$walk19,	hknight_walk20	] {ai_walk(3);};
 void()	hknight_walk20	=[	$walk20,	hknight_walk1	] {ai_walk(2);};
-
+*/
 //===========================================================================
 
 void()	hknight_run1	=[	$run1,		hknight_run2	] {
