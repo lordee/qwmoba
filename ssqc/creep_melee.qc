@@ -154,7 +154,7 @@ void(entity attacker, float damage)	knight_pain =
 
 //===========================================================================
 
-void()	knight_bow1	=[	$kneel1,		knight_bow2	] {ai_turn();};
+/*void()	knight_bow1	=[	$kneel1,		knight_bow2	] {ai_turn();};
 void()	knight_bow2	=[	$kneel2,		knight_bow3	] {ai_turn();};
 void()	knight_bow3	=[	$kneel3,		knight_bow4	] {ai_turn();};
 void()	knight_bow4	=[	$kneel4,		knight_bow5	] {ai_turn();};
@@ -165,7 +165,7 @@ void()	knight_bow6	=[	$kneel4,		knight_bow7	] {ai_turn();};
 void()	knight_bow7	=[	$kneel3,		knight_bow8	] {ai_turn();};
 void()	knight_bow8	=[	$kneel2,		knight_bow9	] {ai_turn();};
 void()	knight_bow9	=[	$kneel1,		knight_bow10	] {ai_turn();};
-void()	knight_bow10	=[	$walk1,		knight_walk1	] {ai_turn();};
+void()	knight_bow10	=[	$walk1,		knight_walk1	] {ai_turn();};*/
 
 
 

@@ -1,12 +1,3 @@
-float() FindTarget;
-//
-// when a monster becomes angry at a player, that monster will be used
-// as the sight target the next frame so that monsters near that one
-// will wake up even if they wouldn't have noticed the player
-//
-entity	sight_entity;
-float	sight_entity_time;
-
 float	enemy_yaw;
 float	enemy_vis, enemy_infront, enemy_range;
 
@@ -62,9 +53,10 @@ ai_turn
 don't move, but turn towards ideal_yaw
 =============
 */
+entity () QWM_GetTarget;
 void() ai_turn =
 {
-	if (FindTarget ())
+	if (QWM_GetTarget())
 		return;
 	
 	ChangeYaw ();
@@ -97,13 +89,12 @@ float(entity targ) infront =
 =============
 ai_stand
 
-The monster is staying in one place for a while, with slight angle turns
+The monster is staying in one place for a while
 =============
 */
 void() ai_stand =
 {
-	if (FindTarget())
-		return;
+
 };
 
 /*
@@ -189,10 +180,6 @@ void() ai_melee_side =
 
 	T_Damage (self.enemy, self, self, self.attackdamage);
 };
-
-float () TravelledTooFar = {
-	
-}
 
 /*
 =============
@@ -381,7 +368,6 @@ float() RangeCheckAttack =
 {
 	local vector	spot1, spot2;	
 	local entity	targ;
-	local float		chance;
 
 	targ = self.enemy;
 	
@@ -425,7 +411,6 @@ float() MeleeCheckAttack =
 {
 	local vector	spot1, spot2;	
 	local entity	targ;
-	local float		chance;
 
 	targ = self.enemy;
 	
@@ -475,15 +460,13 @@ float() CheckAnyAttack =
 		case CREEP_SUPER:
 			return MeleeCheckAttack();
 			break;
+		default:
+			return FALSE;
 	}
 };
 
 void(float dist) ai_run =
 {
-	local	vector	delta;
-	local	float	axis;
-	local	float	direct, ang_rint, ang_floor, ang_ceil;
-	
 	movedist = dist;
 	// see if the enemy is dead
 	if (self.enemy.health <= 0)
@@ -527,6 +510,10 @@ void(float dist) ai_run =
 	enemy_infront = infront(self.enemy);
 	enemy_range = range(self.enemy);
 	enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
+
+	self.think = self.th_run;
+	self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
+	self.nextthink = time + 0.1;
 	
 	if (self.attack_state == AS_MISSILE)
 	{
@@ -549,6 +536,8 @@ void(float dist) ai_run =
 		ai_run_slide ();
 		return;
 	}
+
+	
 		
 // head straight in
 	movetogoal (dist);		// done in C code...
