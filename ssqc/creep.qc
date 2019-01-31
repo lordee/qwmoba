@@ -37,7 +37,7 @@ void (float t, vector org) SpawnCreep = {
             setsize (creep, '-16 -16 -24', '16 16 40');
             creep.health = CREEP_MELEE_BASEHEALTH;
             creep.th_stand = knight_stand1;
-            creep.th_walk = SUB_Null;
+            creep.th_walk = knight_walk1;
             creep.th_run = knight_run1;
             creep.th_melee = knight_atk1;
             creep.th_pain = SUB_Null_pain;
@@ -68,7 +68,7 @@ void (float t, vector org) SpawnCreep = {
             setsize (creep, '-16 -16 -24', '16 16 40');
             creep.health = CREEP_RANGE_BASEHEALTH;
             creep.th_stand = enf_stand1;
-            creep.th_walk = SUB_Null;
+            creep.th_walk = enf_walk1;
             creep.th_run = enf_run1;
             creep.th_pain = SUB_Null_pain;
             creep.th_die = enf_die;
@@ -96,7 +96,7 @@ void (float t, vector org) SpawnCreep = {
             setsize (creep, VEC_HULL2_MIN, VEC_HULL2_MAX);
             creep.health = CREEP_CANNON_BASEHEALTH;
             creep.th_stand = ogre_stand1;
-            creep.th_walk = SUB_Null;
+            creep.th_walk = ogre_walk1;
             creep.th_run = ogre_run1;
             creep.th_die = ogre_die;
             creep.th_melee = SUB_Null;
@@ -130,11 +130,11 @@ void (float t, vector org) SpawnCreep = {
             setsize (creep, '-16 -16 -24', '16 16 40');
             creep.health = CREEP_SUPER_BASEHEALTH;
             creep.th_stand = hknight_stand1;
-            creep.th_walk = SUB_Null;
+            creep.th_walk = hknight_walk1;
             creep.th_run = hknight_run1;
             creep.th_melee = hknight_melee;
-            creep.th_missile = hknight_magicc1;
-            creep.th_pain = hknight_pain;
+            creep.th_missile = SUB_Null;
+            creep.th_pain = SUB_Null_pain;
             creep.th_die = hknight_die;
             creep.attack_state = AS_MELEE;
     }

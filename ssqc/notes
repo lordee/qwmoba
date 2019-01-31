@@ -1,0 +1,7 @@
+creep attack cooldowns
+missile shoot up, no blocking check
+tower attacks, model
+
+building models
+find waypoints isn't correct next waypoint, it's just nearest
+next thinks on ai_walk, melee etc

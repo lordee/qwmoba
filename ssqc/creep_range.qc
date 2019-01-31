@@ -89,8 +89,6 @@ void(vector org, vector vec) QWM_LaunchLaser =
 	newmis.touch = QWM_Laser_Touch;
 };
 
-
-
 void() enforcer_fire =
 {
 	local vector org;
@@ -113,30 +111,16 @@ void()	enf_stand5	=[	$stand5,	enf_stand6	] {ai_stand();};
 void()	enf_stand6	=[	$stand6,	enf_stand7	] {ai_stand();};
 void()	enf_stand7	=[	$stand7,	enf_stand1	] {ai_stand();};
 
-/*void()	enf_walk1	=[	$walk1 ,	enf_walk2	] {
-if (random() < 0.2)
-	sound (self, CHAN_VOICE, "enforcer/idle1.wav", 1, ATTN_IDLE);
-ai_walk(2);};
-void()	enf_walk2	=[	$walk2 ,	enf_walk3	] {ai_walk(4);};
-void()	enf_walk3	=[	$walk3 ,	enf_walk4	] {ai_walk(4);};
-void()	enf_walk4	=[	$walk4 ,	enf_walk5	] {ai_walk(3);};
-void()	enf_walk5	=[	$walk5 ,	enf_walk6	] {ai_walk(1);};
-void()	enf_walk6	=[	$walk6 ,	enf_walk7	] {ai_walk(2);};
-void()	enf_walk7	=[	$walk7 ,	enf_walk8	] {ai_walk(2);};
-void()	enf_walk8	=[	$walk8 ,	enf_walk9	] {ai_walk(1);};
-void()	enf_walk9	=[	$walk9 ,	enf_walk10	] {ai_walk(2);};
-void()	enf_walk10	=[	$walk10,	enf_walk11	] {ai_walk(4);};
-void()	enf_walk11	=[	$walk11,	enf_walk12	] {ai_walk(4);};
-void()	enf_walk12	=[	$walk12,	enf_walk13	] {ai_walk(1);};
-void()	enf_walk13	=[	$walk13,	enf_walk14	] {ai_walk(2);};
-void()	enf_walk14	=[	$walk14,	enf_walk15	] {ai_walk(3);};
-void()	enf_walk15	=[	$walk15,	enf_walk16	] {ai_walk(4);};
-void()	enf_walk16	=[	$walk16,	enf_walk1	] {ai_walk(2);};*/
+void()	enf_walk1	=[	$run1 ,	enf_walk2	] {ai_walk(18);};
+void()	enf_walk2	=[	$run2 ,	enf_walk3	] {ai_walk(14);};
+void()	enf_walk3	=[	$run3 ,	enf_walk4	] {ai_walk(7);};
+void()	enf_walk4	=[	$run4 ,	enf_walk5	] {ai_walk(12);};
+void()	enf_walk5	=[	$run5 ,	enf_walk6	] {ai_walk(14);};
+void()	enf_walk6	=[	$run6 ,	enf_walk7	] {ai_walk(15);};
+void()	enf_walk7	=[	$run7 ,	enf_walk8	] {ai_walk(7);};
+void()	enf_walk8	=[	$run8 ,	enf_walk1	] {ai_walk(11);};
 
-void()	enf_run1	=[	$run1  ,	enf_run2	] {
-if (random() < 0.2)
-	sound (self, CHAN_VOICE, "enforcer/idle1.wav", 1, ATTN_IDLE);
-ai_run(18);};
+void()	enf_run1	=[	$run1  ,	enf_run2	] {ai_run(18);};
 void()	enf_run2	=[	$run2  ,	enf_run3	] {ai_run(14);};
 void()	enf_run3	=[	$run3  ,	enf_run4	] {ai_run(7);};
 void()	enf_run4	=[	$run4  ,	enf_run5	] {ai_run(12);};
@@ -159,87 +143,6 @@ void()	enf_atk11	=[	$attack7,	enf_atk12	] {ai_face();};
 void()	enf_atk12	=[	$attack8,	enf_atk13	] {ai_face();};
 void()	enf_atk13	=[	$attack9,	enf_atk14	] {ai_face();};
 void()	enf_atk14	=[	$attack10,	enf_run1	] {ai_face();};
-
-/*void()	enf_paina1	=[	$paina1,	enf_paina2	] {};
-void()	enf_paina2	=[	$paina2,	enf_paina3	] {};
-void()	enf_paina3	=[	$paina3,	enf_paina4	] {};
-void()	enf_paina4	=[	$paina4,	enf_run1	] {};
-
-void()	enf_painb1	=[	$painb1,	enf_painb2	] {};
-void()	enf_painb2	=[	$painb2,	enf_painb3	] {};
-void()	enf_painb3	=[	$painb3,	enf_painb4	] {};
-void()	enf_painb4	=[	$painb4,	enf_painb5	] {};
-void()	enf_painb5	=[	$painb5,	enf_run1	] {};
-
-void()	enf_painc1	=[	$painc1,	enf_painc2	] {};
-void()	enf_painc2	=[	$painc2,	enf_painc3	] {};
-void()	enf_painc3	=[	$painc3,	enf_painc4	] {};
-void()	enf_painc4	=[	$painc4,	enf_painc5	] {};
-void()	enf_painc5	=[	$painc5,	enf_painc6	] {};
-void()	enf_painc6	=[	$painc6,	enf_painc7	] {};
-void()	enf_painc7	=[	$painc7,	enf_painc8	] {};
-void()	enf_painc8	=[	$painc8,	enf_run1	] {};
-
-void()	enf_paind1	=[	$paind1,	enf_paind2	] {};
-void()	enf_paind2	=[	$paind2,	enf_paind3	] {};
-void()	enf_paind3	=[	$paind3,	enf_paind4	] {};
-void()	enf_paind4	=[	$paind4,	enf_paind5	] {ai_painforward(2);};
-void()	enf_paind5	=[	$paind5,	enf_paind6	] {ai_painforward(1);};
-void()	enf_paind6	=[	$paind6,	enf_paind7	] {};
-void()	enf_paind7	=[	$paind7,	enf_paind8	] {};
-void()	enf_paind8	=[	$paind8,	enf_paind9	] {};
-void()	enf_paind9	=[	$paind9,	enf_paind10	] {};
-void()	enf_paind10	=[	$paind10,	enf_paind11	] {};
-void()	enf_paind11	=[	$paind11,	enf_paind12	] {ai_painforward(1);};
-void()	enf_paind12	=[	$paind12,	enf_paind13	] {ai_painforward(1);};
-void()	enf_paind13	=[	$paind13,	enf_paind14	] {ai_painforward(1);};
-void()	enf_paind14	=[	$paind14,	enf_paind15	] {};
-void()	enf_paind15	=[	$paind15,	enf_paind16	] {};
-void()	enf_paind16	=[	$paind16,	enf_paind17	] {ai_pain(1);};
-void()	enf_paind17	=[	$paind17,	enf_paind18	] {ai_pain(1);};
-void()	enf_paind18	=[	$paind18,	enf_paind19	] {};
-void()	enf_paind19	=[	$paind19,	enf_run1	] {};*/
-
-/*void(entity attacker, float damage)	enf_pain =
-{
-	local float r;
-
-	r = random ();
-	if (self.pain_finished > time)
-		return;
-
-	
-	if (r < 0.5)
-		sound (self, CHAN_VOICE, "enforcer/pain1.wav", 1, ATTN_NORM);
-	else
-		sound (self, CHAN_VOICE, "enforcer/pain2.wav", 1, ATTN_NORM);
-
-	if (r < 0.2)
-	{
-		self.pain_finished = time + 1;
-		enf_paina1 ();
-	}
-	else if (r < 0.4)
-	{
-		self.pain_finished = time + 1;
-		enf_painb1 ();
-	}
-	else if (r < 0.7)
-	{
-		self.pain_finished = time + 1;
-		enf_painc1 ();
-	}
-	else
-	{
-		self.pain_finished = time + 2;
-		enf_paind1 ();
-	}
-};*/
-
-//============================================================================
-
-
-
 
 void()	enf_die1	=[	$death1,	enf_die2	] {};
 void()	enf_die2	=[	$death2,	enf_die3	] {};

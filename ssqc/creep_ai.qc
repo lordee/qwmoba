@@ -280,6 +280,18 @@ entity () QWM_GetTarget = {
 
 /*
 =============
+ai_walk
+
+The monster is walking it's beat
+=============
+*/
+void(float dist) ai_walk =
+{
+	movetogoal (dist);
+};
+
+/*
+=============
 ai_run
 
 The monster has an enemy it is trying to kill
@@ -305,11 +317,10 @@ void () QWM_gowaypoint = {
 		wp = find(wp, classname, "info_qwmgoal");
 	}
 
-
 	self.movetarget = closest;
 
 	if (self.movetarget)
-		self.th_walk ();
+		self.th_walk();
 	else
 		self.th_stand();
 }
@@ -536,8 +547,6 @@ void(float dist) ai_run =
 		ai_run_slide ();
 		return;
 	}
-
-	
 		
 // head straight in
 	movetogoal (dist);		// done in C code...

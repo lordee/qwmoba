@@ -42,29 +42,7 @@ void()	knight_stand7	=[	$stand7,	knight_stand8	] {ai_stand();};
 void()	knight_stand8	=[	$stand8,	knight_stand9	] {ai_stand();};
 void()	knight_stand9	=[	$stand9,	knight_stand1	] {ai_stand();};
 
-/*void()	knight_walk1	=[	$walk1,		knight_walk2	] {
-if (random() < 0.2)
-	sound (self, CHAN_VOICE, "knight/idle.wav", 1,  ATTN_IDLE);
-ai_walk(3);};
-void()	knight_walk2	=[	$walk2,		knight_walk3	] {ai_walk(2);};
-void()	knight_walk3	=[	$walk3,		knight_walk4	] {ai_walk(3);};
-void()	knight_walk4	=[	$walk4,		knight_walk5	] {ai_walk(4);};
-void()	knight_walk5	=[	$walk5,		knight_walk6	] {ai_walk(3);};
-void()	knight_walk6	=[	$walk6,		knight_walk7	] {ai_walk(3);};
-void()	knight_walk7	=[	$walk7,		knight_walk8	] {ai_walk(3);};
-void()	knight_walk8	=[	$walk8,		knight_walk9	] {ai_walk(4);};
-void()	knight_walk9	=[	$walk9,		knight_walk10	] {ai_walk(3);};
-void()	knight_walk10	=[	$walk10,	knight_walk11	] {ai_walk(3);};
-void()	knight_walk11	=[	$walk11,	knight_walk12	] {ai_walk(2);};
-void()	knight_walk12	=[	$walk12,	knight_walk13	] {ai_walk(3);};
-void()	knight_walk13	=[	$walk13,	knight_walk14	] {ai_walk(4);};
-void()	knight_walk14	=[	$walk14,	knight_walk1	] {ai_walk(3);};*/
-
-
-void()	knight_run1	=[	$runb1,		knight_run2	] {
-if (random() < 0.2)
-	sound (self, CHAN_VOICE, "knight/idle.wav", 1,  ATTN_IDLE);
-ai_run(16);};
+void()	knight_run1	=[	$runb1,		knight_run2	] {ai_run(16);};
 void()	knight_run2	=[	$runb2,		knight_run3	] {ai_run(20);};
 void()	knight_run3	=[	$runb3,		knight_run4	] {ai_run(13);};
 void()	knight_run4	=[	$runb4,		knight_run5	] {ai_run(7);};
@@ -73,6 +51,14 @@ void()	knight_run6	=[	$runb6,		knight_run7	] {ai_run(20);};
 void()	knight_run7	=[	$runb7,		knight_run8	] {ai_run(14);};
 void()	knight_run8	=[	$runb8,		knight_run1	] {ai_run(6);};
 
+void()	knight_walk1	=[	$runb1,		knight_walk2	] {ai_walk(16);};
+void()	knight_walk2	=[	$runb2,		knight_walk3	] {ai_walk(20);};
+void()	knight_walk3	=[	$runb3,		knight_walk4	] {ai_walk(13);};
+void()	knight_walk4	=[	$runb4,		knight_walk5	] {ai_walk(7);};
+void()	knight_walk5	=[	$runb5,		knight_walk6	] {ai_walk(16);};
+void()	knight_walk6	=[	$runb6,		knight_walk7	] {ai_walk(20);};
+void()	knight_walk7	=[	$runb7,		knight_walk8	] {ai_walk(14);};
+void()	knight_walk8	=[	$runb8,		knight_walk1	] {ai_walk(6);};
 
 void()	knight_runatk1	=[	$runattack1,		knight_runatk2	]
 {
@@ -106,67 +92,6 @@ void()	knight_atk7	=[	$attackb7,		knight_atk8	] {ai_charge(1); ai_melee();};
 void()	knight_atk8	=[	$attackb8,		knight_atk9	] {ai_charge(3); ai_melee();};
 void()	knight_atk9	=[	$attackb9,		knight_atk10] {ai_charge(1);};
 void()	knight_atk10=[	$attackb10,		knight_run1	] {ai_charge(5);};
-
-
-//===========================================================================
-
-void()	knight_pain1	=[	$pain1,		knight_pain2	] {};
-void()	knight_pain2	=[	$pain2,		knight_pain3	] {};
-void()	knight_pain3	=[	$pain3,		knight_run1	] {};
-
-/*void()	knight_painb1	=[	$painb1,	knight_painb2	] {ai_painforward(0);};
-void()	knight_painb2	=[	$painb2,	knight_painb3	] {ai_painforward(3);};
-void()	knight_painb3	=[	$painb3,	knight_painb4	] {};
-void()	knight_painb4	=[	$painb4,	knight_painb5	] {};
-void()	knight_painb5	=[	$painb5,	knight_painb6	] {ai_painforward(2);};
-void()	knight_painb6	=[	$painb6,	knight_painb7	] {ai_painforward(4);};
-void()	knight_painb7	=[	$painb7,	knight_painb8	] {ai_painforward(2);};
-void()	knight_painb8	=[	$painb8,	knight_painb9	] {ai_painforward(5);};
-void()	knight_painb9	=[	$painb9,	knight_painb10	] {ai_painforward(5);};
-void()	knight_painb10	=[	$painb10,	knight_painb11	] {ai_painforward(0);};
-void()	knight_painb11	=[	$painb11,	knight_run1	] {};*/
-
-void(entity attacker, float damage)	knight_pain =
-{
-	local float r;
-
-	if (self.pain_finished > time)
-		return;
-
-	r = random();
-	
-	sound (self, CHAN_VOICE, "knight/khurt.wav", 1, ATTN_NORM);
-	knight_pain1 ();
-	self.pain_finished = time + 1;
-
-	/*if (r < 0.85)
-	{
-		knight_pain1 ();
-		self.pain_finished = time + 1;
-	}
-	else
-	{
-		knight_painb1 ();
-		self.pain_finished = time + 1;
-	}*/
-	
-};
-
-//===========================================================================
-
-/*void()	knight_bow1	=[	$kneel1,		knight_bow2	] {ai_turn();};
-void()	knight_bow2	=[	$kneel2,		knight_bow3	] {ai_turn();};
-void()	knight_bow3	=[	$kneel3,		knight_bow4	] {ai_turn();};
-void()	knight_bow4	=[	$kneel4,		knight_bow5	] {ai_turn();};
-
-void()	knight_bow5	=[	$kneel5,		knight_bow5	] {ai_turn();};
-
-void()	knight_bow6	=[	$kneel4,		knight_bow7	] {ai_turn();};
-void()	knight_bow7	=[	$kneel3,		knight_bow8	] {ai_turn();};
-void()	knight_bow8	=[	$kneel2,		knight_bow9	] {ai_turn();};
-void()	knight_bow9	=[	$kneel1,		knight_bow10	] {ai_turn();};
-void()	knight_bow10	=[	$walk1,		knight_walk1	] {ai_turn();};*/
-
 
 
 void()	knight_die1	=[	$death1,	knight_die2	] {};

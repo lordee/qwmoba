@@ -114,30 +114,18 @@ void()	hknight_stand8	=[	$stand8,	hknight_stand9	] {ai_stand();};
 void()	hknight_stand9	=[	$stand9,	hknight_stand1	] {ai_stand();};
 
 //===========================================================================
-/*
-void()	hknight_walk1	=[	$walk1,		hknight_walk2	] {
+
+void()	hknight_walk1	=[	$run1,		hknight_walk2	] {
 hk_idle_sound();
-ai_walk(2);};
-void()	hknight_walk2	=[	$walk2,		hknight_walk3	] {ai_walk(5);};
-void()	hknight_walk3	=[	$walk3,		hknight_walk4	] {ai_walk(5);};
-void()	hknight_walk4	=[	$walk4,		hknight_walk5	] {ai_walk(4);};
-void()	hknight_walk5	=[	$walk5,		hknight_walk6	] {ai_walk(4);};
-void()	hknight_walk6	=[	$walk6,		hknight_walk7	] {ai_walk(2);};
-void()	hknight_walk7	=[	$walk7,		hknight_walk8	] {ai_walk(2);};
-void()	hknight_walk8	=[	$walk8,		hknight_walk9	] {ai_walk(3);};
-void()	hknight_walk9	=[	$walk9,		hknight_walk10	] {ai_walk(3);};
-void()	hknight_walk10	=[	$walk10,	hknight_walk11	] {ai_walk(4);};
-void()	hknight_walk11	=[	$walk11,	hknight_walk12	] {ai_walk(3);};
-void()	hknight_walk12	=[	$walk12,	hknight_walk13	] {ai_walk(4);};
-void()	hknight_walk13	=[	$walk13,	hknight_walk14	] {ai_walk(6);};
-void()	hknight_walk14	=[	$walk14,	hknight_walk15	] {ai_walk(2);};
-void()	hknight_walk15	=[	$walk15,	hknight_walk16	] {ai_walk(2);};
-void()	hknight_walk16	=[	$walk16,	hknight_walk17	] {ai_walk(4);};
-void()	hknight_walk17	=[	$walk17,	hknight_walk18	] {ai_walk(3);};
-void()	hknight_walk18	=[	$walk18,	hknight_walk19	] {ai_walk(3);};
-void()	hknight_walk19	=[	$walk19,	hknight_walk20	] {ai_walk(3);};
-void()	hknight_walk20	=[	$walk20,	hknight_walk1	] {ai_walk(2);};
-*/
+ai_walk (20); };
+void()	hknight_walk2	=[	$run2,		hknight_walk3	] {ai_walk(25);};
+void()	hknight_walk3	=[	$run3,		hknight_walk4	] {ai_walk(18);};
+void()	hknight_walk4	=[	$run4,		hknight_walk5	] {ai_walk(16);};
+void()	hknight_walk5	=[	$run5,		hknight_walk6	] {ai_walk(14);};
+void()	hknight_walk6	=[	$run6,		hknight_walk7	] {ai_walk(25);};
+void()	hknight_walk7	=[	$run7,		hknight_walk8	] {ai_walk(21);};
+void()	hknight_walk8	=[	$run8,		hknight_walk1	] {ai_walk(13);};
+
 //===========================================================================
 
 void()	hknight_run1	=[	$run1,		hknight_run2	] {
@@ -150,14 +138,6 @@ void()	hknight_run5	=[	$run5,		hknight_run6	] {ai_run(14);};
 void()	hknight_run6	=[	$run6,		hknight_run7	] {ai_run(25);};
 void()	hknight_run7	=[	$run7,		hknight_run8	] {ai_run(21);};
 void()	hknight_run8	=[	$run8,		hknight_run1	] {ai_run(13);};
-
-//============================================================================
-
-void()	hknight_pain1	=[	$pain1,		hknight_pain2	] {sound (self, CHAN_VOICE, "hknight/pain1.wav", 1, ATTN_NORM);};
-void()	hknight_pain2	=[	$pain2,		hknight_pain3	] {};
-void()	hknight_pain3	=[	$pain3,		hknight_pain4	] {};
-void()	hknight_pain4	=[	$pain4,		hknight_pain5	] {};
-void()	hknight_pain5	=[	$pain5,		hknight_run1	] {};
 
 //============================================================================
 
@@ -207,53 +187,6 @@ void() hknight_die =
 		hknight_dieb1 ();
 };
 
-
-//============================================================================
-
-void()	hknight_magica1 =[	$magica1,	hknight_magica2	] {ai_face();};
-void()	hknight_magica2 =[	$magica2,	hknight_magica3	] {ai_face();};
-void()	hknight_magica3 =[	$magica3,	hknight_magica4	] {ai_face();};
-void()	hknight_magica4 =[	$magica4,	hknight_magica5	] {ai_face();};
-void()	hknight_magica5 =[	$magica5,	hknight_magica6	] {ai_face();};
-void()	hknight_magica6 =[	$magica6,	hknight_magica7	] {ai_face();};
-void()	hknight_magica7 =[	$magica7,	hknight_magica8	] {hknight_shot(-2);};
-void()	hknight_magica8 =[	$magica8,	hknight_magica9	] {hknight_shot(-1);};
-void()	hknight_magica9 =[	$magica9,	hknight_magica10] {hknight_shot(0);};
-void()	hknight_magica10 =[	$magica10,	hknight_magica11] {hknight_shot(1);};
-void()	hknight_magica11 =[	$magica11,	hknight_magica12] {hknight_shot(2);};
-void()	hknight_magica12 =[	$magica12,	hknight_magica13] {hknight_shot(3);};
-void()	hknight_magica13 =[	$magica13,	hknight_magica14] {ai_face();};
-void()	hknight_magica14 =[	$magica14,	hknight_run1	] {ai_face();};
-
-//============================================================================
-
-void()	hknight_magicb1 =[	$magicb1,	hknight_magicb2	] {ai_face();};
-void()	hknight_magicb2 =[	$magicb2,	hknight_magicb3	] {ai_face();};
-void()	hknight_magicb3 =[	$magicb3,	hknight_magicb4	] {ai_face();};
-void()	hknight_magicb4 =[	$magicb4,	hknight_magicb5	] {ai_face();};
-void()	hknight_magicb5 =[	$magicb5,	hknight_magicb6	] {ai_face();};
-void()	hknight_magicb6 =[	$magicb6,	hknight_magicb7	] {ai_face();};
-void()	hknight_magicb7 =[	$magicb7,	hknight_magicb8	] {hknight_shot(-2);};
-void()	hknight_magicb8 =[	$magicb8,	hknight_magicb9	] {hknight_shot(-1);};
-void()	hknight_magicb9 =[	$magicb9,	hknight_magicb10] {hknight_shot(0);};
-void()	hknight_magicb10 =[	$magicb10,	hknight_magicb11] {hknight_shot(1);};
-void()	hknight_magicb11 =[	$magicb11,	hknight_magicb12] {hknight_shot(2);};
-void()	hknight_magicb12 =[	$magicb12,	hknight_magicb13] {hknight_shot(3);};
-void()	hknight_magicb13 =[	$magicb13,	hknight_run1] {ai_face();};
-
-//============================================================================
-
-void()	hknight_magicc1 =[	$magicc1,	hknight_magicc2	] {ai_face();};
-void()	hknight_magicc2 =[	$magicc2,	hknight_magicc3	] {ai_face();};
-void()	hknight_magicc3 =[	$magicc3,	hknight_magicc4	] {ai_face();};
-void()	hknight_magicc4 =[	$magicc4,	hknight_magicc5	] {ai_face();};
-void()	hknight_magicc5 =[	$magicc5,	hknight_magicc6	] {ai_face();};
-void()	hknight_magicc6 =[	$magicc6,	hknight_magicc7	] {hknight_shot(-2);};
-void()	hknight_magicc7 =[	$magicc7,	hknight_magicc8	] {hknight_shot(-1);};
-void()	hknight_magicc8 =[	$magicc8,	hknight_magicc9	] {hknight_shot(0);};
-void()	hknight_magicc9 =[	$magicc9,	hknight_magicc10] {hknight_shot(1);};
-void()	hknight_magicc10 =[	$magicc10,	hknight_magicc11] {hknight_shot(2);};
-void()	hknight_magicc11 =[	$magicc11,	hknight_run1] {hknight_shot(3);};
 
 //===========================================================================
 
@@ -342,27 +275,6 @@ void() hk_idle_sound =
 {
 	if (random() < 0.2)
 		sound (self, CHAN_VOICE, "hknight/idle.wav", 1, ATTN_NORM);
-};
-
-void(entity attacker, float damage)	hknight_pain =
-{
-	if (self.pain_finished > time)
-		return;
-
-	sound (self, CHAN_VOICE, "hknight/pain1.wav", 1, ATTN_NORM);
-
-	if (time - self.pain_finished > 5)
-	{	// allways go into pain frame if it has been a while
-		hknight_pain1 ();
-		self.pain_finished = time + 1;
-		return;
-	}
-	
-	if ((random()*30 > damage) )
-		return;		// didn't flinch
-
-	self.pain_finished = time + 1;
-	hknight_pain1 ();
 };
 
 float	hknight_type;
