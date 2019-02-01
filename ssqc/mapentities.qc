@@ -233,24 +233,47 @@ void () item_qwmgoal = {
     switch (self.type)
     {
         case STRUCTURE_NEXUS:
+            precache_model("progs/oldone.mdl");
+            self.solid = SOLID_BSP;
+	        self.movetype = MOVETYPE_NONE;
+            setmodel (self, "progs/oldone.mdl");
+	        setsize (self, '-160 -128 -24', '160 128 256');
+
             self.health = HEALTH_NEXUS;
             self.healthregen = HEALTH_REGEN_NEXUS;
             self.think = GoalThink;
             self.nextthink = time + REGEN_TICKTIME;
             break;
         case STRUCTURE_INHIB:
+            precache_model("progs/oldone.mdl");
+            self.solid = SOLID_BSP;
+	        self.movetype = MOVETYPE_NONE;
+            setmodel (self, "progs/oldone.mdl");
+	        setsize (self, '-160 -128 -24', '160 128 256');
+
             self.health = HEALTH_INHIB;
             self.healthregen = HEALTH_REGEN_INHIB;
             self.think = GoalThink;
             self.nextthink = time + REGEN_TICKTIME;
             break;
         case STRUCTURE_TOWER:
+            precache_model ("progs/shambler.mdl");
+            self.solid = SOLID_BSP;
+            self.movetype = MOVETYPE_NONE;
+            setmodel (self, "progs/shambler.mdl");
+            setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
+
             self.health = HEALTH_TOWER;
             self.think = GoalThink;
             self.nextthink = time + REGEN_TICKTIME;
             break;
         case STRUCTURE_SHOP:
             self.takedamage = FALSE;
+            precache_model("progs/shalrath.mdl");
+            self.solid = SOLID_BSP;
+	        self.movetype = MOVETYPE_NONE;
+            setmodel (self, "progs/shalrath.mdl");
+	        setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
             break;
     }
 }
