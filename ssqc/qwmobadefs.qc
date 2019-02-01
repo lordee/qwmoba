@@ -47,3 +47,6 @@
 .float wave;
 .float deadtime;
 .vector attackstartorigin;
+
+// waypoints
+.float chainnum;

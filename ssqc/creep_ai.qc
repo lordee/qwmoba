@@ -298,31 +298,62 @@ The monster has an enemy it is trying to kill
 =============
 */
 
-void () QWM_gowaypoint = {
+entity () QWM_getwaypoint = {
 	entity wp, closest;
-	float dist, closedist;
-
-	wp = find(world, classname, "info_qwmgoal");
-	closest = wp;
-	closedist = wp ? vlen(wp.origin - self.origin) : 0;
-	while (wp)
+	float dist, closedist, wpnum;
+	closest = world;
+	
+	// if we have a waypoint, if it's near, get next
+	if (self.movetarget)
 	{
-		dist = vlen(wp.origin - self.origin);
-		if (dist < closedist)
-		{
-			closest = wp;
-			closedist = dist;
-		} 
+		dist = vlen(self.movetarget.origin - self.origin);
 
-		wp = find(wp, classname, "info_qwmgoal");
+		if (dist <= 100)
+		{
+			wpnum = self.movetarget.chainnum + 1;
+			wp = find(world, classname, "info_qwmgoal");
+			while (wp)
+			{
+				if (wp.team_no == self.team_no)
+				{
+					if (wp.lane == self.lane)
+					{
+						if (wp.chainnum == wpnum)
+						{
+							closest = wp;
+						}
+					}
+				}
+				wp = find(wp, classname, "info_qwmgoal");
+			}
+		}
+	}
+	else
+	{
+		// if no waypoint, find closest	
+		wp = find(world, classname, "info_qwmgoal");
+		closest = wp;
+		closedist = wp ? vlen(wp.origin - self.origin) : 0;
+		while (wp)
+		{
+			if (wp.team_no == self.team_no)
+			{
+				if (wp.lane == self.lane)
+				{
+					dist = vlen(wp.origin - self.origin);
+					if (dist < closedist)
+					{
+						closest = wp;
+						closedist = dist;
+					} 
+				}
+			}
+			
+			wp = find(wp, classname, "info_qwmgoal");
+		}
 	}
 
-	self.movetarget = closest;
-
-	if (self.movetarget)
-		self.th_walk();
-	else
-		self.th_stand();
+	return closest;
 }
 
 float () QWM_TravelledTooFar = {
@@ -478,6 +509,7 @@ float() CheckAnyAttack =
 
 void(float dist) ai_run =
 {
+	self.nextthink = time + 0.2;
 	movedist = dist;
 	// see if the enemy is dead
 	if (self.enemy.health <= 0)
@@ -497,7 +529,15 @@ void(float dist) ai_run =
 		{
 			// no enemy, move towards waypoint
 			// get waypoint
-			QWM_gowaypoint();
+			self.movetarget = QWM_getwaypoint();
+			if (self.movetarget)
+			{
+				self.th_walk();
+			}
+			else
+			{
+				self.th_stand();
+			}
 			return;
 		}
 	}
@@ -508,8 +548,6 @@ void(float dist) ai_run =
 		// clear enemy
 		self.enemy = world;
 		self.ideal_yaw = vectoyaw(self.movetarget.origin - self.origin);
-		self.nextthink = time + 0.1;
-		self.think = self.th_run;
 		return;
 	}
 
@@ -522,9 +560,7 @@ void(float dist) ai_run =
 	enemy_range = range(self.enemy);
 	enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
 
-	self.think = self.th_run;
 	self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
-	self.nextthink = time + 0.1;
 	
 	if (self.attack_state == AS_MISSILE)
 	{

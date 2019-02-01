@@ -44,7 +44,7 @@ float (float team, float lanenum) InhibDown = {
     return FALSE;
 }
 
-void (float type, vector org) SpawnCreep;
+void (float type, vector org, float lanenum) SpawnCreep;
 // creep spawn
 void () WaveThink = {
     self.wave = self.wave + 1;
@@ -76,28 +76,28 @@ void () WaveThink = {
             {
                 case 6:
                     org_x = org_x + CREEP_SPAWNOFFSET_X;
-                    SpawnCreep(CREEP_MELEE, org);
+                    SpawnCreep(CREEP_MELEE, org, lanenum);
                     break;
                 case 5:
                     org_x = org_x + CREEP_SPAWNOFFSET_X;
                     org_y = org_y - CREEP_SPAWNOFFSET_Y;
-                    SpawnCreep(CREEP_MELEE, org);
+                    SpawnCreep(CREEP_MELEE, org, lanenum);
                     break;
                 case 4:
                     org_x = org_x + CREEP_SPAWNOFFSET_X;
                     org_y = org_y + CREEP_SPAWNOFFSET_Y;
-                    SpawnCreep(CREEP_MELEE, org);
+                    SpawnCreep(CREEP_MELEE, org, lanenum);
                     break;
                 case 3:
-                    SpawnCreep(CREEP_RANGE, org);
+                    SpawnCreep(CREEP_RANGE, org, lanenum);
                     break;
                 case 2:
                     org_y = org_y - CREEP_SPAWNOFFSET_Y;
-                    SpawnCreep(CREEP_RANGE, org);
+                    SpawnCreep(CREEP_RANGE, org, lanenum);
                     break;
                 case 1:
                     org_y = org_y + CREEP_SPAWNOFFSET_Y;
-                    SpawnCreep(CREEP_RANGE, org);
+                    SpawnCreep(CREEP_RANGE, org, lanenum);
                     break;
             }
             spawnnum = spawnnum - 1;        
@@ -108,18 +108,18 @@ void () WaveThink = {
         // if all inhibs down, super minions in each wave
         if (inhibsdown == 3)
         {
-            SpawnCreep(CREEP_SUPER, org);
+            SpawnCreep(CREEP_SUPER, org, lanenum);
         }
         else if (self.wave % 3 == 0)
         {
             // if inhibitor is down, cannon is super minion
             if (InhibDown(teamcheck, lanenum))
             {
-                SpawnCreep(CREEP_SUPER, org);
+                SpawnCreep(CREEP_SUPER, org, lanenum);
             }
             else
             {
-                SpawnCreep(CREEP_CANNON, org);
+                SpawnCreep(CREEP_CANNON, org, lanenum);
             }               
         }
         spawn = find(spawn, classname, "info_creep_teamspawn");

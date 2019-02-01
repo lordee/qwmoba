@@ -11,10 +11,11 @@ void () QWM_CreepAttack = {
     }
 }
 
-void (float t, vector org) SpawnCreep = {
+void (float t, vector org, float lanenum) SpawnCreep = {
     entity creep;
     creep = spawn();
     creep.type = t;
+    creep.lane = lanenum;
 
     switch (t)
     {
