@@ -48,6 +48,7 @@ void (float type, vector org, float lanenum) SpawnCreep;
 // creep spawn
 void () WaveThink = {
     self.wave = self.wave + 1;
+    dprint("wave think going for wave: ", ftos(self.wave));
 
     float teamcheck, inhibsdown;
     teamcheck = self.team_no == 1 ? 2 : 1;
@@ -143,6 +144,7 @@ void () info_creep_teamspawn = {
     }
 }
 
+// this doesn't need to be an entity
 void () info_qwmwavemanager = {
     switch (self.team_no)
     {
@@ -245,11 +247,11 @@ void () item_qwmgoal = {
             self.nextthink = time + REGEN_TICKTIME;
             break;
         case STRUCTURE_INHIB:
-            precache_model("progs/oldone.mdl");
+            precache_model("progs/shalrath.mdl");
             self.solid = SOLID_BSP;
 	        self.movetype = MOVETYPE_NONE;
-            setmodel (self, "progs/oldone.mdl");
-	        setsize (self, '-160 -128 -24', '160 128 256');
+            setmodel (self, "progs/shalrath.mdl");
+	        setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 
             self.health = HEALTH_INHIB;
             self.healthregen = HEALTH_REGEN_INHIB;
@@ -269,11 +271,11 @@ void () item_qwmgoal = {
             break;
         case STRUCTURE_SHOP:
             self.takedamage = FALSE;
-            precache_model("progs/shalrath.mdl");
+            precache_model("progs/tarbaby.mdl");
             self.solid = SOLID_BSP;
 	        self.movetype = MOVETYPE_NONE;
-            setmodel (self, "progs/shalrath.mdl");
-	        setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
+            setmodel (self, "progs/tarbaby.mdl");
+	        setsize (self, '-16 -16 -24', '16 16 40');
             break;
     }
 }
