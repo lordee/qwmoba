@@ -509,11 +509,15 @@ float() CheckAnyAttack =
 
 void(float dist) ai_run =
 {
-	self.nextthink = time + 0.2;
+	dprint("ai_run executed\n");
+	//self.nextthink = time + 0.2;
+	self.nextthink = time + 1;
 	movedist = dist;
 	// see if the enemy is dead
 	if (self.enemy.health <= 0)
 	{
+		eprint(self.enemy);
+		dprint("enemy dead\n");
 		self.enemy = world;
 
 		// find a new target within range
@@ -522,16 +526,19 @@ void(float dist) ai_run =
 		// if enemy in range
 		if (self.enemy)
 		{
+			dprint("got enemy\n");
 			self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
 			self.attackstartorigin = self.origin;
 		}
 		else
 		{
 			// no enemy, move towards waypoint
+			dprint("no enemy, move towards waypoint\n");
 			// get waypoint
 			self.movetarget = QWM_getwaypoint();
 			if (self.movetarget)
 			{
+				dprint("got a target, walking\n");
 				self.th_walk();
 			}
 			else

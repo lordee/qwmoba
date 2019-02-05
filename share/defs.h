@@ -332,9 +332,9 @@
 #define STRUCTURE_SHOP      4
 #define HEALTH_REGEN_NEXUS  10
 #define HEALTH_REGEN_INHIB  10
-#define HEALTH_NEXUS  4000
-#define HEALTH_INHIB  3000
-#define HEALTH_TOWER  2000
+#define HEALTH_NEXUS  400
+#define HEALTH_INHIB  300
+#define HEALTH_TOWER  200
 
 // info_qwmgoal
 #define INFO_WAYPOINT   1

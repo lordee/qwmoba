@@ -38,7 +38,7 @@ float (float team, float lanenum) InhibDown = {
                 }
             }
         }
-        inhib = find(world, classname, "item_qwmgoal");
+        inhib = find(inhib, classname, "item_qwmgoal");
     }
 
     return FALSE;
@@ -79,7 +79,7 @@ void () WaveThink = {
                     org_x = org_x + CREEP_SPAWNOFFSET_X;
                     SpawnCreep(CREEP_MELEE, org, lanenum);
                     break;
-                case 5:
+                /*case 5:
                     org_x = org_x + CREEP_SPAWNOFFSET_X;
                     org_y = org_y - CREEP_SPAWNOFFSET_Y;
                     SpawnCreep(CREEP_MELEE, org, lanenum);
@@ -88,8 +88,8 @@ void () WaveThink = {
                     org_x = org_x + CREEP_SPAWNOFFSET_X;
                     org_y = org_y + CREEP_SPAWNOFFSET_Y;
                     SpawnCreep(CREEP_MELEE, org, lanenum);
-                    break;
-                case 3:
+                    break;*/
+                /*case 3:
                     SpawnCreep(CREEP_RANGE, org, lanenum);
                     break;
                 case 2:
@@ -99,7 +99,8 @@ void () WaveThink = {
                 case 1:
                     org_y = org_y + CREEP_SPAWNOFFSET_Y;
                     SpawnCreep(CREEP_RANGE, org, lanenum);
-                    break;
+                    break;*/
+                default:
             }
             spawnnum = spawnnum - 1;        
         }
@@ -107,7 +108,7 @@ void () WaveThink = {
         org = spawn.origin;
         org_x = org_x + (CREEP_SPAWNOFFSET_X / 2);
         // if all inhibs down, super minions in each wave
-        if (inhibsdown == 3)
+        /*if (inhibsdown == 3)
         {
             SpawnCreep(CREEP_SUPER, org, lanenum);
         }
@@ -122,7 +123,7 @@ void () WaveThink = {
             {
                 SpawnCreep(CREEP_CANNON, org, lanenum);
             }               
-        }
+        }*/
         spawn = find(spawn, classname, "info_creep_teamspawn");
     }
 }

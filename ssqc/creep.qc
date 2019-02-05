@@ -145,4 +145,6 @@ void (float t, vector org, float lanenum) SpawnCreep = {
     creep.nextthink = time + 0.5;
 	creep.think = creep.th_run;
     creep.classname = "creep";
+    self = creep;
+    droptofloor();
 }
