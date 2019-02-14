@@ -242,7 +242,9 @@ void () item_qwmgoal = {
             setmodel (self, "progs/oldone.mdl");
 	        setsize (self, '-160 -128 -24', '160 128 256');
 
+            self.takedamage = TRUE;
             self.health = HEALTH_NEXUS;
+            self.max_health = HEALTH_NEXUS;
             self.healthregen = HEALTH_REGEN_NEXUS;
             self.think = GoalThink;
             self.nextthink = time + REGEN_TICKTIME;
@@ -255,6 +257,7 @@ void () item_qwmgoal = {
 	        setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 
             self.health = HEALTH_INHIB;
+            self.max_health = HEALTH_INHIB;
             self.healthregen = HEALTH_REGEN_INHIB;
             self.think = GoalThink;
             self.nextthink = time + REGEN_TICKTIME;
@@ -267,6 +270,7 @@ void () item_qwmgoal = {
             setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 
             self.health = HEALTH_TOWER;
+            self.max_health = HEALTH_TOWER;
             self.think = GoalThink;
             self.nextthink = time + REGEN_TICKTIME;
             break;

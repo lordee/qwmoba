@@ -252,7 +252,7 @@
 #define SKILL_USEFOUR    9
 
 // global rules
-#define REGEN_TICKTIME  .5
+#define REGEN_TICKTIME  1
 
 // champ skills
 #define SKILLONE_ASHE   1

@@ -190,6 +190,7 @@ Strafe sideways, but stay at aproximately the same range
 */
 void() ai_run_slide =
 {
+	dprint("ai_run_slide executed\n");
 	local float	ofs;
 	
 	self.ideal_yaw = enemy_yaw;
@@ -216,6 +217,7 @@ Turn and close until within an angle to launch a melee attack
 */
 void() ai_run_melee =
 {
+	dprint("ai_run_melee executed\n");
 	self.ideal_yaw = enemy_yaw;
 	ChangeYaw ();
 
@@ -235,6 +237,7 @@ Turn in place until within an angle to launch a missile attack
 */
 void() ai_run_missile =
 {
+	dprint("ai_run_missile executed\n");
 	self.ideal_yaw = enemy_yaw;
 	ChangeYaw ();
 	if (FacingIdeal())
@@ -287,6 +290,7 @@ The monster is walking it's beat
 */
 void(float dist) ai_walk =
 {
+	dprint("ai_walk executed\n");
 	movetogoal (dist);
 };
 
@@ -514,9 +518,9 @@ void(float dist) ai_run =
 	self.nextthink = time + 1;
 	movedist = dist;
 	// see if the enemy is dead
+	eprint(self.enemy);
 	if (self.enemy.health <= 0)
 	{
-		eprint(self.enemy);
 		dprint("enemy dead\n");
 		self.enemy = world;
 
@@ -526,6 +530,7 @@ void(float dist) ai_run =
 		// if enemy in range
 		if (self.enemy)
 		{
+			self.goalentity = self.enemy;
 			dprint("got enemy\n");
 			self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
 			self.attackstartorigin = self.origin;
@@ -536,6 +541,7 @@ void(float dist) ai_run =
 			dprint("no enemy, move towards waypoint\n");
 			// get waypoint
 			self.movetarget = QWM_getwaypoint();
+			self.goalentity = self.movetarget;
 			if (self.movetarget)
 			{
 				dprint("got a target, walking\n");
@@ -554,6 +560,7 @@ void(float dist) ai_run =
 	{
 		// clear enemy
 		self.enemy = world;
+		self.goalentity = world;
 		self.ideal_yaw = vectoyaw(self.movetarget.origin - self.origin);
 		return;
 	}
@@ -577,7 +584,6 @@ void(float dist) ai_run =
 	}
 	if (self.attack_state == AS_MELEE)
 	{
-//dprint ("ai_run_melee\n");
 		ai_run_melee ();
 		return;
 	}
@@ -592,6 +598,7 @@ void(float dist) ai_run =
 	}
 		
 // head straight in
+	dprint("movetogoal in ai_run");
 	movetogoal (dist);		// done in C code...
 };
 
