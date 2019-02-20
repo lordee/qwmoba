@@ -189,6 +189,11 @@ local float		len, traveltime;
 	self.think = SUB_CalcAngleMoveDone;
 };
 
+void(float normal) SUB_AttackFinished =
+{
+	self.cnt = 0;		// refire count for nightmare
+};
+
 /*
 ============
 After rotating, set angle to exact final angle

@@ -44,7 +44,7 @@ void (float t, vector org, float lanenum) SpawnCreep = {
             creep.th_pain = SUB_Null_pain;
             creep.th_die = knight_die;
             creep.attack_state = AS_MELEE;            
-            break;
+            /*break;
         case CREEP_RANGE:
             precache_model2 ("progs/enforcer.mdl");
             precache_model2 ("progs/h_mega.mdl");
@@ -137,7 +137,7 @@ void (float t, vector org, float lanenum) SpawnCreep = {
             creep.th_missile = SUB_Null;
             creep.th_pain = SUB_Null_pain;
             creep.th_die = hknight_die;
-            creep.attack_state = AS_MELEE;
+            creep.attack_state = AS_MELEE;*/
     }
 
     setorigin(creep, org);
