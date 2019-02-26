@@ -1,7 +1,6 @@
 void () GameThink = {
-    // gold
     entity p;
-    p = find(world, "classname", "player");
+    p = find(world, classname, "player");
     while (p)
     {
         p.gold = p.gold + 1;
@@ -18,7 +17,14 @@ void () GameThink = {
             }
         }
 
-        p = find(p, "classname", "player");
+        p = find(p, classname, "player");
+    }
+
+    self.cnt2 = self.cnt2 + 1;
+    if (self.cnt2 >= 60)
+    {
+        self.cnt = self.cnt + 1;
+        self.cnt2 = 0;
     }
 
     self.nextthink = time + 1;
