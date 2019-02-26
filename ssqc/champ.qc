@@ -213,7 +213,22 @@ void (entity player, entity targ, float killtype, float numparticipants) ApplyEx
     switch (targ.classname)
     {
         case "creep":
-            exp = EXP_CREEP;
+            switch (targ.type)
+            {
+                case CREEP_MELEE:
+                    exp = CREEP_MELEE_EXP;
+                    break;
+                case CREEP_RANGE:
+                    exp = CREEP_RANGE_EXP;
+                    break;
+                case CREEP_CANNON:
+                    exp = CREEP_CANNON_EXP;
+                    break;
+                case CREEP_SUPER:
+                    exp = CREEP_SUPER_EXP;
+                    break;
+            }
+            
             if (numparticipants > 1)
             {
                 exp = exp * 1.304;
@@ -242,7 +257,7 @@ void (entity player, entity targ, float killtype, float numparticipants) ApplyEx
         bar = EXP_LEVELTWO;
     else if (player.level == 2)
         bar = EXP_LEVELTHREE;
-    else if (player.level == 3
+    else if (player.level == 3)
         bar = EXP_LEVELFOUR;
     else if (player.level == 4)
         bar = EXP_LEVELFIVE;
