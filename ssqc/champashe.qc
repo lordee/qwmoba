@@ -102,12 +102,11 @@ void () AsheAttack = {
 	newmis.nextthink = time + 6;
 	newmis.think = SUB_Remove;
 
-    entity buff;
-    buff = find(world, classname, "buff");
-
     sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
 	setmodel (newmis, "progs/ashearrow.mdl");
 
+    entity buff;
+    buff = find(world, classname, "buff");
     while (buff)
     {
         if (buff.owner == self && buff.buffcategory == AASPEED_SKILLONE_ASHE)
@@ -116,7 +115,7 @@ void () AsheAttack = {
 	        setmodel (newmis, "progs/ashearrowbuff.mdl");
             break;
         }
-        buff = find(world, classname, "buff");
+        buff = find(buff, classname, "buff");
     }
     
 	setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);
@@ -187,7 +186,7 @@ void () AsheSkillTwoTouch = {
                     slowed = 1;
                     break;
                 }
-                buff = find(world, classname, "buff");
+                buff = find(buff, classname, "buff");
             }	
 
             if (slowed == 0)
