@@ -31,6 +31,12 @@
 .float skillfourdamage;
 .float skillfourcooldown;
 .float skillfourmanacost;
+.float gold;
+.float respawntime;
+.float cnt2;
+.float ready;
+.float level;
+.float experience;
 
 // buff fields
 .float bufftype;
@@ -50,3 +56,5 @@
 
 // waypoints
 .float chainnum;
+
+entity oldself;

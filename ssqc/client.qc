@@ -77,6 +77,7 @@ void() SetNewParms =
 	parm9 = 0;
 };
 
+void () LobbyThink;
 void() DecodeLevelParms =
 {
 	if (serverflags)
@@ -97,7 +98,7 @@ void() DecodeLevelParms =
 
     // should probably detect it's qwmoba here
 
-    ent te;
+    entity te;
 
     te = spawn();
     te.owner = world;

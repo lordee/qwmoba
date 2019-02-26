@@ -105,7 +105,7 @@ float (float cooldown, float manacost) CanCast = {
 
 void (entity player) UpdateStats = {
 
-    float attdamage, attspeed, msspeed, health, mana, lvl;
+    float attdamage, attspeed, msspeed, hth, mna, lvl;
     lvl = player.level;
     
     switch (player.champ)
@@ -115,14 +115,14 @@ void (entity player) UpdateStats = {
             attdamage = BASEAD_ASHE;
             attspeed = BASEATTACKSPEED_ASHE;
             msspeed = BASESPEED_ASHE;
-            health = BASEHEALTH_ASHE;
-            mana = BASEMANA_ASHE;
+            hth = BASEHEALTH_ASHE;
+            mna = BASEMANA_ASHE;
 
             // char levels
             attdamage = attdamage + (GROWTH_AD_ASHE * lvl);
             attspeed = attspeed * (100 + ((GROWTH_AS_ASHE * lvl) / 100));
-            health = health + (GROWTH_HEALTH_ASHE * lvl);
-            mana = mana + (GROWTH_MANA_ASHE * lvl);
+            hth = hth + (GROWTH_HEALTH_ASHE * lvl);
+            mna = mna + (GROWTH_MANA_ASHE * lvl);
             break;
     }
 
@@ -148,10 +148,29 @@ void (entity player) UpdateStats = {
         buff = find(buff, classname, "buff");
     }
 
+    float h, m, mh, mm;
+    h = player.health;
+    m = player.mana;
+    mh = player.max_health;
+    mm = player.max_mana;
+
     player.attackspeed = attspeed;
     player.speed = msspeed;
-    player.health = player.health + (health - player.maxhealth);
-    player.maxhealth = health;
-    player.mana = player.mana + (mana - player.maxmana);
-    player.maxmana = mana;
+    player.health = h + (hth - mh);
+    player.max_health = hth;
+    player.mana = m + (mna - mm);
+    player.max_mana = mna;
+}
+
+void (entity player, entity targ, float killtype) ApplyExperience = {
+
+    switch (targ.classname)
+    {
+        case "creep":
+
+            break;
+        case "player":
+
+            break;
+    }
 }
