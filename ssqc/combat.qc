@@ -134,7 +134,6 @@ This should be the only function that ever reduces health.
 void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 {
 	local   vector  dir;
-	local   entity  oldself;
 	local   float   save;
 	local   float   take;
 	local   string  attackerteam, targteam;
@@ -322,6 +321,8 @@ void(entity attacker, float damage) T_BeamDamage =
 	}
 };
 
+void (entity player) UpdateStats;
+
 void () ChampUpdateThink = {
     UpdateStats(self.owner);
     remove(self);
@@ -345,8 +346,8 @@ void () BuffThink = {
     switch (self.buffcategory)
     {
         case DEBUFF_STUN:
-            targ.stunned = FALSE;
-            targ.movetype = MOVETYPE_WALK;
+            self.owner.stunned = FALSE;
+            self.owner.movetype = MOVETYPE_WALK;
         default:
     }
 
@@ -383,31 +384,31 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
     switch (type)
     {
         case MSSLOW_ASHE:
-            newbuff.maxhealth = AASLOW_LIFETIME_ASHE;
+            newbuff.max_health = AASLOW_LIFETIME_ASHE;
             newbuff.health = AASLOW_LIFETIME_ASHE; // lifetime of debuff
             newbuff.nextthinkinterval = AASLOW_TICKRATE_ASHE; // this isn't needed but use for examples later on
             newbuff.nextthink = time + AASLOW_TICKRATE_ASHE;
             break;
         case AASPEED_SKILLONE_ASHE:
-            newbuff.maxhealth = SKILLONE_LIFETIME_ASHE;
+            newbuff.max_health = SKILLONE_LIFETIME_ASHE;
             newbuff.health = SKILLONE_LIFETIME_ASHE; 
             newbuff.nextthinkinterval = SKILLONE_TICKRATE_ASHE; 
             newbuff.nextthink = time + SKILLONE_TICKRATE_ASHE;
             break;
         case MSSLOW_SKILLTWO_ASHE:
-            newbuff.maxhealth = SKILLTWO_LIFETIME_ASHE;
+            newbuff.max_health = SKILLTWO_LIFETIME_ASHE;
             newbuff.health = SKILLTWO_LIFETIME_ASHE; 
             newbuff.nextthinkinterval = SKILLTWO_TICKRATE_ASHE; 
             newbuff.nextthink = time + SKILLTWO_TICKRATE_ASHE;
             break;
 		case STUN_SKILLFOUR_ASHE:
-            newbuff.maxhealth = SKILLFOUR_LIFETIME_ASHE;
+            newbuff.max_health = SKILLFOUR_LIFETIME_ASHE;
 			newbuff.health = SKILLFOUR_LIFETIME_ASHE; 
             newbuff.nextthinkinterval = SKILLFOUR_TICKRATE_ASHE; 
             newbuff.nextthink = time + SKILLFOUR_TICKRATE_ASHE;
 			break;
         default:
-            newbuff.maxhealth = 10;
+            newbuff.max_health = 10;
             newbuff.health = 10; // 10 ticks of nextthink
             newbuff.nextthinkinterval = .1;
             newbuff.nextthink = time + .1;

@@ -572,10 +572,10 @@ void() GibPlayer =
 void() PlayerDie =
 {
 	local   float   i;
-	local	string	s;	
 	self.items = self.items - (self.items & IT_INVISIBILITY);
     
-    ent gt = find(world, classname, "gametimer");
+    entity gt;
+	gt = find(world, classname, "gametimer");
     if (gt)
     {
         float restime;
