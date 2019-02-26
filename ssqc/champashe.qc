@@ -17,6 +17,12 @@ void () AsheAttackTouch = {
 		remove(self);
 		return;
 	}
+
+    if (other.team_no == self.owner.team_no)
+    {
+        remove(self);
+        return;
+    }
 	
 // hit something that bleeds
 	if (other.takedamage)
@@ -42,7 +48,7 @@ void () AsheAttackTouch = {
                     slowed = 1;
                     break;
                 }
-                buff = find(world, classname, "buff");
+                buff = find(buff, classname, "buff");
             }	
 
             if (slowed == 0)
