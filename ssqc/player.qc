@@ -574,35 +574,35 @@ void() PlayerDie =
 	local   float   i;
 	local	string	s;	
 	self.items = self.items - (self.items & IT_INVISIBILITY);
-
-	if ((stof(infokey(world,"dq"))) != 0)
-	{
-		if (self.super_damage_finished > 0)
-		{
-			DropQuad (self.super_damage_finished - time);
-			bprint (PRINT_LOW, self.netname);
-			if (deathmatch == 4)
-				bprint (PRINT_LOW, " lost an OctaPower with ");
-			else
-				bprint (PRINT_LOW, " lost a quad with ");
-			s = ftos(rint(self.super_damage_finished - time));
-			bprint (PRINT_LOW, s);
-			bprint (PRINT_LOW, " seconds remaining\n");
-		}
-	}
-
-	if ((stof(infokey(world,"dr"))) != 0)
-	{
-		if (self.invisible_finished > 0)
-		{
-			bprint (PRINT_LOW, self.netname);
-			bprint (PRINT_LOW, " lost a ring with ");
-			s = ftos(rint(self.invisible_finished - time));
-			bprint (PRINT_LOW, s);
-			bprint (PRINT_LOW, " seconds remaining\n");
-			DropRing (self.invisible_finished - time);
-		}
-	}
+    
+    ent gt = find(world, classname, "gametimer");
+    if (gt)
+    {
+        float restime;
+        restime = 0;
+        if (gt.cnt < 3)
+        {
+            restime = 20;
+        } 
+        else if (gt.cnt < 8)
+        {
+            restime = 40;
+        }
+        else if (gt.cnt < 13)
+        {
+            restime = 60;
+        }
+        else if (gt.cnt < 18)
+        {
+            restime = 60;
+        }
+        else
+        {
+            restime = 90;
+        }
+        
+        self.respawntime = restime;
+    }
 
 	self.invisible_finished = 0;    // don't die as eyes
 	self.invincible_finished = 0;
