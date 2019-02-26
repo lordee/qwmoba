@@ -94,6 +94,17 @@ void() DecodeLevelParms =
 	self.ammo_cells = parm7;
 	self.weapon = parm8;
 	self.armortype = parm9 * 0.01;
+
+    // should probably detect it's qwmoba here
+
+    ent te;
+
+    te = spawn();
+    te.owner = world;
+    te.classname = "gametimer";
+    te.think = LobbyThink;
+    te.nextthink = time + 1;
+    te.cnt2 = 30;
 };
 
 /*

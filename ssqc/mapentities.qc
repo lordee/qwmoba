@@ -44,90 +44,6 @@ float (float team, float lanenum) InhibDown = {
     return FALSE;
 }
 
-void (float type, vector org, float lanenum) SpawnCreep;
-// creep spawn
-void () WaveThink = {
-    self.wave = self.wave + 1;
-    dprint("wave think going for wave: ", ftos(self.wave));
-
-    float teamcheck, inhibsdown;
-    teamcheck = self.team_no == 1 ? 2 : 1;
-    inhibsdown = NumInhibsDown(teamcheck);
-
-    // if all inhibitors down, double spawn speed
-    float w;
-    w = inhibsdown == 3 ? (self.wait / 2) : self.wait;
-    
-    self.nextthink = time + w;
-
-    entity spawn;
-    spawn = find(world, classname, "info_creep_teamspawn");
-    while (spawn)
-    {
-        // every wave has 3 melee, 3 range
-        float spawnnum, lanenum;
-        vector org;
-        spawnnum = 6;
-        lanenum = spawn.lane;
-        
-        while (spawnnum > 0)
-        {   
-            org = spawn.origin;
-            switch (spawnnum)
-            {
-                case 6:
-                    org_x = org_x + CREEP_SPAWNOFFSET_X;
-                    SpawnCreep(CREEP_MELEE, org, lanenum);
-                    break;
-                /*case 5:
-                    org_x = org_x + CREEP_SPAWNOFFSET_X;
-                    org_y = org_y - CREEP_SPAWNOFFSET_Y;
-                    SpawnCreep(CREEP_MELEE, org, lanenum);
-                    break;
-                case 4:
-                    org_x = org_x + CREEP_SPAWNOFFSET_X;
-                    org_y = org_y + CREEP_SPAWNOFFSET_Y;
-                    SpawnCreep(CREEP_MELEE, org, lanenum);
-                    break;*/
-                /*case 3:
-                    SpawnCreep(CREEP_RANGE, org, lanenum);
-                    break;
-                case 2:
-                    org_y = org_y - CREEP_SPAWNOFFSET_Y;
-                    SpawnCreep(CREEP_RANGE, org, lanenum);
-                    break;
-                case 1:
-                    org_y = org_y + CREEP_SPAWNOFFSET_Y;
-                    SpawnCreep(CREEP_RANGE, org, lanenum);
-                    break;*/
-                default:
-            }
-            spawnnum = spawnnum - 1;        
-        }
-        
-        org = spawn.origin;
-        org_x = org_x + (CREEP_SPAWNOFFSET_X / 2);
-        // if all inhibs down, super minions in each wave
-        /*if (inhibsdown == 3)
-        {
-            SpawnCreep(CREEP_SUPER, org, lanenum);
-        }
-        else if (self.wave % 3 == 0)
-        {
-            // if inhibitor is down, cannon is super minion
-            if (InhibDown(teamcheck, lanenum))
-            {
-                SpawnCreep(CREEP_SUPER, org, lanenum);
-            }
-            else
-            {
-                SpawnCreep(CREEP_CANNON, org, lanenum);
-            }               
-        }*/
-        spawn = find(spawn, classname, "info_creep_teamspawn");
-    }
-}
-
 void () info_creep_teamspawn = {
     switch (self.team_no)
     {
@@ -147,29 +63,7 @@ void () info_creep_teamspawn = {
 
 // this doesn't need to be an entity
 void () info_qwmwavemanager = {
-    switch (self.team_no)
-    {
-        case 1:
-            self.team_str = "team1";
-            break;
-        case 2:
-            self.team_str = "team2";
-            break;
-        default:
-            objerror
-            ("error: bad team_no associated with info_qwmwavemanager\n");
-            remove(self);
-            return;
-    }
-
-    // setup timer
-    if (self.wait == 0)
-    {
-        self.wait = 30;
-    }
-    self.wave = 0;
-    self.nextthink = time + self.wait;
-    self.think = WaveThink;
+    remove(self);
 }
 
 // tower, inhibs, base

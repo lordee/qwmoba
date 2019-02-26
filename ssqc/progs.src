@@ -36,3 +36,5 @@ creep_super.qc
 //monsters.qc
 //knight.qc
 creep.qc
+
+game.qc
