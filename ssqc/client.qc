@@ -486,6 +486,7 @@ void() PutClientInServer =
 		rj = stof(infokey(world, "rj"));
 	}
 
+    UpdateStats(self);
 };
 
 
