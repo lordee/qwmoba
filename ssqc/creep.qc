@@ -11,11 +11,16 @@ void () QWM_CreepAttack = {
     }
 }
 
-void (float t, vector org, float lanenum) SpawnCreep = {
+void (float t, vector org, float lanenum, float team) SpawnCreep = {
     entity creep;
     creep = spawn();
     creep.type = t;
     creep.lane = lanenum;
+    creep.takedamage = DAMAGE_AIM;
+    creep.nextthink = time + 0.5;
+	creep.think = creep.th_run;
+    creep.classname = "creep";
+    creep.team_no = team;
 
     switch (t)
     {
@@ -141,10 +146,8 @@ void (float t, vector org, float lanenum) SpawnCreep = {
     }
 
     setorigin(creep, org);
-    creep.takedamage = DAMAGE_AIM;
-    creep.nextthink = time + 0.5;
-	creep.think = creep.th_run;
-    creep.classname = "creep";
+    oldself = self;
     self = creep;
     droptofloor();
+    self = oldself;
 }
