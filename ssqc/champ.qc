@@ -102,3 +102,44 @@ float (float cooldown, float manacost) CanCast = {
         return FALSE;
     }
 }
+
+void (entity player) UpdateStats = {
+
+    float attdamage, attspeed, msspeed;
+    // base char
+    switch (player.champ)
+    {
+        case CHAMP_ASHE:
+            attdamage = BASEAD_ASHE;
+            attspeed = BASEATTACKSPEED_ASHE;
+            msspeed = BASESPEED_ASHE;
+            break;
+    }
+
+    // char levels
+
+    // items
+
+    // buffs
+    entity buff;
+    float val;
+
+    buff = find(world, classname, "buff");
+    while (buff)
+    {
+        val = buff.buffvalue;
+        switch (buff.buffcategory)
+        {
+            case DEBUFF_MSSLOW:
+                msspeed = msspeed * ((100 - val) / 100);
+                break;
+            case BUFF_AASPEED:
+                attspeed = attspeed * ((100 + val) / 100);
+                break;
+        }
+        buff = find(buff, classname, "buff");
+    }
+
+    player.attackspeed = attspeed;
+    player.speed = msspeed;
+}

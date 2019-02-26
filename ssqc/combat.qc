@@ -322,6 +322,11 @@ void(entity attacker, float damage) T_BeamDamage =
 	}
 };
 
+void () ChampUpdateThink = {
+    UpdateStats(self.owner);
+    remove(self);
+}
+
 // qwmoba
 void () BuffThink = {
     float h;
@@ -332,56 +337,30 @@ void () BuffThink = {
         self.health = h;
         self.nextthink = time + self.nextthinkinterval;
 
-        // apply buff again (health damage etc)
-    }
-    else
-    {
-        float s, value;
-        value = self.buffvalue;
-		entity targ = self.owner;
+        // apply ticks (health damage etc)
 
-        // remove buff
-        switch (self.buffcategory)
-        {
-            case DEBUFF_MSSLOW:
-                s = targ.speed;
-                s = s / ((100 - value) / 100);
-                targ.speed = s;
-                break;
-            case BUFF_AASPEED:
-                s = targ.attackspeed;
-                s = s / ((100 + value) / 100);
-                targ.attackspeed = s;
-                break;
-			case DEBUFF_STUN:
-				targ.stunned = FALSE;
-				targ.movetype = MOVETYPE_WALK;
-			default:
-        }
-        remove(self);
+        return;
     }
+
+    switch (self.buffcategory)
+    {
+        case DEBUFF_STUN:
+            targ.stunned = FALSE;
+            targ.movetype = MOVETYPE_WALK;
+        default:
+    }
+
+    entity upd;
+    upd = spawn();
+    upd.owner = self.owner;
+    upd.classname = "champupdater";
+    upd.think = ChampUpdateThink;
+    upd.nextthink = time + .1;
+
+    remove(self);
 }
 
 void (entity targ, float cat, float type, float value) T_ApplyBuff = {
-    float s;
-    s = 0;
-    switch (cat)
-	{
-		case DEBUFF_MSSLOW:
-			s = targ.speed;
-			s = s * ((100 - value) / 100);
-			targ.speed = s;
-			break;
-        case BUFF_AASPEED:
-            s = targ.attackspeed;
-            s = s * ((100 + value) / 100);
-            targ.attackspeed = s;
-            break;
-		case DEBUFF_STUN:
-			targ.stunned = TRUE;
-			targ.movetype = MOVETYPE_NONE;
-			break;
-	}
 	entity newbuff;
 	newbuff = spawn();
     newbuff.owner = targ;
@@ -391,32 +370,48 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
     
     newbuff.buffvalue = value;
     newbuff.think = BuffThink;
+
+    // instant debuff
+    switch (cat)
+    {
+        case DEBUFF_STUN:
+            targ.stunned = TRUE;
+            targ.movetype = MOVETYPE_NONE;
+        default:
+    }
     
     switch (type)
     {
         case MSSLOW_ASHE:
+            newbuff.maxhealth = AASLOW_LIFETIME_ASHE;
             newbuff.health = AASLOW_LIFETIME_ASHE; // lifetime of debuff
             newbuff.nextthinkinterval = AASLOW_TICKRATE_ASHE; // this isn't needed but use for examples later on
             newbuff.nextthink = time + AASLOW_TICKRATE_ASHE;
             break;
         case AASPEED_SKILLONE_ASHE:
+            newbuff.maxhealth = SKILLONE_LIFETIME_ASHE;
             newbuff.health = SKILLONE_LIFETIME_ASHE; 
             newbuff.nextthinkinterval = SKILLONE_TICKRATE_ASHE; 
             newbuff.nextthink = time + SKILLONE_TICKRATE_ASHE;
             break;
         case MSSLOW_SKILLTWO_ASHE:
+            newbuff.maxhealth = SKILLTWO_LIFETIME_ASHE;
             newbuff.health = SKILLTWO_LIFETIME_ASHE; 
             newbuff.nextthinkinterval = SKILLTWO_TICKRATE_ASHE; 
             newbuff.nextthink = time + SKILLTWO_TICKRATE_ASHE;
             break;
 		case STUN_SKILLFOUR_ASHE:
+            newbuff.maxhealth = SKILLFOUR_LIFETIME_ASHE;
 			newbuff.health = SKILLFOUR_LIFETIME_ASHE; 
             newbuff.nextthinkinterval = SKILLFOUR_TICKRATE_ASHE; 
             newbuff.nextthink = time + SKILLFOUR_TICKRATE_ASHE;
 			break;
         default:
+            newbuff.maxhealth = 10;
             newbuff.health = 10; // 10 ticks of nextthink
             newbuff.nextthinkinterval = .1;
             newbuff.nextthink = time + .1;
     }
+
+    UpdateStats(newbuff.owner);
 }
