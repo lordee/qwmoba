@@ -896,8 +896,6 @@ void() PlayerPostThink =
 	// if there's a menu set, make sure it's activated
 	// send this even when 0
 	ShowMenu(self, self.menu);
-	
-
 };
 
 
