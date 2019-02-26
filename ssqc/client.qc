@@ -413,6 +413,11 @@ void () SetupChamp;
 
 void() PutClientInServer =
 {
+    if (self.respawntime != 0)
+    {
+        return;
+    }
+
 	local   entity spot;
 
 	self.classname = "player";
