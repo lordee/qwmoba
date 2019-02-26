@@ -105,18 +105,26 @@ float (float cooldown, float manacost) CanCast = {
 
 void (entity player) UpdateStats = {
 
-    float attdamage, attspeed, msspeed;
-    // base char
+    float attdamage, attspeed, msspeed, health, mana, lvl;
+    lvl = player.level;
+    
     switch (player.champ)
     {
         case CHAMP_ASHE:
+            // base char
             attdamage = BASEAD_ASHE;
             attspeed = BASEATTACKSPEED_ASHE;
             msspeed = BASESPEED_ASHE;
+            health = BASEHEALTH_ASHE;
+            mana = BASEMANA_ASHE;
+
+            // char levels
+            attdamage = attdamage + (GROWTH_AD_ASHE * lvl);
+            attspeed = attspeed * (100 + ((GROWTH_AS_ASHE * lvl) / 100));
+            health = health + (GROWTH_HEALTH_ASHE * lvl);
+            mana = mana + (GROWTH_MANA_ASHE * lvl);
             break;
     }
-
-    // char levels
 
     // items
 
@@ -142,4 +150,8 @@ void (entity player) UpdateStats = {
 
     player.attackspeed = attspeed;
     player.speed = msspeed;
+    player.health = player.health + (health - player.maxhealth);
+    player.maxhealth = health;
+    player.mana = player.mana + (mana - player.maxmana);
+    player.maxmana = mana;
 }

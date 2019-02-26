@@ -267,11 +267,15 @@
 #define BASEMANA_ASHE  330
 #define BASEMANA_REGEN_ASHE 5
 #define BASESPEED_ASHE  330
-#define ADGROWTH_ASHE   3
 #define BASEATTACKSPEED_ASHE    1
 #define AASLOW_VALUE_ASHE       30 // slow percent
 #define AASLOW_LIFETIME_ASHE   1
 #define AASLOW_TICKRATE_ASHE   1
+#define GROWTH_AD_ASHE  3
+#define GROWTH_HEALTH_ASHE  50
+#define GROWTH_AS_ASHE  3
+#define GROWTH_MANA_ASHE    25
+
 
 #define SKILLONE_VALUE_ASHE      30 // slow percent
 #define SKILLONE_LIFETIME_ASHE   1
