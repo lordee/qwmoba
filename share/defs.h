@@ -342,3 +342,25 @@
 
 // info_qwmgoal
 #define INFO_WAYPOINT   1
+
+// levels
+#define EXP_LEVELTWO    280
+#define EXP_LEVELTHREE    380
+#define EXP_LEVELFOUR    480
+#define EXP_LEVELFIVE    580
+#define EXP_LEVELSIX    680
+#define EXP_LEVELSEVEN    780
+#define EXP_LEVELEIGHT    880
+#define EXP_LEVELNINE    980
+#define EXP_LEVELTEN    1080
+#define EXP_LEVELELEVEN    1180
+#define EXP_LEVELTWELVE    1280
+#define EXP_LEVELTHIRTEEN    1380
+#define EXP_LEVELFOURTEEN    1480
+#define EXP_LEVELFIFTEEN    1580
+#define EXP_LEVELSIXTEEN    1680
+#define EXP_LEVELSEVENTEEN    1780
+#define EXP_LEVELEIGHTEEN    1880
+
+#define KILLTYPE_KILL       1
+#define KILLTYPE_ASSIST     2
