@@ -98,17 +98,7 @@ void () GoalThink = {
             break;
     }
 
-    self.health = self.health + self.healthregen;
-    self.mana = self.mana + self.manaregen;
-
-    if (self.health > self.max_health)
-    {
-        self.health = self.max_health;
-    }
-    if (self.mana > self.max_mana)
-    {
-        self.mana = self.max_mana;
-    }
+    DoRegen(self);
 }
 
 void () item_qwmgoal = {
@@ -141,7 +131,7 @@ void () item_qwmgoal = {
             self.max_health = STRUCTURE_NEXUS_HEALTH;
             self.healthregen = STRUCTURE_NEXUS_HEALTH_REGEN;
             self.think = GoalThink;
-            self.nextthink = time + REGEN_TICKTIME;
+            self.nextthink = time + .1;
             break;
         case STRUCTURE_INHIB:
             precache_model("progs/shalrath.mdl");
@@ -154,7 +144,7 @@ void () item_qwmgoal = {
             self.max_health = STRUCTURE_INHIB_HEALTH;
             self.healthregen = STRUCTURE_INHIB_HEALTH_REGEN;
             self.think = GoalThink;
-            self.nextthink = time + REGEN_TICKTIME;
+            self.nextthink = time + .1;
             break;
         case STRUCTURE_TOWER:
             precache_model ("progs/shambler.mdl");
@@ -204,7 +194,7 @@ void () item_qwmgoal = {
             }
 
             self.think = GoalThink;
-            self.nextthink = time + REGEN_TICKTIME;
+            self.nextthink = time + .1;
             break;
         case STRUCTURE_SHOP:
             self.takedamage = FALSE;

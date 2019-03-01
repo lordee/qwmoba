@@ -3,6 +3,31 @@ void () SkillTwo_Ashe;
 void () SkillThree_Ashe;
 void () SkillFour_Ashe;
 
+void (entity e) DoRegen = {
+    if (e.deadflag == DEAD_NO)
+    {
+        if (time >= e.healthlastregen)
+        {
+            e.health = e.health + e.healthregen;
+            if (self.health > self.max_health)
+            {
+                self.health = self.max_health;
+            }
+            self.healthlastregen = time;
+        }
+
+        if (time >= self.manalastregen)
+        {
+            self.mana = self.mana + self.manaregen;
+            if (self.mana > self.max_mana)
+            {
+                self.mana = self.max_mana;
+            }
+            self.manalastregen = time;
+        }
+    }
+}
+
 void () SetupChamp = {
     self.regentick = time + REGEN_TICKTIME;
     switch (self.champ)

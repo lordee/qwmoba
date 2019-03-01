@@ -37,6 +37,10 @@
 .float ready;
 .float level;
 .float experience;
+.float tower_no;
+.float mrvalue;
+.float healthlastregen;
+.float manalastregen;
 
 // buff fields
 .float bufftype;
