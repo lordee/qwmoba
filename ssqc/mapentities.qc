@@ -130,6 +130,11 @@ void () item_qwmgoal = {
             self.health = STRUCTURE_NEXUS_HEALTH;
             self.max_health = STRUCTURE_NEXUS_HEALTH;
             self.healthregen = STRUCTURE_NEXUS_HEALTH_REGEN;
+            self.armorvalue = STRUCTURE_NEXUS_ARMOUR_BASE;
+            self.mrvalue = STRUCTURE_NEXUS_MR_BASE;
+            self.gold_global = STRUCTURE_NEXUS_GOLD_GLOBAL;
+            self.gold_assist = STRUCTURE_NEXUS_GOLD_ASSIST;
+            self.gold_kill = STRUCTURE_NEXUS_GOLD_KILL;
             self.think = GoalThink;
             self.nextthink = time + .1;
             break;
@@ -143,6 +148,12 @@ void () item_qwmgoal = {
             self.health = STRUCTURE_INHIB_HEALTH;
             self.max_health = STRUCTURE_INHIB_HEALTH;
             self.healthregen = STRUCTURE_INHIB_HEALTH_REGEN;
+            self.armorvalue = STRUCTURE_INHIB_ARMOUR_BASE;
+            self.mrvalue = STRUCTURE_INHIB_MR_BASE;
+            self.gold_global = STRUCTURE_INHIB_GOLD_GLOBAL;
+            self.gold_assist = STRUCTURE_INHIB_GOLD_ASSIST;
+            self.gold_kill = STRUCTURE_INHIB_GOLD_KILL;
+
             self.think = GoalThink;
             self.nextthink = time + .1;
             break;
@@ -163,6 +174,9 @@ void () item_qwmgoal = {
                     self.attackspeed = STRUCTURE_TOWER_NEXUS_ATTACKSPEED;
                     self.armorvalue = STRUCTURE_TOWER_NEXUS_ARMOUR_BASE;
                     self.mrvalue = STRUCTURE_TOWER_NEXUS_MR_BASE;
+                    self.gold_global = STRUCTURE_TOWER_NEXUS_GOLD_GLOBAL;
+                    self.gold_assist = STRUCTURE_TOWER_NEXUS_GOLD_ASSIST;
+                    self.gold_kill = STRUCTURE_TOWER_NEXUS_GOLD_KILL;
                     break;
                 case STRUCTURE_TOWER_INHIB:
                     self.health = STRUCTURE_TOWER_INHIB_HEALTH;
@@ -172,6 +186,9 @@ void () item_qwmgoal = {
                     self.attackspeed = STRUCTURE_TOWER_INHIB_ATTACKSPEED;
                     self.armorvalue = STRUCTURE_TOWER_INHIB_ARMOUR_BASE;
                     self.mrvalue = STRUCTURE_TOWER_INHIB_MR_BASE;
+                    self.gold_global = STRUCTURE_TOWER_INHIB_GOLD_GLOBAL;
+                    self.gold_assist = STRUCTURE_TOWER_INHIB_GOLD_ASSIST;
+                    self.gold_kill = STRUCTURE_TOWER_INHIB_GOLD_KILL;
                     break;
                 case STRUCTURE_TOWER_INNER:
                     self.health = STRUCTURE_TOWER_INNER_HEALTH;
@@ -181,6 +198,9 @@ void () item_qwmgoal = {
                     self.attackspeed = STRUCTURE_TOWER_INNER_ATTACKSPEED;
                     self.armorvalue = STRUCTURE_TOWER_INNER_ARMOUR_BASE;
                     self.mrvalue = STRUCTURE_TOWER_INNER_MR_BASE;
+                    self.gold_global = STRUCTURE_TOWER_INNER_GOLD_GLOBAL;
+                    self.gold_assist = STRUCTURE_TOWER_INNER_GOLD_ASSIST;
+                    self.gold_kill = STRUCTURE_TOWER_INNER_GOLD_KILL;
                     break;
                 case STRUCTURE_TOWER_OUTER:
                     self.health = STRUCTURE_TOWER_OUTER_HEALTH;
@@ -190,6 +210,9 @@ void () item_qwmgoal = {
                     self.attackspeed = STRUCTURE_TOWER_OUTER_ATTACKSPEED;
                     self.armorvalue = STRUCTURE_TOWER_OUTER_ARMOUR_BASE;
                     self.mrvalue = STRUCTURE_TOWER_OUTER_MR_BASE;
+                    self.gold_global = STRUCTURE_TOWER_OUTER_GOLD_GLOBAL;
+                    self.gold_assist = STRUCTURE_TOWER_OUTER_GOLD_ASSIST;
+                    self.gold_kill = STRUCTURE_TOWER_OUTER_GOLD_KILL;
                     break;
             }
 

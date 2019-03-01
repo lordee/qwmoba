@@ -49,6 +49,7 @@ void (float t, vector org, float lanenum, float team) SpawnCreep = {
             creep.th_pain = SUB_Null_pain;
             creep.th_die = knight_die;
             creep.attack_state = AS_MELEE;            
+            creep.gold_kill = CREEP_MELEE_GOLD;
             break;
         case CREEP_RANGE:
             precache_model2 ("progs/enforcer.mdl");
@@ -80,6 +81,7 @@ void (float t, vector org, float lanenum, float team) SpawnCreep = {
             creep.th_die = enf_die;
             creep.th_missile = enf_atk1;
             creep.attack_state = AS_MISSILE;
+            creep.gold_kill = CREEP_RANGE_GOLD;
             break;
         case CREEP_CANNON:
             precache_model ("progs/ogre.mdl");
@@ -109,6 +111,7 @@ void (float t, vector org, float lanenum, float team) SpawnCreep = {
             creep.th_missile = ogre_nail1;
             creep.th_pain = SUB_Null_pain;            
             creep.attack_state = AS_MISSILE;
+            creep.gold_kill = CREEP_CANNON_GOLD;
             break;
         case CREEP_SUPER:
             precache_model2 ("progs/hknight.mdl");
@@ -143,6 +146,7 @@ void (float t, vector org, float lanenum, float team) SpawnCreep = {
             creep.th_pain = SUB_Null_pain;
             creep.th_die = hknight_die;
             creep.attack_state = AS_MELEE;
+            creep.gold_kill = CREEP_SUPER_GOLD;
     }
 
     setorigin(creep, org);

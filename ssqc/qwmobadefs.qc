@@ -32,6 +32,10 @@
 .float skillfourcooldown;
 .float skillfourmanacost;
 .float gold;
+.float gold_global;
+.float gold_assist;
+.float gold_kill;
+
 .float respawntime;
 .float cnt2;
 .float ready;
