@@ -32,7 +32,7 @@ void () GameThink = {
 
 void () WaveThink = {
     self.wave = self.wave + 1;
-    dprint("wave think going for wave: ", ftos(self.wave));
+    //dprint("wave think going for wave: ", ftos(self.wave));
 
     float teamcheck, inhibsdown;
     teamcheck = 2;
