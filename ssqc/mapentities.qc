@@ -137,9 +137,9 @@ void () item_qwmgoal = {
 	        setsize (self, '-160 -128 -24', '160 128 256');
 
             self.takedamage = TRUE;
-            self.health = HEALTH_NEXUS;
-            self.max_health = HEALTH_NEXUS;
-            self.healthregen = HEALTH_REGEN_NEXUS;
+            self.health = STRUCTURE_NEXUS_HEALTH;
+            self.max_health = STRUCTURE_NEXUS_HEALTH;
+            self.healthregen = STRUCTURE_NEXUS_HEALTH_REGEN;
             self.think = GoalThink;
             self.nextthink = time + REGEN_TICKTIME;
             break;
@@ -150,9 +150,9 @@ void () item_qwmgoal = {
             setmodel (self, "progs/shalrath.mdl");
 	        setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 
-            self.health = HEALTH_INHIB;
-            self.max_health = HEALTH_INHIB;
-            self.healthregen = HEALTH_REGEN_INHIB;
+            self.health = STRUCTURE_INHIB_HEALTH;
+            self.max_health = STRUCTURE_INHIB_HEALTH;
+            self.healthregen = STRUCTURE_INHIB_HEALTH_REGEN;
             self.think = GoalThink;
             self.nextthink = time + REGEN_TICKTIME;
             break;
@@ -163,8 +163,46 @@ void () item_qwmgoal = {
             setmodel (self, "progs/shambler.mdl");
             setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 
-            self.health = HEALTH_TOWER;
-            self.max_health = HEALTH_TOWER;
+            switch (self.tower_no)
+            {
+                case STRUCTURE_TOWER_NEXUS:
+                    self.health = STRUCTURE_TOWER_NEXUS_HEALTH;
+                    self.max_health = STRUCTURE_TOWER_NEXUS_HEALTH;
+                    self.healthregen = STRUCTURE_TOWER_NEXUS_HEALTH_REGEN;
+                    self.attackdamage = STRUCTURE_TOWER_NEXUS_AD;
+                    self.attackspeed = STRUCTURE_TOWER_NEXUS_ATTACKSPEED;
+                    self.armorvalue = STRUCTURE_TOWER_NEXUS_ARMOUR_BASE;
+                    self.mrvalue = STRUCTURE_TOWER_NEXUS_MR_BASE;
+                    break;
+                case STRUCTURE_TOWER_INHIB:
+                    self.health = STRUCTURE_TOWER_INHIB_HEALTH;
+                    self.max_health = STRUCTURE_TOWER_INHIB_HEALTH;
+                    self.healthregen = STRUCTURE_TOWER_INHIB_HEALTH_REGEN;
+                    self.attackdamage = STRUCTURE_TOWER_INHIB_AD;
+                    self.attackspeed = STRUCTURE_TOWER_INHIB_ATTACKSPEED;
+                    self.armorvalue = STRUCTURE_TOWER_INHIB_ARMOUR_BASE;
+                    self.mrvalue = STRUCTURE_TOWER_INHIB_MR_BASE;
+                    break;
+                case STRUCTURE_TOWER_INNER:
+                    self.health = STRUCTURE_TOWER_INNER_HEALTH;
+                    self.max_health = STRUCTURE_TOWER_INNER_HEALTH;
+                    self.healthregen = STRUCTURE_TOWER_INNER_HEALTH_REGEN;
+                    self.attackdamage = STRUCTURE_TOWER_INNER_AD;
+                    self.attackspeed = STRUCTURE_TOWER_INNER_ATTACKSPEED;
+                    self.armorvalue = STRUCTURE_TOWER_INNER_ARMOUR_BASE;
+                    self.mrvalue = STRUCTURE_TOWER_INNER_MR_BASE;
+                    break;
+                case STRUCTURE_TOWER_OUTER:
+                    self.health = STRUCTURE_TOWER_OUTER_HEALTH;
+                    self.max_health = STRUCTURE_TOWER_OUTER_HEALTH;
+                    self.healthregen = STRUCTURE_TOWER_OUTER_HEALTH_REGEN;
+                    self.attackdamage = STRUCTURE_TOWER_OUTER_AD;
+                    self.attackspeed = STRUCTURE_TOWER_OUTER_ATTACKSPEED;
+                    self.armorvalue = STRUCTURE_TOWER_OUTER_ARMOUR_BASE;
+                    self.mrvalue = STRUCTURE_TOWER_OUTER_MR_BASE;
+                    break;
+            }
+
             self.think = GoalThink;
             self.nextthink = time + REGEN_TICKTIME;
             break;
