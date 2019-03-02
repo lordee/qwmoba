@@ -134,41 +134,14 @@ This should be the only function that ever reduces health.
 void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 {
 	local   vector  dir;
-	local   float   save;
-	local   float   take;
-	local   string  attackerteam, targteam;
+	local   float  attackerteam, targteam;
 
 	if (!targ.takedamage)
 		return;
 
 // used by buttons and triggers to set activator for target firing
 	damage_attacker = attacker;
-
-// save damage based on the target's armor level
-
-	save = ceil(targ.armortype*damage);
-	if (save >= targ.armorvalue)
-	{
-		save = targ.armorvalue;
-		targ.armortype = 0;     // lost all armor
-		targ.items = targ.items - (targ.items & (IT_ARMOR1 | IT_ARMOR2 | IT_ARMOR3));
-	}
-	
-	targ.armorvalue = targ.armorvalue - save;
-	take = ceil(damage-save);
-
-// add to the damage total for clients, which will be sent as a single
-// message at the end of the frame
-// FIXME: remove after combining shotgun blasts?
-	if (targ.flags & FL_CLIENT)
-	{
-		targ.dmg_take = targ.dmg_take + take;
-		targ.dmg_save = targ.dmg_save + save;
-		targ.dmg_inflictor = inflictor;
-	}
-
 	damage_inflictor = inflictor;        
-
 
 // figure momentum add
 	if ( (inflictor != world) && (targ.movetype == MOVETYPE_WALK) )
@@ -187,26 +160,46 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 		// Rocket Jump modifiers
 		if ( (rj > 1) & ((attacker.classname == "player") & (targ.classname == "player")) & ( attacker.netname == targ.netname)) 
 			targ.velocity = targ.velocity + dir * damage * rj;
-
 	}
 
-// team play damage avoidance
-//ZOID 12-13-96: self.team doesn't work in QW.  Use keys
-	attackerteam = infokey(attacker, "team");
-	targteam = infokey(targ, "team");
+	// team play damage avoidance
+	attackerteam = attacker.team_no;
+	targteam = targ.team_no;
 
-	if ((teamplay == 1) && (targteam == attackerteam) &&
-		(attacker.classname == "player") && (attackerteam != "") &&
+	if ((targteam == attackerteam) &&
+		(attacker.classname == "player") && 
 		inflictor.classname !="door")
 		return;
+	
+	// do the damage
+	targ.health = targ.health - damage;
 
-	if ((teamplay == 3) && (targteam == attackerteam) &&
-		(attacker.classname == "player") && (attackerteam != "") &&
-		(targ != attacker)&& inflictor.classname !="door")
-		return;
-		
-// do the damage
-	targ.health = targ.health - take;
+	// if champ being attacked
+	if (targ.classname == "player" && attacker.classname == "player")
+	{
+		entity creep;
+		float dist;
+		creep = find (world, classname, "creep");
+
+		while (creep)
+		{
+			if (creep.team_no == targ.team_no)
+			{
+				// if minions are near
+				dist = vlen(targ.origin, creep.origin);
+
+				if (dist <= CREEP_AGRO_RANGE)
+				{
+					// if minions don't have a champ target, target the attacker
+					if (!creep.enemy || creep.enemy.classname != "player")
+					{
+						creep.enemy = attacker;
+					}
+				}
+			}
+			creep = find(creep, classname, "creep");
+		}
+	}
 
 	if (targ.health <= 0)
 	{
@@ -214,30 +207,13 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 		return;
 	}
 
-// react to the damage
+	// react to the damage
 	oldself = self;
 	self = targ;
 
-/*SERVER
-	if ( (self.flags & FL_MONSTER) && attacker != world)
-	{
-	// get mad unless of the same class (except for soldiers)
-		if (self != attacker && attacker != self.enemy)
-		{
-			if ( (self.classname != attacker.classname) 
-			|| (self.classname == "monster_army" ) )
-			{
-				if (self.enemy.classname == "player")
-					self.oldenemy = self.enemy;
-				self.enemy = attacker;
-				FoundTarget ();
-			}
-		}
-	}
-*/
 	if (self.th_pain)
 	{
-		self.th_pain (attacker, take);
+		self.th_pain (attacker, damage);
 	}
 
 	self = oldself;
