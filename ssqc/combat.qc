@@ -178,19 +178,39 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 	// do the damage
 	targ.health = targ.health - damage;
 
-	// track attacker in assist entity
-	entity at;
-	at = spawn();
-	at.classname = "assist_tracker";
-	at.owner = targ;
-	at.enemy = attacker;
-	at.think = AssistTrackerThink;
-	at.nextthink = time + 1;
-	at.health = 5;
-
-	// if champ being attacked
+	// if champ being attacked by another champ
 	if (targ.classname == "player" && attacker.classname == "player")
 	{
+		// last hit by
+		targ.enemy = attacker;
+
+		// track attacker in assist entity
+		entity at;
+		float tracked;
+		tracked = 0;
+		at = find(world, classname, "assist_tracker");
+		while (at)
+		{
+			if (at.enemy == attacker && at.owner == targ)
+			{
+				tracked = 1;
+				at.health = 13;
+				at.nextthink = time + 1;
+			}
+			at = find(at, classname, "assist_tracker");
+		}
+		
+		if (!tracked)
+		{
+			at = spawn();
+			at.classname = "assist_tracker";
+			at.owner = targ;
+			at.enemy = attacker;
+			at.think = AssistTrackerThink;
+			at.nextthink = time + 1;
+			at.health = 13;
+		}
+
 		entity creep;
 		float dist;
 		creep = find (world, classname, "creep");
