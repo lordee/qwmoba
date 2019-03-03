@@ -82,6 +82,7 @@ float(entity targ, entity inflictor) CanDamage =
 Killed
 ============
 */
+void (entity targ, entity attacker) GoldReward;
 void(entity targ, entity attacker) Killed =
 {
 	local entity oself;
@@ -99,14 +100,9 @@ void(entity targ, entity attacker) Killed =
 		return;
 	}
 
-	self.enemy = attacker;
+	GoldReward(self, attacker);
 
-// bump the monster counter
-	if (self.flags & FL_MONSTER)
-	{
-		killed_monsters = killed_monsters + 1;
-		WriteByte (MSG_ALL, SVC_KILLEDMONSTER);
-	}
+	self.enemy = attacker;
 
 	ClientObituary(self, attacker);
 	
@@ -114,15 +110,23 @@ void(entity targ, entity attacker) Killed =
 	self.touch = SUB_Null;
 	self.effects = 0;
 
-/*SERVER
-	monster_death_use();
-*/
 	self.th_die ();
 	
 	self = oself;
 };
 
 
+void () AssistTrackerThink = {
+	self.health = self.health - 1;
+	if (self.health <= 0)
+	{
+		remove(self);
+	}
+	else
+	{
+		self.nextthink = time + 1;
+	}
+}
 /*
 ============
 T_Damage
@@ -174,6 +178,16 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 	// do the damage
 	targ.health = targ.health - damage;
 
+	// track attacker in assist entity
+	entity at;
+	at = spawn();
+	at.classname = "assist_tracker";
+	at.owner = targ;
+	at.enemy = attacker;
+	at.think = AssistTrackerThink;
+	at.nextthink = time + 1;
+	at.health = 5;
+
 	// if champ being attacked
 	if (targ.classname == "player" && attacker.classname == "player")
 	{
@@ -186,7 +200,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 			if (creep.team_no == targ.team_no)
 			{
 				// if minions are near
-				dist = vlen(targ.origin, creep.origin);
+				dist = vlen(targ.origin - creep.origin);
 
 				if (dist <= CREEP_AGRO_RANGE)
 				{

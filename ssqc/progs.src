@@ -22,6 +22,7 @@ server.qc
 
 qwmobamenu.qc
 endpoints.qc
+qwm.qc
 champ.qc
 champashe.qc
 mapentities.qc

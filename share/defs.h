@@ -313,6 +313,9 @@
 #define MSSLOW_SKILLTWO_ASHE     3
 #define STUN_SKILLFOUR_ASHE     4
 
+// range?
+#define RANGE_LOCAL 800
+
 // creeps
 #define CREEP_AGRO_RANGE    1000
 #define CREEP_CHASE_DISTANCE    2500
