@@ -224,7 +224,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 			if (at.enemy == attacker && at.owner == targ)
 			{
 				tracked = 1;
-				at.health = 13;
+				at.health = 10;
 				at.nextthink = time + 1;
 			}
 			at = find(at, classname, "assist_tracker");
@@ -238,7 +238,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 			at.enemy = attacker;
 			at.think = AssistTrackerThink;
 			at.nextthink = time + 1;
-			at.health = 13;
+			at.health = 10;
 		}
 
 		entity creep;
