@@ -3,6 +3,11 @@ void (entity targ, entity attacker) GoldReward = {
     dist = 0;
     
     // kill gold
+    if (attacker.classname != "player")
+    {
+        // if enemy wasn't a player, find last person to hit them and make them the killer
+        attacker = targ.enemy;
+    }
     attacker.gold = attacker.gold + targ.gold_kill;
 
     entity p;

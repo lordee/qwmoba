@@ -120,6 +120,10 @@ void () AssistTrackerThink = {
 	self.health = self.health - 1;
 	if (self.health <= 0)
 	{
+		if (self.classname == "lasthit_tracker")
+		{
+			self.owner.enemy = world;
+		}
 		remove(self);
 	}
 	else
@@ -183,11 +187,37 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 	{
 		// last hit by
 		targ.enemy = attacker;
+		entity lht;
+		float tracked;
+		tracked = 0;
+
+		lht = find(world, classname, "lasthit_tracker");
+		while (lht)
+		{
+			if (lht.owner == targ)
+			{
+				lht.enemy = attacker;
+				tracked = 1;
+				lht.health = 13;
+				lht.nextthink = time + 1;
+			}
+			lht = find(lht, classname, "lasthit_tracker");
+		}
+		if (!tracked)
+		{
+			lht = spawn();
+			lht.classname = "lasthit_tracker";
+			lht.owner = targ;
+			lht.enemy = attacker;
+			lht.health = 13;
+			lht.think = AssistTrackerThink;
+			lht.nextthink = time + 1;
+		}
 
 		// track attacker in assist entity
 		entity at;
-		float tracked;
 		tracked = 0;
+
 		at = find(world, classname, "assist_tracker");
 		while (at)
 		{
@@ -199,7 +229,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 			}
 			at = find(at, classname, "assist_tracker");
 		}
-		
+
 		if (!tracked)
 		{
 			at = spawn();
