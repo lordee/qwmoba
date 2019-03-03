@@ -3,7 +3,7 @@ void () GameThink = {
     p = find(world, classname, "player");
     while (p)
     {
-        p.gold = p.gold + 1;
+        p.gold = p.gold + 2.4;
         
         if (p.deadflag == DEAD_DEAD)
         {
@@ -129,6 +129,7 @@ void () StartGame = {
     {
         oldself = self;
         self = p;
+        self.gold = 500;
         PutClientInServer();
         self = oldself;
         p = find(p, classname, "player");
