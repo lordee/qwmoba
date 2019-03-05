@@ -131,12 +131,6 @@ void () StartGame = {
         self = p;
         self.gold = 500;
         
-        entity gt;
-        gt = spawn();
-        gt.owner = player;
-        gt.tier = 0;
-        gt.classname = "gold_tracker";
-
         SetGold(self);
         PutClientInServer();
         self = oldself;

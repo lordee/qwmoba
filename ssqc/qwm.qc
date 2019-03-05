@@ -1,136 +1,125 @@
 void (entity player, float kill_type, float creep_type) GoldTracker_Update = {
-    
-    entity gt;
-    gt = find(world, classname, "gold_tracker");
-
-    while (gt)
+    // kills
+    // minions
+    switch (kill_type)
     {
-        if (gt.owner == player)
-        {
-            // kills
-            // minions
-            switch (kill_type)
+        case KT_CHAMPKILL:
+            player.consecutive_deaths = 0;
+            player.consecutive_kills = player.consecutive_kills + 1;
+            // tier resets to 0 when on a neg tier
+            player.kill_tier = (player.kill_tier < 0) ? 0 : player.kill_tier;
+            break;
+        case KT_CHAMPASSIST:
+            // if level < 0 then go up a level
+            player.kill_tier = (player.kill_tier < 0) ? player.kill_tier + 1 : player.kill_tier;
+            break;
+        case KT_MINIONKILL:
+            float mkg;
+            mkg = 0;
+            switch (creep_type)
             {
-                case GT_CHAMPKILL:
-                    gt.consecutive_deaths = 0;
-                    gt.consecutive_kills = gt.consecutive_kills + 1;
-                    // tier resets to 0 when on a neg tier
-                    gt.level = (gt.level < 0) ? 0 : gt.level;
+                case CREEP_MELEE:
+                    mkg = CREEP_MELEE_GOLD;
                     break;
-                case GT_CHAMPASSIST:
-                    // if level < 0 then go up a level
-                    gt.level = (gt.level < 0) ? gt.level + 1 : gt.level;
+                case CREEP_RANGE:
+                    mkg = CREEP_RANGE_GOLD;
                     break;
-                case GT_MINIONKILL:
-                    float mkg;
-                    mkg = 0;
-                    switch (creep_type)
-                    {
-                        case CREEP_MELEE:
-                            mkg = CREEP_MELEE_GOLD;
-                            break;
-                        case CREEP_RANGE:
-                            mkg = CREEP_RANGE_GOLD;
-                            break;
-                        case CREEP_CANNON:
-                            mkg = CREEP_CANNON_GOLD;
-                            break;
-                        case CREEP_SUPER:
-                            mkg = CREEP_SUPER_GOLD;
-                            break;
-                    }
-                    gt.gold_minion = gt.gold_minion + mkg;
-
-                    if (gt.gold_minion >= 1000)
-                    {
-                        gt.gold_minion = gt.gold_minion - 1000;
-                        // if negative tier, go up 1 tier for 1k gold from minions
-                        gt.level = (gt.level < 0) ? (gt.level + 1) : 0;
-                    }
+                case CREEP_CANNON:
+                    mkg = CREEP_CANNON_GOLD;
                     break;
-                case GT_SELFDEATH:
-                    gt.consecutive_kills = 0;
-                    gt.consecutive_deaths = gt.consecutive_deaths + 1;
-                    // tier resets to 0 when dying whilst being on a positive tier
-                    gt.level = (gt.level > 0) ? 0 : gt.level;
-
+                case CREEP_SUPER:
+                    mkg = CREEP_SUPER_GOLD;
                     break;
-                    
             }
+            player.gold_minion = player.gold_minion + mkg;
 
+            if (player.gold_minion >= 1000)
+            {
+                player.gold_minion = player.gold_minion - 1000;
+                // if negative tier, go up 1 tier for 1k gold from minions
+                player.kill_tier = (player.kill_tier < 0) ? (player.kill_tier + 1) : 0;
+            }
+            break;
+        case KT_SELFDEATH:
+            // if more than 1k reward, only reward 1k and reduce tier
+            if (player.kill_tier > 3 && player.consecutive_kills >= 7)
+            {
+                float gk, nt;
+                gk = 600 + (100 * (player.consecutive_kills - 3));
+                nt = (gk - 600) / 100;
 
-        }
-        gt = find(gt, classname, "gold_tracker");
+            }
+            
+
+            
+            
+
+            // tier resets to 0 when dying whilst being on a positive tier
+
+            player.kill_tier = (player.kill_tier > 0) ? 0 : player.kill_tier;
+
+            player.consecutive_kills = 0;
+            player.consecutive_deaths = player.consecutive_deaths + 1;
+            break;
+            
     }
-    
-    
 
 }
 
 void (entity player) SetGold = {
-    entity gt;
-
-    gt = find(world, classname, "gold_tracker");
-    while (gt)
+    if (player.kill_tier > 3)
     {
-        if (gt.owner == player)
-        {
-            if (gt.level > 3)
-            {
-                float gk;
-                gk = 600 + (100 * (player.consecutive_kills - 3));
-                gk = (gk > 1000) ? 1000 : gk;
+        float gk;
+        gk = 600 + (100 * (player.consecutive_kills - 3));
+        gk = (gk > 1000) ? 1000 : gk;
 
-                player.gold_kill = gk;
+        player.gold_kill = gk;
+        player.gold_assist = 150;
+    }
+    else {
+        switch (player.kill_tier)
+        {
+            case 3:
+                player.gold_kill = 600;
                 player.gold_assist = 150;
-            }
-            else {
-                switch (gt.level)
-                {
-                    case 3:
-                        player.gold_kill = 600;
-                        player.gold_assist = 150;
-                        break;
-                    case 2:
-                        player.gold_kill = 450;
-                        player.gold_assist = 150;
-                        break;
-                    case 1:
-                        player.gold_kill = 300;
-                        player.gold_assist = 150;
-                        break;
-                    case 0:
-                        player.gold_kill = 300;
-                        player.gold_assist = 150;
-                        break;
-                    case -1:
-                        player.gold_kill = 274;
-                        player.gold_assist = 137;
-                        break;
-                    case -2:
-                        player.gold_kill = 220;
-                        player.gold_assist = 110;
-                        break;
-                    case -3:
-                        player.gold_kill = 176;
-                        player.gold_assist = 88;
-                        break;
-                    case -4:
-                        player.gold_kill = 140;
-                        player.gold_assist = 70;
-                        break;
-                    case -5:
-                        player.gold_kill = 112;
-                        player.gold_assist = 56;
-                        break;
-                    case -6:
-                        player.gold_kill = 100;
-                        player.gold_assist = 50;
-                        break;
-                }
-            }
+                break;
+            case 2:
+                player.gold_kill = 450;
+                player.gold_assist = 150;
+                break;
+            case 1:
+                player.gold_kill = 300;
+                player.gold_assist = 150;
+                break;
+            case 0:
+                player.gold_kill = 300;
+                player.gold_assist = 150;
+                break;
+            case -1:
+                player.gold_kill = 274;
+                player.gold_assist = 137;
+                break;
+            case -2:
+                player.gold_kill = 220;
+                player.gold_assist = 110;
+                break;
+            case -3:
+                player.gold_kill = 176;
+                player.gold_assist = 88;
+                break;
+            case -4:
+                player.gold_kill = 140;
+                player.gold_assist = 70;
+                break;
+            case -5:
+                player.gold_kill = 112;
+                player.gold_assist = 56;
+                break;
+            case -6:
+                player.gold_kill = 100;
+                player.gold_assist = 50;
+                break;
         }
-        gt = find(gt, classname, "gold_tracker");
     }
 }
 
