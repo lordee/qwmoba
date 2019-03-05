@@ -83,6 +83,7 @@ Killed
 ============
 */
 void (entity targ, entity attacker) GoldReward;
+void (entity player, float killtype, float creeptype) KillTier_Update;
 void(entity targ, entity attacker) Killed =
 {
 	local entity oself;
@@ -101,6 +102,7 @@ void(entity targ, entity attacker) Killed =
 	}
 
 	GoldReward(self, attacker);
+	KillTier_Update(self, KT_SELFDEATH, CREEP_NONE);
 
 	self.enemy = attacker;
 

@@ -238,10 +238,10 @@
 #define CHAMP_VEIGAR    10
 
 // kill tiers
-#define KT_CHAMPKILL    0
-#define KT_CHAMPASSIST    1
-#define KT_MINIONKILL    2
-#define KT_SELFDEATH    3
+#define KT_CHAMPKILL    1
+#define KT_CHAMPASSIST    2
+#define KT_MINIONKILL    3
+#define KT_SELFDEATH    4
 
 // champ weapons
 #define WEAPON_ASHE     1
@@ -326,7 +326,7 @@
 #define CREEP_AGRO_RANGE    1000
 #define CREEP_CHASE_DISTANCE    2500
 
-
+#define CREEP_NONE          0
 #define CREEP_MELEE         1
 #define CREEP_RANGE         2
 #define CREEP_CANNON        3

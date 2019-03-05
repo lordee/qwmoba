@@ -120,6 +120,8 @@ void () WaveThink = {
     }    
 }
 
+
+void (entity player) SetGold;
 void () StartGame = {
     bprint(PRINT_HIGH, "GAME IS STARTING\n");
     // respawn champs

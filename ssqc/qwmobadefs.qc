@@ -35,6 +35,12 @@
 .float gold_global;
 .float gold_assist;
 .float gold_kill;
+.float gold_extra;
+.float gold_minion;
+
+.float consecutive_deaths;
+.float consecutive_kills;
+.float kill_tier;
 
 .float respawntime;
 .float cnt2;
