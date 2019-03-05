@@ -1,6 +1,4 @@
-void (entity player, float kill_type, float creep_type) GoldTracker_Update = {
-    // kills
-    // minions
+void (entity player, float kill_type, float creep_type) KillTier_Update = {
     switch (kill_type)
     {
         case KT_CHAMPKILL:
@@ -41,85 +39,82 @@ void (entity player, float kill_type, float creep_type) GoldTracker_Update = {
             }
             break;
         case KT_SELFDEATH:
-            // if more than 1k reward, only reward 1k and reduce tier
-            if (player.kill_tier > 3 && player.consecutive_kills >= 7)
-            {
-                float gk, nt;
-                gk = 600 + (100 * (player.consecutive_kills - 3));
-                nt = (gk - 600) / 100;
-
-            }
-            
-
-            
-            
-
             // tier resets to 0 when dying whilst being on a positive tier
-
             player.kill_tier = (player.kill_tier > 0) ? 0 : player.kill_tier;
-
             player.consecutive_kills = 0;
             player.consecutive_deaths = player.consecutive_deaths + 1;
-            break;
-            
+            break;       
     }
-
+    SetGold(player);
 }
 
 void (entity player) SetGold = {
+    float gk;
+    gk = 0;
     if (player.kill_tier > 3)
     {
-        float gk;
         gk = 600 + (100 * (player.consecutive_kills - 3));
-        gk = (gk > 1000) ? 1000 : gk;
-
-        player.gold_kill = gk;
         player.gold_assist = 150;
     }
-    else {
+    else 
+    {
         switch (player.kill_tier)
         {
             case 3:
-                player.gold_kill = 600;
+                gk = 600;
                 player.gold_assist = 150;
                 break;
             case 2:
-                player.gold_kill = 450;
+                gk = 450;
                 player.gold_assist = 150;
                 break;
             case 1:
-                player.gold_kill = 300;
+                gk = 300;
                 player.gold_assist = 150;
                 break;
             case 0:
-                player.gold_kill = 300;
+                gk = 300;
                 player.gold_assist = 150;
                 break;
             case -1:
-                player.gold_kill = 274;
+                gk = 274;
                 player.gold_assist = 137;
                 break;
             case -2:
-                player.gold_kill = 220;
+                gk = 220;
                 player.gold_assist = 110;
                 break;
             case -3:
-                player.gold_kill = 176;
+                gk = 176;
                 player.gold_assist = 88;
                 break;
             case -4:
-                player.gold_kill = 140;
+                gk = 140;
                 player.gold_assist = 70;
                 break;
             case -5:
-                player.gold_kill = 112;
+                gk = 112;
                 player.gold_assist = 56;
                 break;
             case -6:
-                player.gold_kill = 100;
+                gk = 100;
                 player.gold_assist = 50;
                 break;
         }
+    }
+
+    gk = gk + player.gold_extra;
+
+    // max reward is only ever 1k
+    if (gk > 1000)
+    {
+        player.gold_kill = 1000;
+        player.gold_extra = (gk - 1000);
+    }
+    else
+    {
+        player.gold_kill = gk;
+        player.gold_extra = 0;
     }
 }
 

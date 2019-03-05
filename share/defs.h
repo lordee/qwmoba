@@ -237,6 +237,12 @@
 #define CHAMP_AHRI      9
 #define CHAMP_VEIGAR    10
 
+// kill tiers
+#define KT_CHAMPKILL    0
+#define KT_CHAMPASSIST    1
+#define KT_MINIONKILL    2
+#define KT_SELFDEATH    3
+
 // champ weapons
 #define WEAPON_ASHE     1
 
