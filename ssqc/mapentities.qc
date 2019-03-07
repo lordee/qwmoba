@@ -158,6 +158,7 @@ void () GoalThink = {
             dist = 0;
             if (self.enemy)
             {
+                
                 dist = vlen(self.enemy.origin - self.origin);
                 if (dist <= STRUCTURE_TOWER_RANGE)
                 {
@@ -184,7 +185,7 @@ void () GoalThink = {
                 en = find(world, classname, "creep");
                 while (en)
                 {
-                    if (en.team_no != self.team_no)
+                    if (en.team_no != self.team_no && en.team_no != 0)
                     {
                         dist = vlen(en.origin- self.origin);
                         if (dist <= STRUCTURE_TOWER_RANGE)
@@ -223,7 +224,7 @@ void () GoalThink = {
                 en = find(world, classname, "player");
                 while (en)
                 {
-                    if (en.team_no != self.team_no)
+                    if (en.team_no != self.team_no && en.team_no != 0)
                     {
                         dist = vlen(en.origin- self.origin);
                         if (dist <= STRUCTURE_TOWER_RANGE)
