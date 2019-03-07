@@ -866,6 +866,7 @@ PlayerPostThink
 Called every frame after physics are run
 ================
 */
+void (entity ent) DoRegen;
 void() PlayerPostThink =
 {
 //dprint ("post think\n");
@@ -892,22 +893,7 @@ void() PlayerPostThink =
 	self.jump_flag = self.velocity_z;
 
     // qwmoba
-    if (self.regentick >= time)
-    {
-        self.health = self.health + self.healthregen;
-        self.mana = self.mana + self.manaregen;
-        self.regentick = time + REGEN_TICKTIME;
-
-        if (self.health > self.max_health)
-        {
-            self.health = self.max_health;
-        }
-        if (self.mana > self.max_mana)
-        {
-            self.mana = self.max_mana;
-        }
-    }
-
+    DoRegen(self);
 
 	W_WeaponFrame ();
 

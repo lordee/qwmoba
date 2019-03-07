@@ -13,7 +13,7 @@ void (entity e) DoRegen = {
             {
                 self.health = self.max_health;
             }
-            self.healthlastregen = time;
+            self.healthlastregen = time + self.regentick;
         }
 
         if (time >= self.manalastregen)
@@ -23,7 +23,7 @@ void (entity e) DoRegen = {
             {
                 self.mana = self.max_mana;
             }
-            self.manalastregen = time;
+            self.manalastregen = time + self.regentick;
         }
     }
 }
