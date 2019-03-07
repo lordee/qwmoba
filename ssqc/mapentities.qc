@@ -170,7 +170,6 @@ void () GoalThink = {
                 {
                     self.enemy = world;
                 }
-                
             }
             else
             {

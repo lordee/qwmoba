@@ -262,14 +262,55 @@ void (entity player, entity targ, float killtype, float numparticipants) ApplyEx
             break;
         case "player":
             exp = 140 * targ.level;
-            if (killtype == KILLTYPE_ASSIST)
+            if (killtype == KT_CHAMPASSIST)
             {
                 // share exp with all assisters
                 exp = exp / numparticipants;
             }
+            else if (killtype == KT_CHAMPKILL)
+            {
+                entity at;
+                float num;
+                num = 0
+                at = find(world, classname, "assist_tracker");
+                while (at)
+                {
+                    if (at.owner == targ)
+                    {
+                        if (at.enemy != player)
+                        {
+                            num = num + 1;
+                        }
+                    }
+                    at = find(at, classname, "assist_tracker");
+                }
+
+                // no dynamic sized arrays...?
+                // need better way for this, could store count on at.owner i guess
+                at = find(world, classname, "assist_tracker");
+                while (at)
+                {
+                    if (at.owner == targ)
+                    {
+                        if (at.enemy != player)
+                        {
+                            ApplyExperience(at.enemy, targ, KT_CHAMPASSIST, num);
+                        }
+                    }
+                    at = find(at, classname, "assist_tracker");
+                }
+            }
             break;
         case "item_qwmgoal":
-
+            switch (targ.type)
+            {
+                case STRUCTURE_INHIB:
+                        exp = STRUCTURE_INHIB_EXP;
+                    break;
+                case STRUCTURE_TOWER:
+                        exp = STRUCTURE_TOWER_EXP;
+                    break;
+            }
             break;
         default:
     }

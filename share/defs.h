@@ -237,7 +237,7 @@
 #define CHAMP_AHRI      9
 #define CHAMP_VEIGAR    10
 
-// kill tiers
+// kill types
 #define KT_CHAMPKILL    1
 #define KT_CHAMPASSIST    2
 #define KT_MINIONKILL    3
@@ -395,7 +395,6 @@
 #define CREEP_SUPER_MOVESPEED   325
 #define CREEP_SUPER_ATTACKSPEED 0.85
 
-
 // builds
 #define STRUCTURE_NEXUS     1
 #define STRUCTURE_INHIB     2
@@ -479,7 +478,6 @@
 #define STRUCTURE_TOWER_NEXUS_GOLD_ASSIST    0
 #define STRUCTURE_TOWER_NEXUS_GOLD_KILL    0
 
-
 // info_qwmgoal
 #define INFO_WAYPOINT   1
 
@@ -501,6 +499,3 @@
 #define EXP_LEVELSIXTEEN    1680
 #define EXP_LEVELSEVENTEEN    1780
 #define EXP_LEVELEIGHTEEN    1880
-
-#define KILLTYPE_KILL       1
-#define KILLTYPE_ASSIST     2

@@ -119,7 +119,6 @@ void (entity player, float kill_type, float creep_type) KillTier_Update = {
     SetGold(player);
 }
 
-
 void (entity targ, entity attacker) GoldReward = {
     float dist;
     dist = 0;
