@@ -327,8 +327,8 @@
 #define CREEP_CHASE_DISTANCE    2500
 
 #define CREEP_NONE          0
-#define CREEP_MELEE         1
-#define CREEP_RANGE         2
+#define CREEP_RANGE         1
+#define CREEP_MELEE         2
 #define CREEP_CANNON        3
 #define CREEP_SUPER         4
 #define CREEP_SPAWNOFFSET_X     400
@@ -422,6 +422,8 @@
 #define STRUCTURE_NEXUS_GOLD_GLOBAL    0
 #define STRUCTURE_NEXUS_GOLD_ASSIST    0
 #define STRUCTURE_NEXUS_GOLD_KILL    50
+
+#define STRUCTURE_TOWER_RANGE       2000
 
 #define STRUCTURE_TOWER_OUTER_HEALTH    5000
 #define STRUCTURE_TOWER_OUTER_HEALTH_REGEN  0

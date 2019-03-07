@@ -66,6 +66,78 @@ void () info_qwmwavemanager = {
     remove(self);
 }
 
+void() TowerMissileTouch =
+{
+	if (other != self.enemy)
+		return;		// don't explode unless it's enemy
+
+    T_Damage (other, self, self.owner, self.attackdamage);	
+	
+	sound (self, CHAN_WEAPON, "weapons/r_exp3.wav", 1, ATTN_NORM);
+
+	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+	WriteByte (MSG_BROADCAST, TE_EXPLOSION);
+	WriteCoord (MSG_BROADCAST, self.origin_x);
+	WriteCoord (MSG_BROADCAST, self.origin_y);
+	WriteCoord (MSG_BROADCAST, self.origin_z);
+
+	self.velocity = '0 0 0';
+	self.touch = SUB_Null;
+	setmodel (self, "progs/s_explod.spr");
+	self.solid = SOLID_NOT;
+	s_explode1 ();
+}
+
+void() TowerMissileThink =
+{
+	local vector	dir, vtemp;
+	vtemp = self.enemy.origin + '0 0 10';
+	if (self.enemy.health < 1)
+	{
+		remove(self);
+		return;
+	}
+	dir = normalize(vtemp - self.origin);
+    self.velocity = dir * 350;
+
+	self.nextthink = time + 0.2;
+	self.think = TowerMissileThink;	
+}
+
+void () TowerShoot = {
+    local	entity 	missile;
+	local	vector	dir;
+	local	float	dist, flytime;
+
+	dir = normalize((self.enemy.origin + '0 0 10') - self.origin);
+	dist = vlen (self.enemy.origin - self.origin);
+	flytime = dist * 0.002;
+	if (flytime < 0.1)
+		flytime = 0.1;
+
+	self.effects = self.effects | EF_MUZZLEFLASH;
+	sound (self, CHAN_WEAPON, "shalrath/attack2.wav", 1, ATTN_NORM);
+
+	missile = spawn ();
+	missile.owner = self;
+
+	missile.solid = SOLID_BBOX;
+	missile.movetype = MOVETYPE_FLYMISSILE;
+	setmodel (missile, "progs/v_spike.mdl");
+
+	setsize (missile, '0 0 0', '0 0 0');		
+
+	missile.origin = self.origin + '0 0 10';
+	missile.velocity = dir * 400;
+	missile.avelocity = '300 300 300';
+	missile.nextthink = flytime + time;
+	missile.think = TowerMissileThink;
+	missile.enemy = self.enemy;
+	missile.touch = TowerMissileTouch;
+    missile.attackdamage = self.attackdamage;
+    self.attack_finished = time + (1 / self.attackspeed);
+}
+
 // tower, inhibs, base
 void () GoalThink = {
     self.nextthink = time + REGEN_TICKTIME;
@@ -75,10 +147,106 @@ void () GoalThink = {
         return;
     }
 
+    DoRegen(self);
+
     switch (self.type)
     {
         case STRUCTURE_TOWER:
             // check if any enemy in range, shoot them
+            float dist;
+            dist = 0;
+            if (self.enemy)
+            {
+                dist = vlen(self.enemy.origin - self.origin);
+                if (dist <= STRUCTURE_TOWER_RANGE)
+                {
+                    if (self.attack_finished <= time)
+                    {
+                        // shoot target
+                        TowerShoot();
+                    }
+                }
+                else
+                {
+                    self.enemy = world;
+                }
+                
+            }
+            else
+            {
+                // check for enemy
+                // first check for creeps
+                entity en, targ;
+                float closest;
+                closest = 0;
+                targ = world;
+
+                en = find(world, classname, "creep");
+                while (en)
+                {
+                    if (en.team_no != self.team_no)
+                    {
+                        dist = vlen(en.origin- self.origin);
+                        if (dist <= STRUCTURE_TOWER_RANGE)
+                        {
+                            if (closest == 0)
+                            {
+                                closest = dist;
+                                targ = en;
+                            }
+                            else
+                            {
+                                // targ priorities (melee over range etc)
+                                if (en.type >= targ.type)
+                                {
+                                    if (dist <= closest)
+                                    {
+                                        closest = dist;
+                                        targ = en;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    en = find(en, classname, "creep");
+                }
+
+                if (targ)
+                {
+                    self.enemy = targ;
+                    return;
+                }
+                
+                // check for champs
+                closest = 0;
+                dist = 0;
+                en = find(world, classname, "player");
+                while (en)
+                {
+                    if (en.team_no != self.team_no)
+                    {
+                        dist = vlen(en.origin- self.origin);
+                        if (dist <= STRUCTURE_TOWER_RANGE)
+                        {
+                            if (closest == 0)
+                            {
+                                closest = dist;
+                                targ = en;
+                            }
+                            else
+                            {
+                                if (dist <= closest)
+                                {
+                                    closest = dist;
+                                    targ = en;
+                                }
+                            }
+                        }
+                    }
+                    en = find(en, classname, "player");
+                }
+                self.enemy = targ;
+            }
             break;
         case STRUCTURE_INHIB:
             if (self.deadflag == DEAD_DEAD)
@@ -97,8 +265,6 @@ void () GoalThink = {
             }
             break;
     }
-
-    DoRegen(self);
 }
 
 void () item_qwmgoal = {
@@ -139,10 +305,10 @@ void () item_qwmgoal = {
             self.nextthink = time + .1;
             break;
         case STRUCTURE_INHIB:
-            precache_model("progs/shalrath.mdl");
+            precache_model ("progs/shambler.mdl");
             self.solid = SOLID_BSP;
 	        self.movetype = MOVETYPE_NONE;
-            setmodel (self, "progs/shalrath.mdl");
+            setmodel (self, "progs/shambler.mdl");
 	        setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 
             self.health = STRUCTURE_INHIB_HEALTH;
@@ -158,10 +324,10 @@ void () item_qwmgoal = {
             self.nextthink = time + .1;
             break;
         case STRUCTURE_TOWER:
-            precache_model ("progs/shambler.mdl");
+            precache_model("progs/shalrath.mdl");
             self.solid = SOLID_BSP;
             self.movetype = MOVETYPE_NONE;
-            setmodel (self, "progs/shambler.mdl");
+            setmodel (self, "progs/shalrath.mdl");
             setsize (self, VEC_HULL2_MIN, VEC_HULL2_MAX);
 
             switch (self.tower_no)

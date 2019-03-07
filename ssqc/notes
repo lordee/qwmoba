@@ -1,3 +1,6 @@
+
+
+
 creep attack cooldowns
 missile shoot up, no blocking check
 tower attacks, model
@@ -11,36 +14,8 @@ next thinks on ai_walk, melee etc
 
 
 
-
-enemy dead
-got enemy
-ai_run executed
-Entity 37:
-{
-"modelindex" "31"
-"absmin" "167 199 -1"
-"absmax" "489 457 281"
-"lastruntime" "46.488636"
-"solid" "4"
-"origin" "328 328 24"
-"classname" "item_qwmgoal"
-"model" "progs/oldone.mdl"
-"mins" "-160 -128 -24"
-"maxs" "160 128 256"
-"size" "320 256 280"
-"think" "0:GoalThink"
-"nextthink" "47"
-"dimension_solid" "255"
-"dimension_hit" "255"
-"drawflags" "96"
-"dimension_see" "255"
-"dimension_seen" "255"
-"Version" "1"
-"uniquespawnid" "1"
-"team_no" "1"
-"healthregen" "10"
-"type" "1"
-"team_str" "team1"
-}
-
-enemy dead
+custom particle effect
+float effectnum = particleeffectnum("particleconfig.effectname");
+pointparticles(effectnum, self.origin, v_forward, 1);
+you can call particleeffectnum any time you want, but if its not the first time the server sees that name then it'll involve reliable messages which may appear after the first unreliable effect is received by the client, which can cause the first time to fail to appear. so its generally best to use it like a precache
+or there's self.traileffectnum = particleeffectnum("particleconfig.effectname"); if you want to override an entity's particle trail

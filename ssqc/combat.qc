@@ -265,6 +265,36 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 			}
 			creep = find(creep, classname, "creep");
 		}
+
+        // do same for tower
+        float dist2;
+        dist2 = 0;
+        entity tower;
+        tower = find(world, classname, "item_qwmgoal");
+        while (tower)
+        {
+            if (tower.team_no != attacker.team_no)
+            {
+                if (tower.enemy)
+                {
+                    if (tower.enemy.classname == "player")
+                    {
+                        return;
+                    }
+                }
+
+                dist = vlen(attacker.origin - tower.origin);
+                if (dist <= STRUCTURE_TOWER_RANGE)
+                {
+                    dist2 = vlen(targ.origin - tower.origin);
+                    if (dist2 <= STRUCTURE_TOWER_RANGE)
+                    {
+                        tower.enemy = attacker;
+                    }
+                }
+            }
+            tower = find(tower, classname, "item_qwmgoal");
+        }
 	}
 
 	if (targ.health <= 0)
