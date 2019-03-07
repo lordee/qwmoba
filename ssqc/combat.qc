@@ -101,6 +101,15 @@ void(entity targ, entity attacker) Killed =
 		return;
 	}
 
+    if (targ.classname == "player" || targ.classname == "item_qwmgoal")
+    {
+        if (attacker.classname != "player")
+        {
+            // if enemy wasn't a player, find last person to hit them and make them the killer
+            attacker = targ.enemy;
+        }
+    }
+
 	GoldReward(self, attacker);
 	KillTier_Update(self, KT_SELFDEATH, CREEP_NONE);
     if (targ.classname == "player")
@@ -128,7 +137,7 @@ void(entity targ, entity attacker) Killed =
         }
 
         ApplyExperience(attacker, self, KT_MINIONKILL, num);
-        
+
         entity localp;
         float num, dist;
         num = 0;
@@ -169,6 +178,9 @@ void () AssistTrackerThink = {
 		if (self.classname == "lasthit_tracker")
 		{
 			self.owner.enemy = world;
+            self.owner.assist_count = at.owner.assist_count - 1;
+            if (self.owner.assist_count < 0)
+                self.owner.assist_count = 0;
 		}
 		remove(self);
 	}
@@ -285,6 +297,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 			at.think = AssistTrackerThink;
 			at.nextthink = time + 1;
 			at.health = 10;
+            at.owner.assist_count = at.owner.assist_count + 1;
 		}
 
 		entity creep;

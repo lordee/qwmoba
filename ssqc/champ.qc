@@ -270,8 +270,6 @@ void (entity player, entity targ, float killtype, float numparticipants) ApplyEx
             else if (killtype == KT_CHAMPKILL)
             {
                 entity at;
-                float num;
-                num = 0
                 at = find(world, classname, "assist_tracker");
                 while (at)
                 {
@@ -279,22 +277,7 @@ void (entity player, entity targ, float killtype, float numparticipants) ApplyEx
                     {
                         if (at.enemy != player)
                         {
-                            num = num + 1;
-                        }
-                    }
-                    at = find(at, classname, "assist_tracker");
-                }
-
-                // no dynamic sized arrays...?
-                // need better way for this, could store count on at.owner i guess
-                at = find(world, classname, "assist_tracker");
-                while (at)
-                {
-                    if (at.owner == targ)
-                    {
-                        if (at.enemy != player)
-                        {
-                            ApplyExperience(at.enemy, targ, KT_CHAMPASSIST, num);
+                            ApplyExperience(at.enemy, targ, KT_CHAMPASSIST, at.owner.assist_count);
                         }
                     }
                     at = find(at, classname, "assist_tracker");
