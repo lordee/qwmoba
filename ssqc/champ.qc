@@ -145,7 +145,7 @@ void (entity player) UpdateStats = {
 
             // char levels
             attdamage = attdamage + (GROWTH_AD_ASHE * lvl);
-            attspeed = attspeed * (100 + ((GROWTH_AS_ASHE * lvl) / 100));
+            attspeed = attspeed * ((100 + (GROWTH_AS_ASHE * lvl)) / 100);
             hth = hth + (GROWTH_HEALTH_ASHE * lvl);
             mna = mna + (GROWTH_MANA_ASHE * lvl);
             break;
