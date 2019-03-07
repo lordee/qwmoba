@@ -66,6 +66,7 @@ void () info_qwmwavemanager = {
     remove(self);
 }
 
+void () s_explode1;
 void() TowerMissileTouch =
 {
 	if (other != self.enemy)
@@ -324,6 +325,8 @@ void () item_qwmgoal = {
             break;
         case STRUCTURE_TOWER:
             precache_model("progs/shalrath.mdl");
+            precache_model2 ("progs/v_spike.mdl");
+            precache_sound2 ("shalrath/attack2.wav");
             self.solid = SOLID_BSP;
             self.movetype = MOVETYPE_NONE;
             setmodel (self, "progs/shalrath.mdl");

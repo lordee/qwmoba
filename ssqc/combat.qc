@@ -84,6 +84,7 @@ Killed
 */
 void (entity targ, entity attacker) GoldReward;
 void (entity player, float killtype, float creeptype) KillTier_Update;
+void (entity attacker, entity targ, float killtype, float numparticipants) ApplyExperience;
 void(entity targ, entity attacker) Killed =
 {
 	local entity oself;
@@ -114,7 +115,7 @@ void(entity targ, entity attacker) Killed =
 	KillTier_Update(self, KT_SELFDEATH, CREEP_NONE);
     if (targ.classname == "player")
     {
-        ApplyExperience(attacker, self, KT_CHAMPKILL, 1)
+        ApplyExperience(attacker, self, KT_CHAMPKILL, 1);
     }
     else if (targ.classname == "creep")
     {
@@ -138,9 +139,6 @@ void(entity targ, entity attacker) Killed =
 
         ApplyExperience(attacker, self, KT_MINIONKILL, num);
 
-        entity localp;
-        float num, dist;
-        num = 0;
         dist = 0;
         localp = find(world, classname, "player");
         while (localp)
@@ -178,7 +176,7 @@ void () AssistTrackerThink = {
 		if (self.classname == "lasthit_tracker")
 		{
 			self.owner.enemy = world;
-            self.owner.assist_count = at.owner.assist_count - 1;
+            self.owner.assist_count = self.owner.assist_count - 1;
             if (self.owner.assist_count < 0)
                 self.owner.assist_count = 0;
 		}

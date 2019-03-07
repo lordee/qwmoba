@@ -37,6 +37,7 @@
 .float gold_kill;
 .float gold_extra;
 .float gold_minion;
+.float assist_count;
 
 .float consecutive_deaths;
 .float consecutive_kills;
