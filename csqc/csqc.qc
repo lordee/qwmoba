@@ -1,5 +1,6 @@
 void (float menuitem) ShowMenu;
 void () RenderMenu;
+void () RenderMessages;
 void () MouseClick;
 
 void() CSQC_Parse_Event = {
@@ -32,6 +33,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
     renderscene();
     //Hud_Draw([width, height]);
     RenderMenu();
+    RenderMessages();
 }
 
 float(float evtype, float scanx, float chary, float devid) CSQC_InputEvent = {

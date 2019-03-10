@@ -144,3 +144,17 @@ void () RenderMenu = {
 		button = find(button, classname, "gui_button");
 	}
 }
+
+void () RenderMessages = {
+    string msg;
+    float msgwidth;
+    if (self.champ && !self.ready)
+    {
+        // middle 200 vertical of screen
+	    vector min = (getviewprop(VF_SCREENVSIZE) - '0 200')*0.5;
+        msg = "Press f3 to ready up";
+        msgwidth = stringwidth(msg, 0, '20 20');
+        min_x = min_x - (msgwidth*.5);
+        drawstring(min+'0 0', "Press ^2F3^7 to ready up", '20 20', '1 1 1', 1, 0);
+    }
+}

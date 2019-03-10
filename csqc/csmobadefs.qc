@@ -1,4 +1,6 @@
 #include "../share/defs.h"
+#include "../ssqc/qwmobadefs.qc"
+
 
 // btn fields
 .string btn_text;
