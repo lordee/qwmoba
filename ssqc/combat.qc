@@ -111,49 +111,56 @@ void(entity targ, entity attacker) Killed =
         }
     }
 
-	GoldReward(self, attacker);
-	KillTier_Update(self, KT_SELFDEATH, CREEP_NONE);
-    if (targ.classname == "player")
-    {
-        ApplyExperience(attacker, self, KT_CHAMPKILL, 1);
-    }
-    else if (targ.classname == "creep")
-    {
-        entity localp;
-        float num, dist;
-        num = 0;
-        dist = 0;
-        localp = find(world, classname, "player");
-        while (localp)
-        {
-            if (localp.team_no == attacker.team_no)
-            {
-                dist = vlen(localp.origin - targ.origin);
-                if (dist <= RANGE_LOCAL)
-                {
-                    num = num + 1;
-                }
-            }
-            localp = find(localp, classname, "player");
-        }
+	if (attacker.classname == "player")
+	{
+		GoldReward(self, attacker);
+		KillTier_Update(self, KT_SELFDEATH, CREEP_NONE);
+		if (targ.classname == "player")
+		{
+			ApplyExperience(attacker, self, KT_CHAMPKILL, 1);
+		}
+		else if (targ.classname == "creep")
+		{
+			entity localp;
+			float num, dist;
+			num = 0;
+			dist = 0;
+			localp = find(world, classname, "player");
+			while (localp)
+			{
+				if (localp.team_no == attacker.team_no)
+				{
+					dist = vlen(localp.origin - targ.origin);
+					if (dist <= RANGE_LOCAL)
+					{
+						num = num + 1;
+					}
+				}
+				localp = find(localp, classname, "player");
+			}
 
-        ApplyExperience(attacker, self, KT_MINIONKILL, num);
+			ApplyExperience(attacker, self, KT_MINIONKILL, num);
 
-        dist = 0;
-        localp = find(world, classname, "player");
-        while (localp)
-        {
-            if (localp.team_no == attacker.team_no)
-            {
-                dist = vlen(localp.origin - targ.origin);
-                if (dist <= RANGE_LOCAL)
-                {
-                    ApplyExperience(localp, self, KT_MINIONKILL, num);
-                }
-            }
-            localp = find(localp, classname, "player");
-        }        
-    }
+			dist = 0;
+			localp = find(world, classname, "player");
+			while (localp)
+			{
+				if (localp.team_no == attacker.team_no)
+				{
+					dist = vlen(localp.origin - targ.origin);
+					if (dist <= RANGE_LOCAL)
+					{
+						ApplyExperience(localp, self, KT_MINIONKILL, num);
+					}
+				}
+				localp = find(localp, classname, "player");
+			}        
+		}
+	}
+	if (attacker.classname != "player")
+	{
+		attacker.enemy = world;
+	}
 
 	self.enemy = attacker;
 
