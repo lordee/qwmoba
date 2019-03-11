@@ -1,3 +1,9 @@
 entity thelocalplayer = findfloat(world, entnum, player_localentnum); 
 
+
+float player_localentnum;	/* This is entity number the player is seeing from/spectating, or the player themself, can change mid-map. */
+float player_localnum;	/* The 0-based player index, valid for getplayerkeyvalue calls. */
+
 #qc on irc.anynet.org
+
+selfplayer is incorrect;
