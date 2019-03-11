@@ -256,6 +256,7 @@
 #define SKILL_USETWO    7
 #define SKILL_USETHREE   8
 #define SKILL_USEFOUR    9
+#define READY   11
 
 // global rules
 #define REGEN_TICKTIME  1

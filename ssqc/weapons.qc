@@ -1030,6 +1030,8 @@ ImpulseCommands
 */
 void () ChangeSkill;
 void (float skill) UseSkill;
+void (entity player) ToggleReady;
+
 void() ImpulseCommands =
 {
 	if (self.stunned)
@@ -1058,6 +1060,10 @@ void() ImpulseCommands =
 			break;
 		case SKILL_USEFOUR:
 			UseSkill(self.skillfour);
+			break;
+		case READY:
+			ToggleReady(self);
+			break;
 	}
 
 	self.impulse = 0;

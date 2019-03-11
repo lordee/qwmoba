@@ -902,6 +902,13 @@ void() PlayerPostThink =
 	ShowMenu(self, self.menu);
 };
 
+void (float imp, string alias) AliasCommand = {
+	stuffcmd (self, strcat("alias ", alias, " \"impulse ", ftos(imp), "\"\n"));
+}
+
+void () AliasImpulses = {
+	AliasCommand(READY, "ready");
+}
 
 /*
 ===========
@@ -916,6 +923,8 @@ void(optional float csqcactive) ClientConnect =
     self.menu = MNU_LOBBYTEAM;
 	bprint (PRINT_HIGH, self.netname);
 	bprint (PRINT_HIGH, " entered the game\n");
+
+	AliasImpulses();
 	
 // a client connecting during an intermission can cause problems
 	if (intermission_running)
@@ -1249,3 +1258,7 @@ void(entity targ, entity attacker) ClientObituary =
 		}
 	}
 };
+
+void (entity player) ToggleReady = {
+	player.ready = !player.ready;
+}
