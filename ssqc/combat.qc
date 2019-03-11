@@ -157,7 +157,7 @@ void(entity targ, entity attacker) Killed =
 			}        
 		}
 	}
-	if (attacker.classname != "player")
+	if (attacker && attacker.classname != "player")
 	{
 		attacker.enemy = world;
 	}
