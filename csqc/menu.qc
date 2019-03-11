@@ -120,7 +120,7 @@ void () MouseClick = {
     }
 }
 
-void () RenderMenu = {
+void () Menu_Draw = {
     entity button;
     float btnID;
 
@@ -145,16 +145,38 @@ void () RenderMenu = {
 	}
 }
 
-void () RenderMessages = {
+void () Messages_Draw = {
     string msg;
     float msgwidth;
     if (self.champ && !self.ready)
     {
         // middle 200 vertical of screen
 	    vector min = (getviewprop(VF_SCREENVSIZE) - '0 200')*0.5;
-        msg = "Press f3 to ready up";
+        string key1 = argv(0);
+		string key2 = argv(1);
+        tokenize(findkeysforcommand("ready"));
+        if (key1 != "") key1 = (key1=="-1") ? "" : keynumtostring(stof(key1));
+		if (key2 != "") key2 = (key2=="-1") ? "" : keynumtostring(stof(key2));
+
+        if (key1 == "" && key2 = "")
+        {
+            msg = "Type ^3/ready^7 to start the game";
+        }
+        else
+        {
+            msg = "Press ";
+            if (key1 != "" && key2 != "") 
+                msg = strcat(msg, "^3", key1, "^7 or ^3", key2);
+            else if (key1 != "")
+                msg = strcat(msg, "^3", key1);
+            else
+                msg = strcat(msg, "^3", key2);
+
+            msg = strcat(msg, "^7 to start the game");           
+        }
+        
         msgwidth = stringwidth(msg, 0, '20 20');
         min_x = min_x - (msgwidth*.5);
-        drawstring(min+'0 0', "Press ^2F3^7 to ready up", '20 20', '1 1 1', 1, 0);
+        drawstring(min+'0 0', msg, '20 20', '1 1 1', 1, 0);
     }
 }
