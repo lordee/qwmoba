@@ -1,6 +1,8 @@
 #include "../share/defs.h"
 #include "../ssqc/qwmobadefs.qc"
 
+entity selfplayer;
+.string netname;
 
 // btn fields
 .string btn_text;

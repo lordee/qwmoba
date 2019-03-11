@@ -4,6 +4,7 @@
 .float team_no;
 .float menu_active;
 .float champ;
+.float id;
 
 // champ fields
 .float attackdamage;

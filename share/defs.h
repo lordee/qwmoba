@@ -217,12 +217,16 @@
 #define AS_MISSILE	4
 
 // qwmoba commands
-#define MNU_OPEN    1
+#define SE_MNU_OPEN    1
+#define SE_READY    2
+#define SE_CHAMP    3
+#define SE_NETNAME       4
 
 // qwmoba menus
 #define MNU_INACTIVE 0
 #define MNU_LOBBYTEAM 1
 #define MNU_LOBBYCHAMP 2
+
 
 // champs
 #define CHAMP_UNDEFINED      0

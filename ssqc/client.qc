@@ -77,7 +77,6 @@ void() SetNewParms =
 	parm9 = 0;
 };
 
-void () LobbyThink;
 void() DecodeLevelParms =
 {
 	if (serverflags)
@@ -95,17 +94,6 @@ void() DecodeLevelParms =
 	self.ammo_cells = parm7;
 	self.weapon = parm8;
 	self.armortype = parm9 * 0.01;
-
-    // should probably detect it's qwmoba here
-
-    entity te;
-
-    te = spawn();
-    te.owner = world;
-    te.classname = "gametimer";
-    te.think = LobbyThink;
-    te.nextthink = time + 1;
-    te.cnt2 = 30;
 };
 
 /*
@@ -410,6 +398,7 @@ called each time a player enters a new level
 ============
 */
 //qwmoba
+
 void () SetupChamp;
 
 void() PutClientInServer =
@@ -451,14 +440,13 @@ void() PutClientInServer =
 	self.deadflag = DEAD_NO;
 // pausetime is set by teleporters to keep the player from moving a while
 	self.pausetime = 0;
-	
+
 	spot = SelectSpawnPoint ();
 
 	self.origin = spot.origin + '0 0 1';
 	self.angles = spot.angles;
 	self.fixangle = TRUE;           // turn this way immediately
 
-// oh, this is a hack!
 	setmodel (self, "progs/eyes.mdl");
 	modelindex_eyes = self.modelindex;
 
@@ -917,10 +905,27 @@ ClientConnect
 called when a player connects to a server
 ============
 */
+void (entity player, float upd_type, float multicast_type) SendUpdate;
 void(optional float csqcactive) ClientConnect =
 {
 	// qwmoba
     self.menu = MNU_LOBBYTEAM;
+	float newid;
+	entity p;
+	p = find(world, classname, "player");
+	if (!p)
+	{
+		self.id = 1;
+	}
+	else
+	{
+		while (p)
+		{
+			newid = (p.id > newid) ? p.id : newid;
+		}
+		self.id = newid + 1;
+	}
+	SendUpdate(self, SE_NETNAME, MULTICAST_ONE);
 	bprint (PRINT_HIGH, self.netname);
 	bprint (PRINT_HIGH, " entered the game\n");
 
@@ -1258,7 +1263,8 @@ void(entity targ, entity attacker) ClientObituary =
 		}
 	}
 };
-
+void (entity player, float upd_type, float multicast_type) SendUpdate;
 void (entity player) ToggleReady = {
 	player.ready = !player.ready;
+	SendUpdate(player, SE_READY, MULTICAST_ALL);
 }

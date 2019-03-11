@@ -153,6 +153,7 @@ World Types:
 2: base
 */
 //=======================
+void () LobbyThink;
 void() worldspawn =
 {
 	lastspawn = world;
@@ -165,7 +166,14 @@ void() worldspawn =
 	else
 		cvar_set ("sv_gravity", "800");
 
-
+	entity te;
+	te = find(world, classname, "gametimer");
+	te = spawn();
+	te.owner = world;
+	te.classname = "gametimer";
+	te.think = LobbyThink;
+	te.nextthink = time + 1;
+	te.cnt2 = 30;
 // the area based ambient sounds MUST be the first precache_sounds
 
 // player precaches     

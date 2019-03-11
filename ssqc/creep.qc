@@ -17,8 +17,6 @@ void (float t, vector org, float lanenum, float team) SpawnCreep = {
     creep.type = t;
     creep.lane = lanenum;
     creep.takedamage = DAMAGE_AIM;
-    creep.nextthink = time + 0.5;
-	creep.think = creep.th_run;
     creep.classname = "creep";
     creep.team_no = team;
 
@@ -149,6 +147,8 @@ void (float t, vector org, float lanenum, float team) SpawnCreep = {
             creep.gold_kill = CREEP_SUPER_GOLD;
     }
 
+    creep.think = creep.th_run;
+    creep.nextthink = time + 0.5;
     setorigin(creep, org);
     oldself = self;
     self = creep;
