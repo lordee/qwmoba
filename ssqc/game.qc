@@ -191,7 +191,7 @@ void () LobbyThink = {
         {
             bprint(PRINT_HIGH, "s");
         }
-        bprint(PRINT_HIGH, "remaining\n");
+        bprint(PRINT_HIGH, " remaining\n");
 
         self.cnt2 = self.cnt2 - 1;
         self.nextthink = time + 1;
