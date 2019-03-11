@@ -2,6 +2,7 @@
 csdefs.qc
 csmobadefs.qc
 csqc.qc
+input.qc
 view.qc
 
 

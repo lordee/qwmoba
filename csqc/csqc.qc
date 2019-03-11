@@ -1,6 +1,6 @@
 void (float menuitem) ShowMenu;
-void () RenderMenu;
-void () RenderMessages;
+void () Menu_Draw;
+void () Messages_Draw;
 void () MouseClick;
 
 void() CSQC_Parse_Event = {
@@ -32,43 +32,6 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 
     renderscene();
     //Hud_Draw([width, height]);
-    RenderMenu();
-    RenderMessages();
-}
-
-float(float evtype, float scanx, float chary, float devid) CSQC_InputEvent = {
-    if (mnu_active)
-    {
-        switch (evtype)
-        {
-            case IE_KEYUP:
-                switch (scanx)
-                {
-                    case K_MOUSE1:
-                        // work out if on a button
-                        MouseClick();
-                        break;
-                }
-                break;
-            case IE_KEYDOWN:
-                switch (scanx)
-                {
-                    case K_MOUSE1:
-                        // work out if on a button
-                        return TRUE;
-                        break;
-                }
-                break;
-            case IE_MOUSEDELTA:
-                //print("in mousedelta", "\n");
-                return TRUE;
-            case IE_MOUSEABS:
-                //print ("in mouseabs", "\n");
-                Mouse.x = scanx;
-                Mouse.y = chary;
-                return TRUE;
-            default:
-        }
-    }
-    return FALSE;
+    Menu_Draw();
+    Messages_Draw();
 }
