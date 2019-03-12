@@ -922,6 +922,7 @@ void(optional float csqcactive) ClientConnect =
 		while (p)
 		{
 			newid = (p.id > newid) ? p.id : newid;
+            p = find(p, classname, "player");
 		}
 		self.id = newid + 1;
 	}
