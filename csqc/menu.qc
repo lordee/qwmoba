@@ -146,74 +146,79 @@ void () Menu_Draw = {
 void () Messages_Draw = {
     string msg;
     
-    if (selfplayer.champ && !selfplayer.ready)
+    entity p;
+    p = findfloat(world, entnum, player_localentnum); 
+    if (p)
     {
-        string key1 = argv(0);
-		string key2 = argv(1);
-        tokenize(findkeysforcommand("ready"));
-        if (key1 != "") key1 = (key1=="-1") ? "" : keynumtostring(stof(key1));
-		if (key2 != "") key2 = (key2=="-1") ? "" : keynumtostring(stof(key2));
+        if (p.champ && !p.ready)
+        {
+            string key1 = argv(0);
+            string key2 = argv(1);
+            tokenize(findkeysforcommand("ready"));
+            if (key1 != "") key1 = (key1=="-1") ? "" : keynumtostring(stof(key1));
+            if (key2 != "") key2 = (key2=="-1") ? "" : keynumtostring(stof(key2));
 
-        if (key1 == "" && key2 == "")
-        {
-            msg = "Type ^3/ready^7 to start the game";
-        }
-        else
-        {
-            msg = "Press ";
-            if (key1 != "" && key2 != "") 
-                msg = strcat(msg, "^3", key1, "^7 or ^3", key2);
-            else if (key1 != "")
-                msg = strcat(msg, "^3", key1);
+            if (key1 == "" && key2 == "")
+            {
+                msg = "Type ^3/ready^7 to start the game";
+            }
             else
-                msg = strcat(msg, "^3", key2);
-
-            msg = strcat(msg, "^7 to start the game");           
-        }
-    }
-    else if (selfplayer.champ && selfplayer.ready)
-    {
-        string champs, readys;
-        champs = "";
-        readys = "";
-        entity player;
-        player = find(world, classname, "player");
-        while (player)
-        {
-            if (!player.champ)
             {
-                if (champs == "")
-                    champs = player.netname;
+                msg = "Press ";
+                if (key1 != "" && key2 != "") 
+                    msg = strcat(msg, "^3", key1, "^7 or ^3", key2);
+                else if (key1 != "")
+                    msg = strcat(msg, "^3", key1);
                 else
-                    champs = strcat(champs, ", ", player.netname);
+                    msg = strcat(msg, "^3", key2);
+
+                msg = strcat(msg, "^7 to start the game");           
             }
-            else if (!player.ready)
+        }
+        else if (p.champ && p.ready)
+        {
+            string champs, readys;
+            champs = "";
+            readys = "";
+            entity player;
+            player = find(world, classname, "player");
+            while (player)
             {
-                if (readys == "")
-                    readys = player.netname;
-                else
-                    readys = strcat(readys, ", ", player.netname);
+                if (!player.champ)
+                {
+                    if (champs == "")
+                        champs = player.netname;
+                    else
+                        champs = strcat(champs, ", ", player.netname);
+                }
+                else if (!player.ready)
+                {
+                    if (readys == "")
+                        readys = player.netname;
+                    else
+                        readys = strcat(readys, ", ", player.netname);
+                }
+                player = find(player, classname, "player");
             }
-            player = find(player, classname, "player");
+
+            if (champs != "")
+            {
+                msg = strcat("Waiting on ", champs, " to select a champ");
+            }
+            else if (readys != "")
+            {
+                msg = strcat("Waiting on ", readys, " to ready up");
+            }
         }
 
-        if (champs != "")
+        if (msg != "")
         {
-            msg = strcat("Waiting on ", champs, " to select a champ");
+            // middle 200 vertical of screen
+            vector min = (getviewprop(VF_SCREENVSIZE) - '0 200')*0.5;
+            // draw msg
+            float msgwidth = stringwidth(msg, 0, '20 20');
+            min_x = min_x - (msgwidth*.5);
+            drawstring(min+'0 0', msg, '20 20', '1 1 1', 1, 0);
         }
-        else if (readys != "")
-        {
-            msg = strcat("Waiting on ", readys, " to ready up");
-        }
-    }
-
-    if (msg != "")
-    {
-        // middle 200 vertical of screen
-        vector min = (getviewprop(VF_SCREENVSIZE) - '0 200')*0.5;
-        // draw msg
-        float msgwidth = stringwidth(msg, 0, '20 20');
-        min_x = min_x - (msgwidth*.5);
-        drawstring(min+'0 0', msg, '20 20', '1 1 1', 1, 0);
-    }
+    }   
 }

@@ -1,4 +1,3 @@
-void (entity player, float upd_type, float multicast_type) SendUpdate;
 // qwmoba
 void (float team) Cmd_JoinTeam_f = {
     self.team_no = team;
@@ -12,7 +11,6 @@ void (float menu) Cmd_AckMenu_f = {
 void (float c) Cmd_ChooseChamp_f = {
     self.menu = MNU_INACTIVE;
     self.champ = c;
-    SendUpdate(self, SE_CHAMP, MULTICAST_ALL);
     // force a respawn as that champ
     ClientKill();
 }
@@ -25,18 +23,10 @@ void (entity player, float upd_type, float multicast_type) SendUpdate = {
     WriteByte(MSG_MULTICAST, upd_type); 
     switch (upd_type)
     {
-        case SE_READY:
+        /*case SE_READY:
             WriteByte(MSG_MULTICAST, player.id);
             WriteByte(MSG_MULTICAST, player.ready);
-            break;
-        case SE_CHAMP:
-            WriteByte(MSG_MULTICAST, player.id);
-            WriteByte(MSG_MULTICAST, player.champ);
-            break;
-        case SE_NETNAME:
-            WriteByte(MSG_MULTICAST, player.id);
-            WriteString(MSG_MULTICAST, player.netname);
-            break;
+            break;*/
     }
     if (multicast_type == MULTICAST_ONE)
     {

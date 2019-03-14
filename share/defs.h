@@ -221,6 +221,7 @@
 #define SE_READY    2
 #define SE_CHAMP    3
 #define SE_NETNAME       4
+#define SE_PLAYER       5
 
 // qwmoba menus
 #define MNU_INACTIVE 0

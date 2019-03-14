@@ -399,6 +399,25 @@ called each time a player enters a new level
 */
 //qwmoba
 
+float Player_SendEntity(entity ePVEnt, float flChanged) {
+    WriteByte(MSG_ENTITY, SE_PLAYER); // Unique Identifier, I suggest you use enums to make it easy on yourself
+    WriteCoord(MSG_ENTITY, self.origin_x); // Position X
+    WriteCoord(MSG_ENTITY, self.origin_y); // Position Y
+    WriteCoord(MSG_ENTITY, self.origin_z); // Position Z
+    WriteCoord(MSG_ENTITY, self.angles_x); // Angle X
+    WriteCoord(MSG_ENTITY, self.angles_y); // Angle Y
+    WriteCoord(MSG_ENTITY, self.angles_z); // Angle Z
+    WriteShort(MSG_ENTITY, self.velocity_x); // Velocity X
+    WriteShort(MSG_ENTITY, self.velocity_y); // Velocity X
+    WriteShort(MSG_ENTITY, self.velocity_z); // Velocity X
+    WriteFloat(MSG_ENTITY, self.flags); // Flags, important for physics
+
+	WriteString(MSG_ENTITY, self.netname);
+	WriteFloat(MSG_ENTITY, self.champ);
+	WriteFloat(MSG_ENTITY, self.ready);
+    return TRUE;
+}
+
 void () SetupChamp;
 
 void() PutClientInServer =
@@ -436,6 +455,7 @@ void() PutClientInServer =
 	self.attack_finished = time;
 	self.th_pain = player_pain;
 	self.th_die = PlayerDie;
+	self.SendEntity = Player_SendEntity;
 	
 	self.deadflag = DEAD_NO;
 // pausetime is set by teleporters to keep the player from moving a while
@@ -857,6 +877,7 @@ Called every frame after physics are run
 void (entity ent) DoRegen;
 void() PlayerPostThink =
 {
+	self.SendFlags = 1;
 //dprint ("post think\n");
 	if (self.view_ofs == '0 0 0')
 		return;         // intermission or finale
@@ -905,7 +926,6 @@ ClientConnect
 called when a player connects to a server
 ============
 */
-void (entity player, float upd_type, float multicast_type) SendUpdate;
 void(optional float csqcactive) ClientConnect =
 {
 	// qwmoba
@@ -926,7 +946,6 @@ void(optional float csqcactive) ClientConnect =
 		}
 		self.id = newid + 1;
 	}
-	SendUpdate(self, SE_NETNAME, MULTICAST_ONE);
 	bprint (PRINT_HIGH, self.netname);
 	bprint (PRINT_HIGH, " entered the game\n");
 
@@ -1264,8 +1283,7 @@ void(entity targ, entity attacker) ClientObituary =
 		}
 	}
 };
-void (entity player, float upd_type, float multicast_type) SendUpdate;
+
 void (entity player) ToggleReady = {
 	player.ready = !player.ready;
-	SendUpdate(player, SE_READY, MULTICAST_ALL);
 }

@@ -2,8 +2,6 @@ void (float menuitem) ShowMenu;
 void () Menu_Draw;
 void () Messages_Draw;
 void () MouseClick;
-void (float pid, float send_event, float event_val) UpdatePlayer;
-void (float pid, float send_event, string event_val) UpdatePlayerS;
 
 void() CSQC_Parse_Event = {
     float first = readbyte(); 
@@ -15,21 +13,43 @@ void() CSQC_Parse_Event = {
             second = readbyte();
             ShowMenu(second);
             break;
-        case SE_READY:
-            second = readbyte(); // id
-            third = readbyte(); // readyval
-            UpdatePlayer(second, SE_READY, third);
-            break;
-        case SE_CHAMP:
-            second = readbyte(); // id
-            third = readbyte(); // champ val
-            UpdatePlayer(second, SE_CHAMP, third);
-            break;
-        case SE_NETNAME:
-            second = readbyte();
-            thirdS = readstring();
-            UpdatePlayerS(second, SE_NETNAME, thirdS);
         default:
+    }
+}
+
+float () Player_PreDraw;
+
+void CSQC_Ent_Update(float flIsNew) {
+    float entType = readbyte();
+
+    switch (entType)
+    {
+        case SE_PLAYER:
+            if ( flIsNew == TRUE ) {
+                self.classname = "player";
+                self.solid = SOLID_SLIDEBOX;
+                self.predraw = Player_PreDraw;
+                self.drawmask = MASK_ENGINE;
+                setmodel(self, "progs/player.mdl");
+            }
+                
+            self.origin_x = readcoord();
+            self.origin_y = readcoord();
+            self.origin_z = readcoord();
+            self.angles_x = readcoord();
+            self.angles_y = readcoord();
+            self.angles_z = readcoord();
+            self.velocity_x = readshort();
+            self.velocity_y = readshort();
+            self.velocity_z = readshort();
+            self.flags = readfloat();
+            self.netname = readstring();
+            self.champ = readfloat();
+            self.ready = readfloat();
+                
+            setsize(self, '-16 -16 -24', '16 16 32');
+            setorigin(self, self.origin);
+            break;
     }
 }
 
@@ -47,6 +67,9 @@ void(float width, float height, float menushown) CSQC_UpdateView =
     vid_realheight = height;
     
     addentities((intermission?0:MASK_VIEWMODEL)|MASK_ENGINE);
+
+    setproperty(VF_ORIGIN, vPlayerOrigin + [ 0, 0, getstatf( STAT_VIEWHEIGHT ) ]);
+    setproperty(VF_ANGLES, view_angles);
 
     renderscene();
     //Hud_Draw([width, height]);

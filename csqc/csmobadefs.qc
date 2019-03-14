@@ -1,7 +1,9 @@
 #include "../share/defs.h"
 #include "../ssqc/qwmobadefs.qc"
 
-entity selfplayer;
+vector vPlayerOrigin;
+vector vPlayerOriginOld; // We definitely need this later
+vector vPlayerVelocity;
 .string netname;
 
 // btn fields

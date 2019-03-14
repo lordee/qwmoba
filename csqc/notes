@@ -5,5 +5,3 @@ float player_localentnum;	/* This is entity number the player is seeing from/spe
 float player_localnum;	/* The 0-based player index, valid for getplayerkeyvalue calls. */
 
 #qc on irc.anynet.org
-
-selfplayer is incorrect;
