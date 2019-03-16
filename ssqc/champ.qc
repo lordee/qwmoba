@@ -45,19 +45,19 @@ void () SetupChamp = {
             self.attackspeed = BASEATTACKSPEED_ASHE;
             self.skillone = SKILLONE_ASHE;
             self.skillonemanacost = SKILLONE_MANACOST_ASHE;
-            self.skillonecooldown = SKILLONE_COOLDOWN_ASHE;
+            self.skillonecooldown = 0;
             self.skillonedamage = SKILLONE_DAMAGE_ASHE;
             self.skilltwo = SKILLTWO_ASHE;
             self.skilltwomanacost = SKILLTWO_MANACOST_ASHE;
-            self.skilltwocooldown = SKILLTWO_COOLDOWN_ASHE;
+            self.skilltwocooldown = 0;
             self.skilltwodamage = SKILLTWO_DAMAGE_ASHE;
             self.skillthree = SKILLTHREE_ASHE;
             self.skillthreemanacost = SKILLTHREE_MANACOST_ASHE;
-            self.skillthreecooldown = SKILLTHREE_COOLDOWN_ASHE;
+            self.skillthreecooldown = 0;
             self.skillthreedamage = SKILLTHREE_DAMAGE_ASHE;
             self.skillfour = SKILLFOUR_ASHE;
             self.skillfourmanacost = SKILLFOUR_MANACOST_ASHE;
-            self.skillfourcooldown = SKILLFOUR_COOLDOWN_ASHE;
+            self.skillfourcooldown = 0;
             self.skillfourdamage = SKILLFOUR_DAMAGE_ASHE;
         break;
     }
