@@ -55,10 +55,8 @@ void (vector pos, float val, float max_val, vector color) Hud_DrawBar = {
 void Hud_Draw(vector scrsz)
 {
 	vector pos = [(scrsz_x-320)/2, pos_y = scrsz_y - 24, 0];	//calculate the top-left of the sbar, assuming it is 320 units wide and placed in the bottom-middle of the screen
-	//get some commonly refered to values
+	
 	float stitems = getstatbits(STAT_ITEMS, 0, 23);			//this is the player's self.items value (STAT_ITEMS is generated specially by the server)
-
-	drawpic(pos, "sbar", '320 24 0', '1 1 1', 0.5, 0);		//draw the sbar background image slightly transparently
 
 	entity p = findfloat(world, entnum, player_localentnum); 
 	float manaval = p.mana;
@@ -73,5 +71,10 @@ void Hud_Draw(vector scrsz)
 	pos = pos + '0 12 0';
 	Hud_DrawBar(pos, hval, h_max, color);
 
+	// skills
+
+	// items
+
+	// minimap
 	
 };
