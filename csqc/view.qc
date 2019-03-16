@@ -40,6 +40,16 @@ void (vector pos, float val, float max_val, vector color) Hud_DrawBar = {
 
 	drawfill(pos, [barperc, 10, 0], color, 0.6, 0);
 	drawfill(pos, [barlength, 10, 0], color, 0.2, 0);
+
+	string msg = strcat(ftos(val), "/", ftos(max_val));
+
+	vector stringpos = pos;
+	stringpos_x = stringpos_x + (barlength / 2);
+
+	float msgwidth = stringwidth(msg, 0, '8 8');
+	stringpos_x = stringpos_x - (msgwidth*.5);
+
+	drawstring(stringpos, msg, [8, 8, 0], [1, 1, 1], 1, 0);
 }
 
 float stitems, stitems2, stweapon;
@@ -53,8 +63,6 @@ void Hud_Draw(vector scrsz)
 
 	drawpic(pos, "sbar", '320 24 0', '1 1 1', 0.5, 0);		//draw the sbar background image slightly transparently
 
-	//Hud_DrawLargeValue(pos+'24 0 0', getstatf(STAT_ARMOR), 25);
-	//Hud_DrawLargeValue(pos+'136 0 0', getstatf(STAT_HEALTH), 25);
 	Hud_DrawLargeValue(pos+'248 0 0', getstatf(STAT_AMMO), 10);
 
 	entity p = findfloat(world, entnum, player_localentnum); 
