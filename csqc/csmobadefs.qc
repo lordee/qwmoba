@@ -5,6 +5,8 @@ vector vPlayerOrigin;
 vector vPlayerOriginOld; // We definitely need this later
 vector vPlayerVelocity;
 .string netname;
+.float health;
+.float max_health;
 
 // btn fields
 .string btn_text;

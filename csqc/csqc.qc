@@ -48,6 +48,8 @@ void CSQC_Ent_Update(float flIsNew) {
             self.ready = readfloat();
             self.mana = readfloat();
             self.max_mana = readfloat();
+            self.health = readfloat();
+            self.max_health = readfloat();
                 
             setsize(self, '-16 -16 -24', '16 16 32');
             setorigin(self, self.origin);

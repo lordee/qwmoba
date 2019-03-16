@@ -417,6 +417,8 @@ float Player_SendEntity(entity ePVEnt, float flChanged) {
 	WriteFloat(MSG_ENTITY, self.ready);
 	WriteFloat(MSG_ENTITY, self.mana);
 	WriteFloat(MSG_ENTITY, self.max_mana);
+	WriteFloat(MSG_ENTITY, self.health);
+	WriteFloat(MSG_ENTITY, self.max_health);
     return TRUE;
 }
 

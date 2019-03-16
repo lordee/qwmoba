@@ -54,14 +54,21 @@ void Hud_Draw(vector scrsz)
 	drawpic(pos, "sbar", '320 24 0', '1 1 1', 0.5, 0);		//draw the sbar background image slightly transparently
 
 	//Hud_DrawLargeValue(pos+'24 0 0', getstatf(STAT_ARMOR), 25);
-	Hud_DrawLargeValue(pos+'136 0 0', getstatf(STAT_HEALTH), 25);
+	//Hud_DrawLargeValue(pos+'136 0 0', getstatf(STAT_HEALTH), 25);
 	Hud_DrawLargeValue(pos+'248 0 0', getstatf(STAT_AMMO), 10);
 
 	entity p = findfloat(world, entnum, player_localentnum); 
 	float manaval = p.mana;
 	float mana_max = p.max_mana;
-	vector mana_pos = pos+'24 0 0';
+	pos = pos+'24 0 0';
 	vector color = '0 0 255';
+	Hud_DrawBar(pos, manaval, mana_max, color);
 
-	Hud_DrawBar(mana_pos, manaval, mana_max, color);
+	float hval = p.health;
+	float h_max = p.max_health;
+	vector color = '255 0 0';
+	pos = pos + '0 12 0';
+	Hud_DrawBar(pos, hval, h_max, color);
+
+	
 };
