@@ -32,6 +32,16 @@ void(vector pos, float value, float threshhold) Hud_DrawLargeValue =
 	}
 };
 
+void (vector pos, float val, float max_val, vector color) Hud_DrawBar = {
+	float barlength = 150;
+	float perc = val / max_val * 100;
+	float barperc = barlength / 100 * perc;
+	float colorchange = barperc / 100;
+
+	drawfill(pos, [barperc, 10, 0], color, 0.6, 0);
+	drawfill(pos, [barlength, 10, 0], color, 0.2, 0);
+}
+
 float stitems, stitems2, stweapon;
 void Hud_Draw(vector scrsz)
 {
@@ -43,7 +53,15 @@ void Hud_Draw(vector scrsz)
 
 	drawpic(pos, "sbar", '320 24 0', '1 1 1', 0.5, 0);		//draw the sbar background image slightly transparently
 
-	Hud_DrawLargeValue(pos+'24 0 0', getstatf(STAT_ARMOR), 25);
+	//Hud_DrawLargeValue(pos+'24 0 0', getstatf(STAT_ARMOR), 25);
 	Hud_DrawLargeValue(pos+'136 0 0', getstatf(STAT_HEALTH), 25);
 	Hud_DrawLargeValue(pos+'248 0 0', getstatf(STAT_AMMO), 10);
+
+	entity p = findfloat(world, entnum, player_localentnum); 
+	float manaval = p.mana;
+	float mana_max = p.max_mana;
+	vector mana_pos = pos+'24 0 0';
+	vector color = '0 0 255';
+
+	Hud_DrawBar(mana_pos, manaval, mana_max, color);
 };

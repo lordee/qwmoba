@@ -46,6 +46,8 @@ void CSQC_Ent_Update(float flIsNew) {
             self.netname = readstring();
             self.champ = readfloat();
             self.ready = readfloat();
+            self.mana = readfloat();
+            self.max_mana = readfloat();
                 
             setsize(self, '-16 -16 -24', '16 16 32');
             setorigin(self, self.origin);
@@ -57,11 +59,13 @@ void(float apilevel, string enginename, float engineversion) CSQC_Init = {
     mnu_active = 0;
 }
 
+void (vector size) Hud_Draw;
 void(float width, float height, float menushown) CSQC_UpdateView =
 {
     clearscene();
-	setviewprop(VF_DRAWENGINESBAR, 1);
+	//setviewprop(VF_DRAWENGINESBAR, 1);
 	setviewprop(VF_DRAWCROSSHAIR, 1);
+    
 
 	vid_realwidth = width;
     vid_realheight = height;
@@ -72,7 +76,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
     setproperty(VF_ANGLES, view_angles);
 
     renderscene();
-    //Hud_Draw([width, height]);
+    Hud_Draw([width, height]);
     Menu_Draw();
     Messages_Draw();
 }

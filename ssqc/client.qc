@@ -415,6 +415,8 @@ float Player_SendEntity(entity ePVEnt, float flChanged) {
 	WriteString(MSG_ENTITY, self.netname);
 	WriteFloat(MSG_ENTITY, self.champ);
 	WriteFloat(MSG_ENTITY, self.ready);
+	WriteFloat(MSG_ENTITY, self.mana);
+	WriteFloat(MSG_ENTITY, self.max_mana);
     return TRUE;
 }
 

@@ -228,7 +228,6 @@
 #define MNU_LOBBYTEAM 1
 #define MNU_LOBBYCHAMP 2
 
-
 // champs
 #define CHAMP_UNDEFINED      0
 #define CHAMP_ASHE      1
