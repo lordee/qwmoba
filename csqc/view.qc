@@ -52,18 +52,13 @@ void (vector pos, float val, float max_val, vector color) Hud_DrawBar = {
 	drawstring(stringpos, msg, [8, 8, 0], [1, 1, 1], 1, 0);
 }
 
-float stitems, stitems2, stweapon;
 void Hud_Draw(vector scrsz)
 {
 	vector pos = [(scrsz_x-320)/2, pos_y = scrsz_y - 24, 0];	//calculate the top-left of the sbar, assuming it is 320 units wide and placed in the bottom-middle of the screen
 	//get some commonly refered to values
-	stitems = getstatbits(STAT_ITEMS, 0, 23);			//this is the player's self.items value (STAT_ITEMS is generated specially by the server)
-	stitems2 = getstatbits(STAT_ITEMS, 23, 9);			//this is the player's self.items2 value if it exists, otherwise it is the serverflags global
-	stweapon = getstatf(STAT_ACTIVEWEAPON);				//this is the player's self.weapon value.
+	float stitems = getstatbits(STAT_ITEMS, 0, 23);			//this is the player's self.items value (STAT_ITEMS is generated specially by the server)
 
 	drawpic(pos, "sbar", '320 24 0', '1 1 1', 0.5, 0);		//draw the sbar background image slightly transparently
-
-	Hud_DrawLargeValue(pos+'248 0 0', getstatf(STAT_AMMO), 10);
 
 	entity p = findfloat(world, entnum, player_localentnum); 
 	float manaval = p.mana;
