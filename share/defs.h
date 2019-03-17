@@ -265,6 +265,12 @@
 // global rules
 #define REGEN_TICKTIME  1
 
+// icons
+#define SKILLONEICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/focus.png"
+#define SKILLTWOICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/volley.tga"
+#define SKILLTHREEICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/bird.png"
+#define SKILLFOURICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/largearrow.png"
+
 // champ skills
 #define SKILLONE_FROSTARCHER   1
 #define SKILLTWO_FROSTARCHER   2

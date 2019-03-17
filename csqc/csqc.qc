@@ -59,6 +59,10 @@ void CSQC_Ent_Update(float flIsNew) {
 
 void(float apilevel, string enginename, float engineversion) CSQC_Init = {
     mnu_active = 0;
+    precache_pic (SKILLONEICON_FROSTARCHER);
+    precache_pic (SKILLTWOICON_FROSTARCHER);
+    precache_pic (SKILLTHREEICON_FROSTARCHER);
+    precache_pic (SKILLFOURICON_FROSTARCHER);
 }
 
 void (vector size) Hud_Draw;

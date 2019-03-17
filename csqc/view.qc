@@ -54,25 +54,33 @@ void (vector pos, float val, float max_val, vector color) Hud_DrawBar = {
 
 void (vector pos, string image) Hud_DrawSkillIcon = {
 	vector size = [20, 20, 0];
-	drawpic(pos, image, size, [1, 1, 1], .6, 0);
+	drawpic(pos, image, size, [1, 1, 1], 1, 0);
 }
 
+// this should not be tested every frame... fix it later
 string (float champ, float skillnum) GetChampIcon = {
-	string icon = "";
-
 	switch (champ)
 	{
 		case CHAMP_FROSTARCHER:
 			switch (skillnum)
 			{
 				case 1:
-					icon = "gfx/hud/champions/frostarcher/volley.tga";
+					return SKILLONEICON_FROSTARCHER;
+					break;
+				case 2:
+					return SKILLTWOICON_FROSTARCHER;
+					break;
+				case 3:
+					return SKILLTHREEICON_FROSTARCHER;
+					break;
+				case 4:
+					return SKILLFOURICON_FROSTARCHER;
 					break;
 			}
 			break;
+		default:
+			return "";
 	}
-
-	return icon;
 }
 
 void Hud_Draw(vector scrsz)
@@ -82,28 +90,43 @@ void Hud_Draw(vector scrsz)
 	float stitems = getstatbits(STAT_ITEMS, 0, 23);			//this is the player's self.items value (STAT_ITEMS is generated specially by the server)
 
 	entity p = findfloat(world, entnum, player_localentnum); 
-	float manaval = p.mana;
-	float mana_max = p.max_mana;
-	pos = pos+'24 0 0';
-	vector color = '0 0 255';
-	Hud_DrawBar(pos, manaval, mana_max, color);
+	if (p.champ)
+	{
+		float manaval = p.mana;
+		float mana_max = p.max_mana;
+		pos = pos+'24 0 0';
+		vector color = '0 0 255';
+		Hud_DrawBar(pos, manaval, mana_max, color);
 
-	float hval = p.health;
-	float h_max = p.max_health;
-	color = '255 0 0';
-	pos = pos + '0 12 0';
-	Hud_DrawBar(pos, hval, h_max, color);
+		float hval = p.health;
+		float h_max = p.max_health;
+		color = '255 0 0';
+		pos = pos + '0 12 0';
+		Hud_DrawBar(pos, hval, h_max, color);
 
-	// skills
-	// based on champ, show champ skill icons
-	string icon = GetChampIcon(p.champ, 1);
-	pos = pos - '0 40 0';
-	Hud_DrawSkillIcon(pos, icon);
+		// skills
+		// based on champ, show champ skill icons
+		string icon = GetChampIcon(p.champ, 1);
+		pos = pos - '0 40 0';
+		Hud_DrawSkillIcon(pos, icon);
 
-	// shade based on time left for cd
+		icon = GetChampIcon(p.champ, 2);
+		pos = pos + '25 0 0';
+		Hud_DrawSkillIcon(pos, icon);
 
-	// items
+		icon = GetChampIcon(p.champ, 3);
+		pos = pos + '25 0 0';
+		Hud_DrawSkillIcon(pos, icon);
 
-	// minimap
+		icon = GetChampIcon(p.champ, 4);
+		pos = pos + '25 0 0';
+		Hud_DrawSkillIcon(pos, icon);
+
+		// shade based on time left for cd
+
+		// items
+
+		// minimap
+	}
 	
 };
