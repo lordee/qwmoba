@@ -39,6 +39,10 @@ float Player_SendEntity(entity ePVEnt, float flChanged) {
 	WriteFloat(MSG_ENTITY, self.health);
 	WriteFloat(MSG_ENTITY, self.max_health);
     WriteFloat(MSG_ENTITY, self.activeskill);
+    WriteFloat(MSG_ENTITY, self.skillonecooldown);
+    WriteFloat(MSG_ENTITY, self.skilltwocooldown);
+    WriteFloat(MSG_ENTITY, self.skillthreecooldown);
+    WriteFloat(MSG_ENTITY, self.skillfourcooldown);
 
     return TRUE;
 }

@@ -52,7 +52,7 @@ void (vector pos, float val, float max_val, vector color) Hud_DrawBar = {
 	drawstring(stringpos, msg, [8, 8, 0], [1, 1, 1], 1, 0);
 }
 
-void (vector pos, string image, float selected) Hud_DrawSkillIcon = {
+void (vector pos, string image, float selected, float cooldown) Hud_DrawSkillIcon = {
 	vector size = [20, 20, 0];
 	drawpic(pos, image, size, [1, 1, 1], 1, 0);
 
@@ -62,6 +62,21 @@ void (vector pos, string image, float selected) Hud_DrawSkillIcon = {
 		drawfill(pos + '0 20 0', [20, 2, 0], [0, 255, 0], 0.6, 0);
 		drawfill(pos - '2 2 0', [2, 24, 0], [0, 255, 0], 0.6, 0);
 		drawfill(pos + '20 0 0', [2, 22, 0], [0, 255, 0], 0.6, 0);
+	}
+
+	float cd = ceil(cooldown - time);
+
+	if (cd > 0)
+	{
+		drawfill(pos, size, [128, 128, 128], 0.6, 0);
+		
+		float msgwidth = stringwidth(ftos(cd), 0, [6, 8, 0]);
+		vector stringpos = pos;
+		stringpos = stringpos + [10, 10, 0];
+		stringpos_x = stringpos_x - (msgwidth * .5);
+		stringpos_y = stringpos_y - 4;
+
+		drawstring(stringpos, ftos(cd), [6, 8, 0], [1, 1, 1], 1, 0);
 	}
 }
 
@@ -116,19 +131,19 @@ void Hud_Draw(vector scrsz)
 		// based on champ, show champ skill icons
 		string icon = GetChampIcon(p.champ, 1);
 		pos = pos - '0 40 0';
-		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 1) ? TRUE : FALSE);
+		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 1) ? TRUE : FALSE, p.skillonecooldown);
 
 		icon = GetChampIcon(p.champ, 2);
 		pos = pos + '25 0 0';
-		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 2) ? TRUE : FALSE);
+		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 2) ? TRUE : FALSE, p.skilltwocooldown);
 
 		icon = GetChampIcon(p.champ, 3);
 		pos = pos + '25 0 0';
-		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 3) ? TRUE : FALSE);
+		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 3) ? TRUE : FALSE, p.skillthreecooldown);
 
 		icon = GetChampIcon(p.champ, 4);
 		pos = pos + '25 0 0';
-		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 4) ? TRUE : FALSE);
+		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 4) ? TRUE : FALSE, p.skillfourcooldown);
 
 		// shade based on time left for cd
 
