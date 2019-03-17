@@ -1,6 +1,6 @@
 void (entity targ, float cat, float type, float value) T_ApplyBuff;
 
-void () AsheAttackTouch = {
+void () FrostArcherAttackTouch = {
     if (other == self.owner)
 		return;
 
@@ -28,10 +28,10 @@ void () AsheAttackTouch = {
 	if (other.takedamage)
 	{
 		spawn_touchblood (self.owner.attackdamage);
-		other.deathtype = "asheattack";
+		other.deathtype = "FrostArcherattack";
 		T_Damage (other, self, self.owner, self.owner.attackdamage);
 
-		// if targ is slowed by ashe already, add a stack
+		// if targ is slowed by FrostArcher already, add a stack
         if (other.classname == "player" || other.classname == "creep")
         {
             entity buff;
@@ -41,9 +41,9 @@ void () AsheAttackTouch = {
             buff = find(world, classname, "buff");
             while (buff)
             {
-                if (buff.owner == other && buff.bufftype == MSSLOW_ASHE)
+                if (buff.owner == other && buff.bufftype == MSSLOW_FROSTARCHER)
                 {
-                    // apply frost stack to ashe
+                    // apply frost stack to FrostArcher
                     self.owner.stacks = self.owner.stacks + 1;
                     slowed = 1;
                     break;
@@ -53,8 +53,8 @@ void () AsheAttackTouch = {
 
             if (slowed == 0)
             {
-                // apply a slow for ashe attacks
-                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_ASHE, AASLOW_VALUE_ASHE);
+                // apply a slow for FrostArcher attacks
+                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_FROSTARCHER, AASLOW_VALUE_FROSTARCHER);
             }
         }
 	}
@@ -71,7 +71,7 @@ void () AsheAttackTouch = {
 	remove(self);
 }
 
-void () AsheAttack = {
+void () FrostArcherAttack = {
 	msg_entity = self;
 	WriteByte (MSG_ONE, SVC_SMALLKICK);
 
@@ -81,7 +81,7 @@ void () AsheAttack = {
 	newmis.movetype = MOVETYPE_BOUNCE;
 	newmis.solid = SOLID_BBOX;
     newmis.effects = EF_BLUE;
-	newmis.classname = "asheattack";
+	newmis.classname = "FrostArcherattack";
 		
 	makevectors (self.v_angle);
 
@@ -98,21 +98,21 @@ void () AsheAttack = {
 
 	newmis.angles = vectoangles(newmis.velocity);
 	
-	newmis.touch = AsheAttackTouch;
+	newmis.touch = FrostArcherAttackTouch;
 	newmis.nextthink = time + 6;
 	newmis.think = SUB_Remove;
 
     sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
-	setmodel (newmis, "progs/ashearrow.mdl");
+	setmodel (newmis, "progs/champions/frostarcher/frostarcherarrow.mdl");
 
     entity buff;
     buff = find(world, classname, "buff");
     while (buff)
     {
-        if (buff.owner == self && buff.buffcategory == AASPEED_SKILLONE_ASHE)
+        if (buff.owner == self && buff.buffcategory == AASPEED_SKILLONE_FROSTARCHER)
         {
             sound (self, CHAN_WEAPON, "weapons/spike2.wav", 1, ATTN_NORM);
-	        setmodel (newmis, "progs/ashearrowbuff.mdl");
+	        setmodel (newmis, "progs/champions/frostarcher/frostarcherarrowbuff.mdl");
             break;
         }
         buff = find(buff, classname, "buff");
@@ -123,7 +123,7 @@ void () AsheAttack = {
 }
 
 
-void () SkillOne_Ashe = {
+void () SkillOne_FrostArcher = {
     if (CanCast(self.skillonecooldown, self.skillonemanacost))
     {
          // do checks for frost stacks
@@ -136,8 +136,8 @@ void () SkillOne_Ashe = {
             self.mana = self.mana - self.skillonemanacost;
             // show cast clientside
             // buff attack speed
-            T_ApplyBuff(self, BUFF_AASPEED, AASPEED_SKILLONE_ASHE, SKILLONE_VALUE_ASHE);
-            self.skillonecooldown = time + SKILLONE_COOLDOWN_ASHE;
+            T_ApplyBuff(self, BUFF_AASPEED, AASPEED_SKILLONE_FROSTARCHER, SKILLONE_VALUE_FROSTARCHER);
+            self.skillonecooldown = time + SKILLONE_COOLDOWN_FROSTARCHER;
         }
         else
         {
@@ -147,7 +147,7 @@ void () SkillOne_Ashe = {
 }
 
 
-void () AsheSkillTwoTouch = {
+void () FrostArcherSkillTwoTouch = {
     if (other == self.owner)
 		return;
 
@@ -169,7 +169,7 @@ void () AsheSkillTwoTouch = {
 	if (other.takedamage)
 	{
 		spawn_touchblood (self.owner.skilltwodamage);
-		other.deathtype = "asheskilltwo";
+		other.deathtype = "frostarcherskilltwo";
 		
 		// if this has already hit, don't damage/slow
         if (other.classname == "player" || other.classname == "creep")
@@ -181,7 +181,7 @@ void () AsheSkillTwoTouch = {
             buff = find(world, classname, "buff");
             while (buff)
             {
-                if (buff.owner == other && buff.bufftype == MSSLOW_SKILLTWO_ASHE)
+                if (buff.owner == other && buff.bufftype == MSSLOW_SKILLTWO_FROSTARCHER)
                 {
                     slowed = 1;
                     break;
@@ -191,8 +191,8 @@ void () AsheSkillTwoTouch = {
 
             if (slowed == 0)
             {
-                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_SKILLTWO_ASHE, SKILLTWO_VALUE_ASHE);
-                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_ASHE, 0); // for frost stacks
+                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_SKILLTWO_FROSTARCHER, SKILLTWO_VALUE_FROSTARCHER);
+                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_FROSTARCHER, 0); // for frost stacks
                 T_Damage (other, self, self.owner, self.owner.skilltwodamage);
             }
         }
@@ -214,11 +214,11 @@ void () AsheSkillTwoTouch = {
 	remove(self);
 }
 
-void () SkillTwo_Ashe = {
+void () SkillTwo_FrostArcher = {
 	if (CanCast(self.skilltwocooldown, self.skilltwomanacost))
     {
         self.mana = self.mana - self.skilltwomanacost;
-        self.skilltwocooldown = time + SKILLTWO_COOLDOWN_ASHE;
+        self.skilltwocooldown = time + SKILLTWO_COOLDOWN_FROSTARCHER;
 
         float num, ang;
         num = 11;
@@ -232,7 +232,7 @@ void () SkillTwo_Ashe = {
             mis.owner = self;
             mis.movetype = MOVETYPE_BOUNCE;
             mis.solid = SOLID_BBOX;
-            mis.classname = "asheskilltwo";
+            mis.classname = "frostarcherskilltwo";
             mis.effects = EF_BLUE;
             makevectors (self.v_angle);
 
@@ -259,11 +259,11 @@ void () SkillTwo_Ashe = {
             }
 
             mis.angles = vectoangles(mis.velocity);
-            mis.touch = AsheSkillTwoTouch;
+            mis.touch = FrostArcherSkillTwoTouch;
             mis.nextthink = time + 6;
             mis.think = SUB_Remove;
             
-            setmodel (mis, "progs/ashearrow.mdl");
+            setmodel (mis, "progs/champions/frostarcher/frostarcherarrow.mdl");
             setsize (mis, VEC_ORIGIN, VEC_ORIGIN);
             setorigin (mis, self.origin);
             num = num - 1;
@@ -272,11 +272,11 @@ void () SkillTwo_Ashe = {
         sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
     }
 }
-void () SkillThree_Ashe = {
+void () SkillThree_FrostArcher = {
 	sprint(self, PRINT_HIGH, "Not implemented\n");
 }
 
-void () AsheSkillFourTouch = {
+void () FrostArcherSkillFourTouch = {
     if (other == self.owner)
 		return;
 
@@ -297,10 +297,10 @@ void () AsheSkillFourTouch = {
     if (other.classname == "player" && other.takedamage)
     {
         spawn_touchblood (self.owner.skillfourdamage);
-		other.deathtype = "asheskillfour";
+		other.deathtype = "frostarcherskillfour";
 		
         // apply stun in radius
-        T_ApplyBuff(other, DEBUFF_STUN, STUN_SKILLFOUR_ASHE, SKILLFOUR_VALUE_ASHE);
+        T_ApplyBuff(other, DEBUFF_STUN, STUN_SKILLFOUR_FROSTARCHER, SKILLFOUR_VALUE_FROSTARCHER);
         T_Damage (other, self, self.owner, self.owner.skilltwodamage);
     }
     else
@@ -316,11 +316,11 @@ void () AsheSkillFourTouch = {
 	remove(self);
 }
 
-void () SkillFour_Ashe = {
+void () SkillFour_FrostArcher = {
 	if (CanCast(self.skillfourcooldown, self.skillfourmanacost))
     {
         self.mana = self.mana - self.skillfourmanacost;
-        self.skillfourcooldown = time + SKILLFOUR_COOLDOWN_ASHE;
+        self.skillfourcooldown = time + SKILLFOUR_COOLDOWN_FROSTARCHER;
             
         newmis = spawn ();
         newmis.voided = 0;
@@ -328,18 +328,18 @@ void () SkillFour_Ashe = {
         newmis.movetype = MOVETYPE_FLYMISSILE;
         newmis.solid = SOLID_BBOX;
         newmis.effects = EF_BLUE;
-        newmis.classname = "asheskillfour";
+        newmis.classname = "frostarcherskillfour";
         makevectors (self.v_angle);
 
         newmis.velocity = aim(self, 1000);
         newmis.velocity = newmis.velocity * 1000;
         newmis.angles = vectoangles(newmis.velocity);
 
-        newmis.touch = AsheSkillFourTouch;
+        newmis.touch = FrostArcherSkillFourTouch;
         newmis.nextthink = time + 60;
         newmis.think = SUB_Remove;
         
-        setmodel (newmis, "progs/asheultimate.mdl");
+        setmodel (newmis, "progs/champions/frostarcher/frostarcherultimate.mdl");
         setsize (newmis, '0 0 0', '0 0 0');             
         setorigin (newmis, self.origin + v_forward*8 + '0 0 16');
 

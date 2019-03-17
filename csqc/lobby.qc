@@ -38,8 +38,8 @@ void () ShowLobbyChampMenu = {
     men_y = vid_realheight*0.2;                     // first button will be displayed 20% of the vertical value from the top of the screen
     buttonback = "progs/csqc/csqcguiback.tga";
 
-    btn = CreateButton( "Ashe", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
-    btn.champ = CHAMP_ASHE;
+    btn = CreateButton( "Frost Archer", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
+    btn.champ = CHAMP_FROSTARCHER;
     btn = CreateButton( "Caitlyn", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
     btn.champ = CHAMP_CAITLYN;
     btn = CreateButton( "Alistar", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;

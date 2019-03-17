@@ -517,29 +517,29 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
     
     switch (type)
     {
-        case MSSLOW_ASHE:
-            newbuff.max_health = AASLOW_LIFETIME_ASHE;
-            newbuff.health = AASLOW_LIFETIME_ASHE; // lifetime of debuff
-            newbuff.nextthinkinterval = AASLOW_TICKRATE_ASHE; // this isn't needed but use for examples later on
-            newbuff.nextthink = time + AASLOW_TICKRATE_ASHE;
+        case MSSLOW_FROSTARCHER:
+            newbuff.max_health = AASLOW_LIFETIME_FROSTARCHER;
+            newbuff.health = AASLOW_LIFETIME_FROSTARCHER; // lifetime of debuff
+            newbuff.nextthinkinterval = AASLOW_TICKRATE_FROSTARCHER; // this isn't needed but use for examples later on
+            newbuff.nextthink = time + AASLOW_TICKRATE_FROSTARCHER;
             break;
-        case AASPEED_SKILLONE_ASHE:
-            newbuff.max_health = SKILLONE_LIFETIME_ASHE;
-            newbuff.health = SKILLONE_LIFETIME_ASHE; 
-            newbuff.nextthinkinterval = SKILLONE_TICKRATE_ASHE; 
-            newbuff.nextthink = time + SKILLONE_TICKRATE_ASHE;
+        case AASPEED_SKILLONE_FROSTARCHER:
+            newbuff.max_health = SKILLONE_LIFETIME_FROSTARCHER;
+            newbuff.health = SKILLONE_LIFETIME_FROSTARCHER; 
+            newbuff.nextthinkinterval = SKILLONE_TICKRATE_FROSTARCHER; 
+            newbuff.nextthink = time + SKILLONE_TICKRATE_FROSTARCHER;
             break;
-        case MSSLOW_SKILLTWO_ASHE:
-            newbuff.max_health = SKILLTWO_LIFETIME_ASHE;
-            newbuff.health = SKILLTWO_LIFETIME_ASHE; 
-            newbuff.nextthinkinterval = SKILLTWO_TICKRATE_ASHE; 
-            newbuff.nextthink = time + SKILLTWO_TICKRATE_ASHE;
+        case MSSLOW_SKILLTWO_FROSTARCHER:
+            newbuff.max_health = SKILLTWO_LIFETIME_FROSTARCHER;
+            newbuff.health = SKILLTWO_LIFETIME_FROSTARCHER; 
+            newbuff.nextthinkinterval = SKILLTWO_TICKRATE_FROSTARCHER; 
+            newbuff.nextthink = time + SKILLTWO_TICKRATE_FROSTARCHER;
             break;
-		case STUN_SKILLFOUR_ASHE:
-            newbuff.max_health = SKILLFOUR_LIFETIME_ASHE;
-			newbuff.health = SKILLFOUR_LIFETIME_ASHE; 
-            newbuff.nextthinkinterval = SKILLFOUR_TICKRATE_ASHE; 
-            newbuff.nextthink = time + SKILLFOUR_TICKRATE_ASHE;
+		case STUN_SKILLFOUR_FROSTARCHER:
+            newbuff.max_health = SKILLFOUR_LIFETIME_FROSTARCHER;
+			newbuff.health = SKILLFOUR_LIFETIME_FROSTARCHER; 
+            newbuff.nextthinkinterval = SKILLFOUR_TICKRATE_FROSTARCHER; 
+            newbuff.nextthink = time + SKILLFOUR_TICKRATE_FROSTARCHER;
 			break;
         default:
             newbuff.max_health = 10;

@@ -23,7 +23,7 @@ server.qc
 endpoints.qc
 qwm.qc
 champ.qc
-champashe.qc
+champfrostarcher.qc
 mapentities.qc
 creep_ai.qc
 creep_melee.qc

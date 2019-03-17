@@ -291,9 +291,9 @@ void() worldspawn =
 	precache_model ("progs/v_light.mdl");
 
 	// qwmoba
-	precache_model ("progs/ashearrow.mdl");
-	precache_model ("progs/ashearrowbuff.mdl");
-	precache_model ("progs/asheultimate.mdl");
+	precache_model ("progs/champions/frostarcher/frostarcherarrow.mdl");
+	precache_model ("progs/champions/frostarcher/frostarcherarrowbuff.mdl");
+	precache_model ("progs/champions/frostarcher/frostarcherultimate.mdl");
 	
 
 //

@@ -52,6 +52,29 @@ void (vector pos, float val, float max_val, vector color) Hud_DrawBar = {
 	drawstring(stringpos, msg, [8, 8, 0], [1, 1, 1], 1, 0);
 }
 
+void (vector pos, string image) Hud_DrawSkillIcon = {
+	vector size = [20, 20, 0];
+	drawpic(pos, image, size, [1, 1, 1], .6, 0);
+}
+
+string (float champ, float skillnum) GetChampIcon = {
+	string icon = "";
+
+	switch (champ)
+	{
+		case CHAMP_FROSTARCHER:
+			switch (skillnum)
+			{
+				case 1:
+					icon = "gfx/hud/champions/frostarcher/volley.tga";
+					break;
+			}
+			break;
+	}
+
+	return icon;
+}
+
 void Hud_Draw(vector scrsz)
 {
 	vector pos = [(scrsz_x-320)/2, pos_y = scrsz_y - 24, 0];	//calculate the top-left of the sbar, assuming it is 320 units wide and placed in the bottom-middle of the screen
@@ -67,11 +90,17 @@ void Hud_Draw(vector scrsz)
 
 	float hval = p.health;
 	float h_max = p.max_health;
-	vector color = '255 0 0';
+	color = '255 0 0';
 	pos = pos + '0 12 0';
 	Hud_DrawBar(pos, hval, h_max, color);
 
 	// skills
+	// based on champ, show champ skill icons
+	string icon = GetChampIcon(p.champ, 1);
+	pos = pos - '0 40 0';
+	Hud_DrawSkillIcon(pos, icon);
+
+	// shade based on time left for cd
 
 	// items
 

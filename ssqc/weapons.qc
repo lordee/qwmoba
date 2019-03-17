@@ -898,7 +898,7 @@ void() W_SetCurrentAmmo =
 		self.weaponmodel = "progs/v_axe.mdl";
 		self.weaponframe = 0;
 	}
-    else if (self.weapon == WEAPON_ASHE)
+    else if (self.weapon == WEAPON_FROSTARCHER)
 	{
 		self.currentammo = 0;
 		self.weaponmodel = "progs/v_shot.mdl";
@@ -998,7 +998,7 @@ void()  player_light1;
 void()  player_rocket1;
 
 // qwmoba
-void () AsheAttack;
+void () FrostArcherAttack;
 
 void() W_Attack =
 {
@@ -1013,11 +1013,11 @@ void() W_Attack =
     float attacktime;
     switch (self.weapon)
     {
-        case WEAPON_ASHE:
+        case WEAPON_FROSTARCHER:
             player_shot1();
             attacktime = 1 / self.attackspeed;
             self.attack_finished = time + attacktime;
-            AsheAttack();
+            FrostArcherAttack();
             break;
     }
 };

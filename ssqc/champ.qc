@@ -1,7 +1,7 @@
-void () SkillOne_Ashe;
-void () SkillTwo_Ashe;
-void () SkillThree_Ashe;
-void () SkillFour_Ashe;
+void () SkillOne_FrostArcher;
+void () SkillTwo_FrostArcher;
+void () SkillThree_FrostArcher;
+void () SkillFour_FrostArcher;
 
 void (entity e) DoRegen = {
     if (e.deadflag == DEAD_NO)
@@ -32,33 +32,33 @@ void () SetupChamp = {
     self.regentick = time + REGEN_TICKTIME;
     switch (self.champ)
     {
-        case CHAMP_ASHE:
-            self.attackdamage = BASEAD_ASHE;
-            self.health = BASEHEALTH_ASHE;
-            self.max_health = BASEHEALTH_ASHE;
-            self.healthregen = BASEHEALTH_REGEN_ASHE; // per second
-            self.mana = BASEMANA_ASHE;
-            self.max_mana = BASEMANA_ASHE;
-            self.manaregen = BASEMANA_REGEN_ASHE;
-            self.speed = BASESPEED_ASHE;
-            self.weapon = WEAPON_ASHE;
-            self.attackspeed = BASEATTACKSPEED_ASHE;
-            self.skillone = SKILLONE_ASHE;
-            self.skillonemanacost = SKILLONE_MANACOST_ASHE;
+        case CHAMP_FROSTARCHER:
+            self.attackdamage = BASEAD_FROSTARCHER;
+            self.health = BASEHEALTH_FROSTARCHER;
+            self.max_health = BASEHEALTH_FROSTARCHER;
+            self.healthregen = BASEHEALTH_REGEN_FROSTARCHER; // per second
+            self.mana = BASEMANA_FROSTARCHER;
+            self.max_mana = BASEMANA_FROSTARCHER;
+            self.manaregen = BASEMANA_REGEN_FROSTARCHER;
+            self.speed = BASESPEED_FROSTARCHER;
+            self.weapon = WEAPON_FROSTARCHER;
+            self.attackspeed = BASEATTACKSPEED_FROSTARCHER;
+            self.skillone = SKILLONE_FROSTARCHER;
+            self.skillonemanacost = SKILLONE_MANACOST_FROSTARCHER;
             self.skillonecooldown = 0;
-            self.skillonedamage = SKILLONE_DAMAGE_ASHE;
-            self.skilltwo = SKILLTWO_ASHE;
-            self.skilltwomanacost = SKILLTWO_MANACOST_ASHE;
+            self.skillonedamage = SKILLONE_DAMAGE_FROSTARCHER;
+            self.skilltwo = SKILLTWO_FROSTARCHER;
+            self.skilltwomanacost = SKILLTWO_MANACOST_FROSTARCHER;
             self.skilltwocooldown = 0;
-            self.skilltwodamage = SKILLTWO_DAMAGE_ASHE;
-            self.skillthree = SKILLTHREE_ASHE;
-            self.skillthreemanacost = SKILLTHREE_MANACOST_ASHE;
+            self.skilltwodamage = SKILLTWO_DAMAGE_FROSTARCHER;
+            self.skillthree = SKILLTHREE_FROSTARCHER;
+            self.skillthreemanacost = SKILLTHREE_MANACOST_FROSTARCHER;
             self.skillthreecooldown = 0;
-            self.skillthreedamage = SKILLTHREE_DAMAGE_ASHE;
-            self.skillfour = SKILLFOUR_ASHE;
-            self.skillfourmanacost = SKILLFOUR_MANACOST_ASHE;
+            self.skillthreedamage = SKILLTHREE_DAMAGE_FROSTARCHER;
+            self.skillfour = SKILLFOUR_FROSTARCHER;
+            self.skillfourmanacost = SKILLFOUR_MANACOST_FROSTARCHER;
             self.skillfourcooldown = 0;
-            self.skillfourdamage = SKILLFOUR_DAMAGE_ASHE;
+            self.skillfourdamage = SKILLFOUR_DAMAGE_FROSTARCHER;
         break;
     }
 }
@@ -92,17 +92,17 @@ void () ChangeSkill = {
 void (float skill) UseSkill = {
     switch (skill)
     {
-        case SKILLONE_ASHE:
-            SkillOne_Ashe();
+        case SKILLONE_FROSTARCHER:
+            SkillOne_FrostArcher();
         break;
-        case SKILLTWO_ASHE:
-            SkillTwo_Ashe();
+        case SKILLTWO_FROSTARCHER:
+            SkillTwo_FrostArcher();
         break;
-        case SKILLTHREE_ASHE:
-            SkillThree_Ashe();
+        case SKILLTHREE_FROSTARCHER:
+            SkillThree_FrostArcher();
         break;
-        case SKILLFOUR_ASHE:
-            SkillFour_Ashe();
+        case SKILLFOUR_FROSTARCHER:
+            SkillFour_FrostArcher();
         break;
     }   
 }
@@ -135,19 +135,19 @@ void (entity player) UpdateStats = {
     
     switch (player.champ)
     {
-        case CHAMP_ASHE:
+        case CHAMP_FROSTARCHER:
             // base char
-            attdamage = BASEAD_ASHE;
-            attspeed = BASEATTACKSPEED_ASHE;
-            msspeed = BASESPEED_ASHE;
-            hth = BASEHEALTH_ASHE;
-            mna = BASEMANA_ASHE;
+            attdamage = BASEAD_FROSTARCHER;
+            attspeed = BASEATTACKSPEED_FROSTARCHER;
+            msspeed = BASESPEED_FROSTARCHER;
+            hth = BASEHEALTH_FROSTARCHER;
+            mna = BASEMANA_FROSTARCHER;
 
             // char levels
-            attdamage = attdamage + (GROWTH_AD_ASHE * lvl);
-            attspeed = attspeed * ((100 + (GROWTH_AS_ASHE * lvl)) / 100);
-            hth = hth + (GROWTH_HEALTH_ASHE * lvl);
-            mna = mna + (GROWTH_MANA_ASHE * lvl);
+            attdamage = attdamage + (GROWTH_AD_FROSTARCHER * lvl);
+            attspeed = attspeed * ((100 + (GROWTH_AS_FROSTARCHER * lvl)) / 100);
+            hth = hth + (GROWTH_HEALTH_FROSTARCHER * lvl);
+            mna = mna + (GROWTH_MANA_FROSTARCHER * lvl);
             break;
     }
 
