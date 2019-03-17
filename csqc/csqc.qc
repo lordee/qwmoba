@@ -50,6 +50,7 @@ void CSQC_Ent_Update(float flIsNew) {
             self.max_mana = readfloat();
             self.health = readfloat();
             self.max_health = readfloat();
+            self.activeskill = readfloat();
                 
             setsize(self, '-16 -16 -24', '16 16 32');
             setorigin(self, self.origin);
