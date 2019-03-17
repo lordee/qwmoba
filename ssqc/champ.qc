@@ -85,7 +85,6 @@ void () ChangeSkill = {
     // do checks??
 
     // switch to skill
-    sprint(self, PRINT_HIGH, "skill is now active: ", ftos(s), "\n");
     self.activeskill = s;
 }
 
@@ -123,7 +122,6 @@ float (float cooldown, float manacost) CanCast = {
     }
     else
     {
-        sprint(self, PRINT_HIGH, "This skill is on cooldown\n");
         return FALSE;
     }
 }
