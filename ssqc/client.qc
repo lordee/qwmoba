@@ -1128,7 +1128,7 @@ void(entity targ, entity attacker) ClientObituary =
 
                 switch (targ.deathtype)
                 {
-                    case "asheattack":
+                    case "frostarcherattack":
                         deathstring = " is pierced by ";
                         deathstring2 = "'s arrow\n";
                     break;
