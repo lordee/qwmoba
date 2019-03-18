@@ -56,7 +56,12 @@ void CSQC_Ent_Update(float flIsNew) {
             self.skillthreecooldown = readfloat();
             self.skillfourcooldown = readfloat();
             self.gold = readfloat();
-            self.level = readfloat();
+            float lvl = readfloat();
+            if (lvl != self.level)
+            {
+                leveluptime = time;
+                self.level = lvl;
+            }           
             self.experience = readfloat();
                 
             setsize(self, '-16 -16 -24', '16 16 32');

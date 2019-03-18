@@ -4,6 +4,8 @@
 vector vPlayerOrigin;
 vector vPlayerOriginOld; // We definitely need this later
 vector vPlayerVelocity;
+float leveluptime;
+
 .string netname;
 .float health;
 .float max_health;

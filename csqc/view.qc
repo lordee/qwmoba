@@ -106,6 +106,20 @@ string (float champ, float skillnum) GetChampIcon = {
 	}
 }
 
+void (vector pos, float lvl, vector color) Hud_DrawLevel = {
+    // for now just a string in a box
+    // if level up recently, do highlight new level
+    if ()
+    drawfill(pos, [20, 20, 0], color, .6, 0);
+
+    float msgwidth = stringwidth(ftos(lvl), 0, [8, 8, 0]);
+    vector stringpos = pos;
+    stringpos = stringpos + [10, 10, 0];
+    stringpos_x = stringpos_x - (msgwidth * .5);
+    stringpos_y = stringpos_y - 4;
+    drawstring(stringpos, ftos(lvl), [8, 8, 0], [1, 1, 1], 1, 0);    
+}
+
 void Hud_Draw(vector scrsz)
 {
 	vector pos = [(scrsz_x-320)/2, pos_y = scrsz_y - 24, 0];	//calculate the top-left of the sbar, assuming it is 320 units wide and placed in the bottom-middle of the screen
@@ -127,6 +141,17 @@ void Hud_Draw(vector scrsz)
 		pos = pos + '0 12 0';
 		Hud_DrawBar(pos, hval, h_max, color);
 
+        // level and experience
+        float eval = p.experience;
+        float e_max = GetExpBar(p.level);
+        color = '147 112 219';
+        pos = pos + '0 12 0';
+        Hud_DrawBar(pos, eval, e_max, color);
+
+        float lvl = p.level;
+        pos = pos + '0 160 0';
+        Hud_DrawLevel(pos, lvl, color);
+
 		// skills
 		// based on champ, show champ skill icons
 		string icon = GetChampIcon(p.champ, 1);
@@ -145,8 +170,7 @@ void Hud_Draw(vector scrsz)
 		pos = pos + '25 0 0';
 		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 4) ? TRUE : FALSE, p.skillfourcooldown);
 
-        // level and experience
-        float bar = GetExpBar(p.level);
+        
 		// gold
 
 		// items
