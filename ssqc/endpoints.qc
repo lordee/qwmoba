@@ -11,6 +11,7 @@ void (float menu) Cmd_AckMenu_f = {
 void (float c) Cmd_ChooseChamp_f = {
     self.menu = MNU_INACTIVE;
     self.champ = c;
+    self.level = 1;
     // force a respawn as that champ
     ClientKill();
 }

@@ -59,7 +59,7 @@ void CSQC_Ent_Update(float flIsNew) {
             float lvl = readfloat();
             if (lvl != self.level)
             {
-                leveluptime = time;
+                leveluptime = time + 1;
                 self.level = lvl;
             }           
             self.experience = readfloat();

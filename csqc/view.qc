@@ -45,6 +45,7 @@ void (vector pos, float val, float max_val, vector color) Hud_DrawBar = {
 
 	vector stringpos = pos;
 	stringpos_x = stringpos_x + (barlength / 2);
+	stringpos_y = stringpos_y + 2;
 
 	float msgwidth = stringwidth(msg, 0, '8 8');
 	stringpos_x = stringpos_x - (msgwidth*.5);
@@ -106,18 +107,80 @@ string (float champ, float skillnum) GetChampIcon = {
 	}
 }
 
-void (vector pos, float lvl, vector color) Hud_DrawLevel = {
-    // for now just a string in a box
-    // if level up recently, do highlight new level
-    if ()
-    drawfill(pos, [20, 20, 0], color, .6, 0);
+void (vector pos, float val, float max_val, float lvl, vector color) Hud_DrawBarEXP = {
+
+	float barlength = 154; // get a little separation from other bars so we can highlight on levelup
+	vector boxsize = [20, 20, 0];
+
+	float perc = val / max_val * 100;
+	//float barperc = barlength / 100 * perc;
+	float barperc = (barlength + boxsize_x) / 100 * perc;
+	float colorchange = barperc / 100;
+	float barcolorpx = 0;
+	float boxcolorpx = 0;
+	if (barperc > barlength)
+	{
+		barcolorpx = barlength;
+		boxcolorpx = barperc - barlength;
+	}
+	else
+	{
+		barcolorpx = barperc;
+	}
+
+	drawfill(pos, [barcolorpx, 10, 0], color, 0.6, 0);
+	drawfill(pos, [barlength, 10, 0], color, 0.2, 0);
+
+	string msg = strcat(ftos(val), "/", ftos(max_val));
+
+	// exp numbers
+	vector stringpos = pos;
+	stringpos_x = stringpos_x + (barlength / 2);
+	stringpos_y = stringpos_y + 2;
+
+	float msgwidth = stringwidth(msg, 0, '8 8');
+	stringpos_x = stringpos_x - (msgwidth*.5);
+	drawstring(stringpos, msg, [8, 8, 0], [1, 1, 1], 1, 0);
+
+	// level box
+	vector boxpos = pos;
+	boxpos_x = boxpos_x + barlength;
+	boxpos_y = boxpos_y - 5;
+	// for now just a string in a box
+    drawfill(boxpos, boxsize, color, .2, 0);
+	drawfill(boxpos, boxcolorpx, color, .6, 0);
 
     float msgwidth = stringwidth(ftos(lvl), 0, [8, 8, 0]);
-    vector stringpos = pos;
+    vector stringpos = boxpos;
     stringpos = stringpos + [10, 10, 0];
     stringpos_x = stringpos_x - (msgwidth * .5);
     stringpos_y = stringpos_y - 4;
     drawstring(stringpos, ftos(lvl), [8, 8, 0], [1, 1, 1], 1, 0);    
+
+	// if level up recently, do highlight new level
+	float trans = leveluptime - time;
+    if (trans > 0)
+	{
+		// top box
+		drawfill(boxpos - '2 2 0', [24, 2, 0], [255, 215, 0], trans, 0);
+		// top left box
+		drawfill(boxpos - '2 0 0', [2, 5, 0], [255, 215, 0], trans, 0);
+		// bot left box
+		vector botpos = boxpos - '2 0 0';
+		botpos_y = botpos_y + 15;
+		drawfill(botpos, [2, 7, 0], [255, 215, 0], trans, 0);
+		// bot box
+		drawfill(boxpos + '0 20 0', [20, 2, 0], [255, 215, 0], trans, 0);
+		// right box
+		drawfill(boxpos + '20 0 0', [2, 22, 0], [255, 215, 0], trans, 0);
+
+		// left bar
+		drawfill(pos - '2 2 0', [2, 14, 0], [255, 215, 0], trans, 0);
+		// top bar
+		drawfill(pos - '0 2 0', [barlength, 2, 0], [255, 215, 0], trans, 0);
+		// bot bar
+		drawfill(pos + '0 10 0', [barlength, 2, 0], [255, 215, 0], trans, 0);
+	}
 }
 
 void Hud_Draw(vector scrsz)
@@ -129,29 +192,27 @@ void Hud_Draw(vector scrsz)
 	entity p = findfloat(world, entnum, player_localentnum); 
 	if (p.champ)
 	{
-		float manaval = p.mana;
-		float mana_max = p.max_mana;
-		pos = pos+'24 0 0';
-		vector color = '0 0 255';
-		Hud_DrawBar(pos, manaval, mana_max, color);
 
 		float hval = p.health;
 		float h_max = p.max_health;
-		color = '255 0 0';
-		pos = pos + '0 12 0';
+		vector color = '255 0 0';
+		pos = pos + '24 12 0';
 		Hud_DrawBar(pos, hval, h_max, color);
 
+		float manaval = p.mana;
+		float mana_max = p.max_mana;
+		pos = pos - '0 12 0';
+		color = '0 0 255';
+		Hud_DrawBar(pos, manaval, mana_max, color);
+
         // level and experience
-        float eval = p.experience;
+		float exp = p.experience;
         float e_max = GetExpBar(p.level);
         color = '147 112 219';
-        pos = pos + '0 12 0';
-        Hud_DrawBar(pos, eval, e_max, color);
-
-        float lvl = p.level;
-        pos = pos + '0 160 0';
-        Hud_DrawLevel(pos, lvl, color);
-
+        pos = pos - '0 12 0';
+		float lvl = p.level;
+		Hud_DrawBarEXP(pos, exp, e_max, lvl, color);
+        
 		// skills
 		// based on champ, show champ skill icons
 		string icon = GetChampIcon(p.champ, 1);
