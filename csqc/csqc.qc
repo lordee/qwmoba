@@ -55,6 +55,9 @@ void CSQC_Ent_Update(float flIsNew) {
             self.skilltwocooldown = readfloat();
             self.skillthreecooldown = readfloat();
             self.skillfourcooldown = readfloat();
+            self.gold = readfloat();
+            self.level = readfloat();
+            self.experience = readfloat();
                 
             setsize(self, '-16 -16 -24', '16 16 32');
             setorigin(self, self.origin);

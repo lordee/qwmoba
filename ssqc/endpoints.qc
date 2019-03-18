@@ -43,6 +43,9 @@ float Player_SendEntity(entity ePVEnt, float flChanged) {
     WriteFloat(MSG_ENTITY, self.skilltwocooldown);
     WriteFloat(MSG_ENTITY, self.skillthreecooldown);
     WriteFloat(MSG_ENTITY, self.skillfourcooldown);
+    WriteFloat(MSG_ENTITY, self.gold);
+    WriteFloat(MSG_ENTITY, self.level);
+    WriteFloat(MSG_ENTITY, self.experience);
 
     return TRUE;
 }

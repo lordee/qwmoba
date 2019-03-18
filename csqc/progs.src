@@ -1,6 +1,7 @@
 ../csprogs.dat
 csdefs.qc
 csmobadefs.qc
+../share/helpers.qc
 csqc.qc
 input.qc
 view.qc

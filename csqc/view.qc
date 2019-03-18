@@ -145,7 +145,9 @@ void Hud_Draw(vector scrsz)
 		pos = pos + '25 0 0';
 		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 4) ? TRUE : FALSE, p.skillfourcooldown);
 
-		// shade based on time left for cd
+        // level and experience
+        float bar = GetExpBar(p.level);
+		// gold
 
 		// items
 

@@ -19,7 +19,7 @@ plats.qc
 misc.qc
 
 server.qc
-
+../share/helpers.qc
 endpoints.qc
 qwm.qc
 champ.qc
