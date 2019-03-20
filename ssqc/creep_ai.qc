@@ -567,14 +567,16 @@ void(float dist) ai_run =
 
 // check knowledge of enemy
 	enemy_vis = visible(self.enemy);
-	if (enemy_vis)
-		self.search_time = time + 5;
-
 	enemy_infront = infront(self.enemy);
 	enemy_range = range(self.enemy);
 	enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
 
 	self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
+
+    // TODO - set attack state if they're within x distance
+    // if attack state, attack
+    // else move
+    set attack state
 	
 	if (self.attack_state == AS_MISSILE)
 	{
