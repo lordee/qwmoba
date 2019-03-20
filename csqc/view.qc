@@ -28,10 +28,10 @@ void Hud_DrawSkillAndItemIcon(vector pos, string image, float selected, float co
 
 	if (selected)
 	{
-		drawfill(pos - '0 2 0', [22, 2, 0], [0, 255, 0], 0.6, 0);
-		drawfill(pos + '0 20 0', [20, 2, 0], [0, 255, 0], 0.6, 0);
-		drawfill(pos - '2 2 0', [2, 24, 0], [0, 255, 0], 0.6, 0);
-		drawfill(pos + '20 0 0', [2, 22, 0], [0, 255, 0], 0.6, 0);
+		drawfill(pos + [0, -2, 0], [22, 2, 0], [0, 255, 0], 0.6, 0);
+		drawfill(pos + [0, 20, 0], [20, 2, 0], [0, 255, 0], 0.6, 0);
+		drawfill(pos + [-2, -2, 0], [2, 24, 0], [0, 255, 0], 0.6, 0);
+		drawfill(pos + [20, 0, 0], [2, 22, 0], [0, 255, 0], 0.6, 0);
 	}
 
 	float cd = ceil(cooldown - time);
@@ -134,24 +134,24 @@ void Hud_DrawBarEXP(vector pos, float val, float max_val, float lvl, vector colo
     if (trans > 0)
 	{
 		// top box
-		drawfill(boxpos - '2 2 0', [24, 2, 0], [255, 215, 0], trans, 0);
+		drawfill(boxpos + [-2, -2, 0], [24, 2, 0], [255, 215, 0], trans, 0);
 		// top left box
-		drawfill(boxpos - '2 0 0', [2, 5, 0], [255, 215, 0], trans, 0);
+		drawfill(boxpos + [-2, 0, 0], [2, 5, 0], [255, 215, 0], trans, 0);
 		// bot left box
-		vector botpos = boxpos - '2 0 0';
+		vector botpos = boxpos + [-2, 0, 0];
 		botpos_y = botpos_y + 15;
 		drawfill(botpos, [2, 7, 0], [255, 215, 0], trans, 0);
 		// bot box
-		drawfill(boxpos + '0 20 0', [20, 2, 0], [255, 215, 0], trans, 0);
+		drawfill(boxpos + [0, 20, 0], [20, 2, 0], [255, 215, 0], trans, 0);
 		// right box
-		drawfill(boxpos + '20 0 0', [2, 22, 0], [255, 215, 0], trans, 0);
+		drawfill(boxpos + [20, 0, 0], [2, 22, 0], [255, 215, 0], trans, 0);
 
 		// left bar
-		drawfill(pos - '2 2 0', [2, 14, 0], [255, 215, 0], trans, 0);
+		drawfill(pos + [-2, -2, 0], [2, 14, 0], [255, 215, 0], trans, 0);
 		// top bar
-		drawfill(pos - '0 2 0', [barlength, 2, 0], [255, 215, 0], trans, 0);
+		drawfill(pos + [0, -2, 0], [barlength, 2, 0], [255, 215, 0], trans, 0);
 		// bot bar
-		drawfill(pos + '0 10 0', [barlength, 2, 0], [255, 215, 0], trans, 0);
+		drawfill(pos + [0, 10, 0], [barlength, 2, 0], [255, 215, 0], trans, 0);
 	}
 }
 
@@ -194,45 +194,44 @@ void Hud_Draw(vector scrsz)
 
 		float hval = p.health;
 		float h_max = p.max_health;
-		vector color = '255 0 0';
-		pos = pos + '24 12 0';
+		vector color = [255, 0, 0];
+		pos = pos + [24, 12, 0];
 		Hud_DrawBar(pos, hval, h_max, color);
 
 		float manaval = p.mana;
 		float mana_max = p.max_mana;
-		pos = pos - '0 12 0';
-		color = '0 0 255';
+		pos = pos + [0, -12, 0];
+		color = [0, 0, 255];
 		Hud_DrawBar(pos, manaval, mana_max, color);
 
         // level and experience
 		float exp = p.experience;
         float e_max = GetExpBar(p.level);
-        color = '147 112 219';
-        pos = pos - '0 12 0';
+        color = [147, 112, 219];
+        pos = pos + [0, -12, 0];
 		float lvl = p.level;
 		Hud_DrawBarEXP(pos, exp, e_max, lvl, color);
         
 		// skills
 		// based on champ, show champ skill icons
 		string icon = GetChampIcon(p.champ, 1);
-		pos = pos - '0 40 0';
+		pos = pos + [0, -40, 0];
 		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 1) ? TRUE : FALSE, p.skill_one_cooldown);
 
 		icon = GetChampIcon(p.champ, 2);
-		pos = pos + '25 0 0';
+		pos = pos + [25, 0, 0];
 		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 2) ? TRUE : FALSE, p.skill_two_cooldown);
 
 		icon = GetChampIcon(p.champ, 3);
-		pos = pos + '25 0 0';
+		pos = pos + [25, 0, 0];
 		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 3) ? TRUE : FALSE, p.skill_three_cooldown);
 
 		icon = GetChampIcon(p.champ, 4);
-		pos = pos + '25 0 0';
+		pos = pos + [25, 0, 0];
 		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 4) ? TRUE : FALSE, p.skill_four_cooldown);
 
 		// gold
-        pos = pos + '50 0 0';
-        pos = pos + '0 64 0';
+        pos = pos + [50, 64, 0];
         Hud_DrawGold(pos, p.gold);
 
 		// items
