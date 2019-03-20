@@ -39,14 +39,20 @@ float Player_SendEntity(entity ePVEnt, float flChanged) {
 	WriteFloat(MSG_ENTITY, self.max_mana);
 	WriteFloat(MSG_ENTITY, self.health);
 	WriteFloat(MSG_ENTITY, self.max_health);
-    WriteFloat(MSG_ENTITY, self.activeskill);
-    WriteFloat(MSG_ENTITY, self.skillonecooldown);
-    WriteFloat(MSG_ENTITY, self.skilltwocooldown);
-    WriteFloat(MSG_ENTITY, self.skillthreecooldown);
-    WriteFloat(MSG_ENTITY, self.skillfourcooldown);
+    WriteFloat(MSG_ENTITY, self.skill_selected);
+    WriteFloat(MSG_ENTITY, self.skill_one_cooldown);
+    WriteFloat(MSG_ENTITY, self.skill_two_cooldown);
+    WriteFloat(MSG_ENTITY, self.skill_three_cooldown);
+    WriteFloat(MSG_ENTITY, self.skill_four_cooldown);
     WriteFloat(MSG_ENTITY, self.gold);
     WriteFloat(MSG_ENTITY, self.level);
-    WriteFloat(MSG_ENTITY, self.experience);
+    WriteFloat(MSG_ENTITY, self.item_one);
+    WriteFloat(MSG_ENTITY, self.item_two);
+    WriteFloat(MSG_ENTITY, self.item_three);
+    WriteFloat(MSG_ENTITY, self.item_four);
+    WriteFloat(MSG_ENTITY, self.item_five);
+    WriteFloat(MSG_ENTITY, self.item_six);
+    WriteFloat(MSG_ENTITY, self.item_seven);
 
     return TRUE;
 }

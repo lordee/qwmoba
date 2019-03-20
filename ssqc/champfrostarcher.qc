@@ -124,7 +124,7 @@ void () FrostArcherAttack = {
 
 
 void () SkillOne_FrostArcher = {
-    if (CanCast(self.skillonecooldown, self.skillonemanacost))
+    if (CanCast(self.skill_one_cooldown, self.skill_one_manacost))
     {
          // do checks for frost stacks
         float s;
@@ -133,11 +133,11 @@ void () SkillOne_FrostArcher = {
         // if five frost stacks then allow cast
         if (s >= 5)
         {
-            self.mana = self.mana - self.skillonemanacost;
+            self.mana = self.mana - self.skill_one_manacost;
             // show cast clientside
             // buff attack speed
             T_ApplyBuff(self, BUFF_AASPEED, AASPEED_SKILLONE_FROSTARCHER, SKILLONE_VALUE_FROSTARCHER);
-            self.skillonecooldown = time + SKILLONE_COOLDOWN_FROSTARCHER;
+            self.skill_one_cooldown = time + SKILLONE_COOLDOWN_FROSTARCHER;
         }
         else
         {
@@ -168,7 +168,7 @@ void () FrostArcherSkillTwoTouch = {
 // hit something that bleeds
 	if (other.takedamage)
 	{
-		spawn_touchblood (self.owner.skilltwodamage);
+		spawn_touchblood (self.owner.skill_two_damage);
 		other.deathtype = "frostarcherskilltwo";
 		
 		// if this has already hit, don't damage/slow
@@ -193,12 +193,12 @@ void () FrostArcherSkillTwoTouch = {
             {
                 T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_SKILLTWO_FROSTARCHER, SKILLTWO_VALUE_FROSTARCHER);
                 T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_FROSTARCHER, 0); // for frost stacks
-                T_Damage (other, self, self.owner, self.owner.skilltwodamage);
+                T_Damage (other, self, self.owner, self.owner.skill_two_damage);
             }
         }
         else
         {
-            T_Damage (other, self, self.owner, self.owner.skilltwodamage);
+            T_Damage (other, self, self.owner, self.owner.skill_two_damage);
         }
 	}
 	else
@@ -215,10 +215,10 @@ void () FrostArcherSkillTwoTouch = {
 }
 
 void () SkillTwo_FrostArcher = {
-	if (CanCast(self.skilltwocooldown, self.skilltwomanacost))
+	if (CanCast(self.skill_two_cooldown, self.skill_two_manacost))
     {
-        self.mana = self.mana - self.skilltwomanacost;
-        self.skilltwocooldown = time + SKILLTWO_COOLDOWN_FROSTARCHER;
+        self.mana = self.mana - self.skill_two_manacost;
+        self.skill_two_cooldown = time + SKILLTWO_COOLDOWN_FROSTARCHER;
 
         float num, ang;
         num = 11;
@@ -296,12 +296,12 @@ void () FrostArcherSkillFourTouch = {
 
     if (other.classname == "player" && other.takedamage)
     {
-        spawn_touchblood (self.owner.skillfourdamage);
+        spawn_touchblood (self.owner.skill_four_damage);
 		other.deathtype = "frostarcherskillfour";
 		
         // apply stun in radius
         T_ApplyBuff(other, DEBUFF_STUN, STUN_SKILLFOUR_FROSTARCHER, SKILLFOUR_VALUE_FROSTARCHER);
-        T_Damage (other, self, self.owner, self.owner.skilltwodamage);
+        T_Damage (other, self, self.owner, self.owner.skill_two_damage);
     }
     else
 	{
@@ -317,10 +317,10 @@ void () FrostArcherSkillFourTouch = {
 }
 
 void () SkillFour_FrostArcher = {
-	if (CanCast(self.skillfourcooldown, self.skillfourmanacost))
+	if (CanCast(self.skill_four_cooldown, self.skill_four_manacost))
     {
-        self.mana = self.mana - self.skillfourmanacost;
-        self.skillfourcooldown = time + SKILLFOUR_COOLDOWN_FROSTARCHER;
+        self.mana = self.mana - self.skill_four_manacost;
+        self.skill_four_cooldown = time + SKILLFOUR_COOLDOWN_FROSTARCHER;
             
         newmis = spawn ();
         newmis.voided = 0;

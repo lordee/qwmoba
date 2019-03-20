@@ -43,49 +43,49 @@ void () SetupChamp = {
             self.speed = BASESPEED_FROSTARCHER;
             self.weapon = WEAPON_FROSTARCHER;
             self.attackspeed = BASEATTACKSPEED_FROSTARCHER;
-            self.skillone = SKILLONE_FROSTARCHER;
-            self.skillonemanacost = SKILLONE_MANACOST_FROSTARCHER;
-            self.skillonecooldown = 0;
-            self.skillonedamage = SKILLONE_DAMAGE_FROSTARCHER;
-            self.skilltwo = SKILLTWO_FROSTARCHER;
-            self.skilltwomanacost = SKILLTWO_MANACOST_FROSTARCHER;
-            self.skilltwocooldown = 0;
-            self.skilltwodamage = SKILLTWO_DAMAGE_FROSTARCHER;
-            self.skillthree = SKILLTHREE_FROSTARCHER;
-            self.skillthreemanacost = SKILLTHREE_MANACOST_FROSTARCHER;
-            self.skillthreecooldown = 0;
-            self.skillthreedamage = SKILLTHREE_DAMAGE_FROSTARCHER;
-            self.skillfour = SKILLFOUR_FROSTARCHER;
-            self.skillfourmanacost = SKILLFOUR_MANACOST_FROSTARCHER;
-            self.skillfourcooldown = 0;
-            self.skillfourdamage = SKILLFOUR_DAMAGE_FROSTARCHER;
+            self.skill_one = SKILLONE_FROSTARCHER;
+            self.skill_one_manacost = SKILLONE_MANACOST_FROSTARCHER;
+            self.skill_one_cooldown = 0;
+            self.skill_one_damage = SKILLONE_DAMAGE_FROSTARCHER;
+            self.skill_two = SKILLTWO_FROSTARCHER;
+            self.skill_two_manacost = SKILLTWO_MANACOST_FROSTARCHER;
+            self.skill_two_cooldown = 0;
+            self.skill_two_damage = SKILLTWO_DAMAGE_FROSTARCHER;
+            self.skill_three = SKILLTHREE_FROSTARCHER;
+            self.skill_three_manacost = SKILLTHREE_MANACOST_FROSTARCHER;
+            self.skill_three_cooldown = 0;
+            self.skill_three_damage = SKILLTHREE_DAMAGE_FROSTARCHER;
+            self.skill_four = SKILLFOUR_FROSTARCHER;
+            self.skill_four_manacost = SKILLFOUR_MANACOST_FROSTARCHER;
+            self.skill_four_cooldown = 0;
+            self.skill_four_damage = SKILLFOUR_DAMAGE_FROSTARCHER;
         break;
     }
 }
 
 void () ChangeSkill = {
     float s;
-    s = self.activeskill;
+    s = self.skill_selected;
     switch (self.impulse)
     {
         case SKILLONE:
-            s = self.skillone;
+            s = self.skill_one;
             break;
         case SKILLTWO:
-            s = self.skilltwo;
+            s = self.skill_two;
             break;
         case SKILLTHREE:
-            s = self.skillthree;
+            s = self.skill_three;
             break;
         case SKILLFOUR:
-            s = self.skillfour;
+            s = self.skill_four;
             break;
     }
 
     // do checks??
 
     // switch to skill
-    self.activeskill = s;
+    self.skill_selected = s;
 }
 
 void (float skill) UseSkill = {

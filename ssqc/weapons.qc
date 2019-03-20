@@ -1047,19 +1047,19 @@ void() ImpulseCommands =
 			ChangeSkill();
 			break;
 		case SKILL_USEACTIVE:
-			UseSkill(self.activeskill);
+			UseSkill(self.skill_selected);
 			break;
 		case SKILL_USEONE:
-			UseSkill(self.skillone);
+			UseSkill(self.skill_one);
 			break;
 		case SKILL_USETWO:
-			UseSkill(self.skilltwo);
+			UseSkill(self.skill_two);
 			break;
 		case SKILL_USETHREE:
-			UseSkill(self.skillthree);
+			UseSkill(self.skill_three);
 			break;
 		case SKILL_USEFOUR:
-			UseSkill(self.skillfour);
+			UseSkill(self.skill_four);
 			break;
 		case READY:
 			ToggleReady(self);

@@ -9,29 +9,29 @@
 // champ fields
 .float attackdamage;
 .float attackspeed;
-.float skillone;
-.float skilltwo;
-.float skillthree;
-.float skillfour;
-.float activeskill;
+.float skill_one;
+.float skill_two;
+.float skill_three;
+.float skill_four;
+.float skill_selected;
 .float mana;
 .float max_mana;
 .float regentick;
 .float healthregen;
 .float manaregen;
 .float stacks;
-.float skillonedamage;
-.float skillonecooldown;
-.float skillonemanacost;
-.float skilltwodamage;
-.float skilltwocooldown;
-.float skilltwomanacost;
-.float skillthreedamage;
-.float skillthreecooldown;
-.float skillthreemanacost;
-.float skillfourdamage;
-.float skillfourcooldown;
-.float skillfourmanacost;
+.float skill_one_damage;
+.float skill_one_cooldown;
+.float skill_one_manacost;
+.float skill_two_damage;
+.float skill_two_cooldown;
+.float skill_two_manacost;
+.float skill_three_damage;
+.float skill_three_cooldown;
+.float skill_three_manacost;
+.float skill_four_damage;
+.float skill_four_cooldown;
+.float skill_four_manacost;
 .float gold;
 .float gold_global;
 .float gold_assist;
@@ -39,6 +39,13 @@
 .float gold_extra;
 .float gold_minion;
 .float assist_count;
+.float item_one;
+.float item_two;
+.float item_three;
+.float item_four;
+.float item_five;
+.float item_six;
+.float item_seven;
 
 .float consecutive_deaths;
 .float consecutive_kills;
@@ -60,7 +67,6 @@
 .float nextthinkinterval;
 .float buffvalue;
 .float stunned;
-
 
 // npc fields
 .float lane;

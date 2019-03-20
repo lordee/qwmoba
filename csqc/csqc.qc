@@ -50,11 +50,11 @@ void CSQC_Ent_Update(float flIsNew) {
             self.max_mana = readfloat();
             self.health = readfloat();
             self.max_health = readfloat();
-            self.activeskill = readfloat();
-            self.skillonecooldown = readfloat();
-            self.skilltwocooldown = readfloat();
-            self.skillthreecooldown = readfloat();
-            self.skillfourcooldown = readfloat();
+            self.skill_selected = readfloat();
+            self.skill_onecooldown = readfloat();
+            self.skill_two_cooldown = readfloat();
+            self.skill_three_cooldown = readfloat();
+            self.skill_four_cooldown = readfloat();
             self.gold = readfloat();
             float lvl = readfloat();
             if (lvl != self.level)
@@ -63,6 +63,13 @@ void CSQC_Ent_Update(float flIsNew) {
                 self.level = lvl;
             }           
             self.experience = readfloat();
+            self.item_one = readfloat();
+            self.item_two = readfloat();
+            self.item_three = readfloat();
+            self.item_four = readfloat();
+            self.item_five = readfloat();
+            self.item_six = readfloat();
+            self.item_seven = readfloat();
                 
             setsize(self, '-16 -16 -24', '16 16 32');
             setorigin(self, self.origin);

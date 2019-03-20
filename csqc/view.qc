@@ -1,42 +1,10 @@
-void(vector pos, float value, float threshhold) Hud_DrawLargeValue =
+void Hud_DrawBar(vector pos, float val, float max_val, vector color)
 {
-	float c;
-	float len;
-	string s;
-	if (value < 0)
-		value = 0;	//hrm
-	if (value>999)
-		value = 999;
-	s = ftos(floor(value));
-	len = strlen(s);
-	pos_x += 24 * (3-len);
-	if (value <= threshhold)
-	{	//use alternate (red) numbers
-
-		while(len>0)
-		{
-			len-=1;
-			c = str2chr(s, len);
-			drawpic(pos+len * '24 0 0', sprintf("anum_%g", c-'0'), '24 24 0', '1 1 1', 1, 0);
-		}
-	}
-	else
-	{	//use normal numbers
-
-		while(len>0)
-		{
-			len-=1;
-			c = str2chr(s, len);
-			drawpic(pos+len * '24 0 0', sprintf("num_%g", c-'0'), '24 24 0', '1 1 1', 1, 0);
-		}
-	}
-};
-
-void (vector pos, float val, float max_val, vector color) Hud_DrawBar = {
 	float barlength = 150;
 	float perc = val / max_val * 100;
 	float barperc = barlength / 100 * perc;
 	float colorchange = barperc / 100;
+    vector fontsize = [8, 8, 0];
 
 	drawfill(pos, [barperc, 10, 0], color, 0.6, 0);
 	drawfill(pos, [barlength, 10, 0], color, 0.2, 0);
@@ -47,13 +15,14 @@ void (vector pos, float val, float max_val, vector color) Hud_DrawBar = {
 	stringpos_x = stringpos_x + (barlength / 2);
 	stringpos_y = stringpos_y + 2;
 
-	float msgwidth = stringwidth(msg, 0, '8 8');
+	float msgwidth = stringwidth(msg, 0, fontsize);
 	stringpos_x = stringpos_x - (msgwidth*.5);
 
-	drawstring(stringpos, msg, [8, 8, 0], [1, 1, 1], 1, 0);
+	drawstring(stringpos, msg, fontsize, [1, 1, 1], 1, 0);
 }
 
-void (vector pos, string image, float selected, float cooldown) Hud_DrawSkillIcon = {
+void Hud_DrawSkillAndItemIcon(vector pos, string image, float selected, float cooldown)
+{
 	vector size = [20, 20, 0];
 	drawpic(pos, image, size, [1, 1, 1], 1, 0);
 
@@ -70,19 +39,21 @@ void (vector pos, string image, float selected, float cooldown) Hud_DrawSkillIco
 	if (cd > 0)
 	{
 		drawfill(pos, size, [128, 128, 128], 0.6, 0);
+        vector fontsize = [6, 8, 0];
 		
-		float msgwidth = stringwidth(ftos(cd), 0, [6, 8, 0]);
+		float msgwidth = stringwidth(ftos(cd), 0, fontsize);
 		vector stringpos = pos;
 		stringpos = stringpos + [10, 10, 0];
 		stringpos_x = stringpos_x - (msgwidth * .5);
 		stringpos_y = stringpos_y - 4;
 
-		drawstring(stringpos, ftos(cd), [6, 8, 0], [1, 1, 1], 1, 0);
+		drawstring(stringpos, ftos(cd), fontsize, [1, 1, 1], 1, 0);
 	}
 }
 
 // this should not be tested every frame... fix it later
-string (float champ, float skillnum) GetChampIcon = {
+string GetChampIcon(float champ, float skillnum)
+{
 	switch (champ)
 	{
 		case CHAMP_FROSTARCHER:
@@ -107,13 +78,14 @@ string (float champ, float skillnum) GetChampIcon = {
 	}
 }
 
-void (vector pos, float val, float max_val, float lvl, vector color) Hud_DrawBarEXP = {
+void Hud_DrawBarEXP(vector pos, float val, float max_val, float lvl, vector color)
+{
 
 	float barlength = 154; // get a little separation from other bars so we can highlight on levelup
 	vector boxsize = [20, 20, 0];
+    vector fontsize = [8, 8, 0];
 
 	float perc = val / max_val * 100;
-	//float barperc = barlength / 100 * perc;
 	float barperc = (barlength + boxsize_x) / 100 * perc;
 	float colorchange = barperc / 100;
 	float barcolorpx = 0;
@@ -138,9 +110,9 @@ void (vector pos, float val, float max_val, float lvl, vector color) Hud_DrawBar
 	stringpos_x = stringpos_x + (barlength / 2);
 	stringpos_y = stringpos_y + 2;
 
-	float msgwidth = stringwidth(msg, 0, '8 8');
+	float msgwidth = stringwidth(msg, 0, fontsize);
 	stringpos_x = stringpos_x - (msgwidth*.5);
-	drawstring(stringpos, msg, [8, 8, 0], [1, 1, 1], 1, 0);
+	drawstring(stringpos, msg, fontsize, [1, 1, 1], 1, 0);
 
 	// level box
 	vector boxpos = pos;
@@ -150,12 +122,12 @@ void (vector pos, float val, float max_val, float lvl, vector color) Hud_DrawBar
     drawfill(boxpos, boxsize, color, .2, 0);
 	drawfill(boxpos, boxcolorpx, color, .6, 0);
 
-    float msgwidth = stringwidth(ftos(lvl), 0, [8, 8, 0]);
+    float msgwidth = stringwidth(ftos(lvl), 0, fontsize);
     vector stringpos = boxpos;
-    stringpos = stringpos + [10, 10, 0];
+    stringpos = stringpos + (boxsize * .5);
     stringpos_x = stringpos_x - (msgwidth * .5);
-    stringpos_y = stringpos_y - 4;
-    drawstring(stringpos, ftos(lvl), [8, 8, 0], [1, 1, 1], 1, 0);    
+    stringpos_y = stringpos_y - (fontsize_y * .5);
+    drawstring(stringpos, ftos(lvl), fontsize, [1, 1, 1], 1, 0);    
 
 	// if level up recently, do highlight new level
 	float trans = leveluptime - time;
@@ -181,6 +153,33 @@ void (vector pos, float val, float max_val, float lvl, vector color) Hud_DrawBar
 		// bot bar
 		drawfill(pos + '0 10 0', [barlength, 2, 0], [255, 215, 0], trans, 0);
 	}
+}
+
+void Hud_DrawGold(vector pos, float goldval)
+{
+    vector fillsize = [50, 20, 0];
+    drawfill(pos, fillsize, color, .2, 0);
+    string msg = ftos(goldval);
+    vector fontsize = [6, 6, 0];
+    vector stringpos = pos;
+    float msgwidth = stringwidth(msg, 0, fontsize);
+
+    // let's right align
+    stringpos_x = stringpos_x + (fillsize_x - msgwidth);
+
+    // vertical middle align
+    stringpos_y = stringpos_y + (fontsize_y * .5);
+    drawstring(stringpos, msg, fontsize, [255, 215, 0], 1, 0);
+
+    // TODO gold coin icon
+}
+
+string GetItemIcon(float item_num)
+{
+    string icon = "";
+    case IT_BOOTS_BASE:
+
+        break;
 }
 
 void Hud_Draw(vector scrsz)
@@ -217,24 +216,47 @@ void Hud_Draw(vector scrsz)
 		// based on champ, show champ skill icons
 		string icon = GetChampIcon(p.champ, 1);
 		pos = pos - '0 40 0';
-		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 1) ? TRUE : FALSE, p.skillonecooldown);
+		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 1) ? TRUE : FALSE, p.skill_one_cooldown);
 
 		icon = GetChampIcon(p.champ, 2);
 		pos = pos + '25 0 0';
-		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 2) ? TRUE : FALSE, p.skilltwocooldown);
+		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 2) ? TRUE : FALSE, p.skill_two_cooldown);
 
 		icon = GetChampIcon(p.champ, 3);
 		pos = pos + '25 0 0';
-		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 3) ? TRUE : FALSE, p.skillthreecooldown);
+		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 3) ? TRUE : FALSE, p.skill_three_cooldown);
 
 		icon = GetChampIcon(p.champ, 4);
 		pos = pos + '25 0 0';
-		Hud_DrawSkillIcon(pos, icon, (p.activeskill == 4) ? TRUE : FALSE, p.skillfourcooldown);
+		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 4) ? TRUE : FALSE, p.skill_four_cooldown);
 
-        
 		// gold
+        pos = pos + '50 0 0';
+        pos = pos + '0 64 0';
+        Hud_DrawGold(pos, p.gold);
 
 		// items
+        pos = pos + [0, -64, 0];
+        string icon = GetItemIcon(p.item_one);
+        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 1) ? TRUE : FALSE, p.item_one_cooldown);
+        pos = pos + [22, 0, 0];
+        icon = GetItemIcon(p.item_two);
+        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 2) ? TRUE : FALSE, p.item_two_cooldown);
+        pos = pos + [22, 0, 0];
+        icon = GetItemIcon(p.item_three);
+        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 3) ? TRUE : FALSE, p.item_three_cooldown);
+        pos = pos + [22, 11, 0];
+        icon = GetItemIcon(p.item_four);
+        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 4) ? TRUE : FALSE, p.item_four_cooldown);
+        pos = pos + [-66, 11, 0];
+        icon = GetItemIcon(p.item_five);
+        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 5) ? TRUE : FALSE, p.item_five_cooldown);
+        pos = pos + [22, 0, 0];
+        icon = GetItemIcon(p.item_six);
+        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 6) ? TRUE : FALSE, p.item_six_cooldown);
+        pos = pos + [22, 0, 0];
+        icon = GetItemIcon(p.item_seven);
+        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 7) ? TRUE : FALSE, p.item_seven_cooldown);
 
 		// minimap
 	}
