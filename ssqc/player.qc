@@ -610,8 +610,6 @@ void() PlayerDie =
 	self.radsuit_finished = 0;
 	self.modelindex = modelindex_player;    // don't use eyes
 
-	DropBackpack();
-	
 	self.weaponmodel="";
 	self.view_ofs = '0 0 -8';
 	self.deadflag = DEAD_DYING;
