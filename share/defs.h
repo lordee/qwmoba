@@ -272,6 +272,9 @@
 #define IT_ATTACK_SPEED_PERC    4
 
 #define BTN_BG  "progs/csqc/csqcguiback.tga"
+#define BTN_CAT_ALL 0
+#define BTN_CAT_MS  1
+#define BTN_CAT_AS  2
 
 // icons
 #define SKILLONEICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/focus.png"

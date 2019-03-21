@@ -1,4 +1,4 @@
-void () ShowLobbyMenu;
+void (vector vid_size) ShowLobbyMenu;
 void () ShowLobbyChampMenu;
 
 void (vector boxpos, vector boxsize, string boxpic, string boxtext, vector boxrgb, float boxalpha) spawnbox =
@@ -24,10 +24,10 @@ void () ClearMenu = {
 	}
 }
 
-void (float menuitem) ShowMenu = {
+void (vector vid_size, float menuitem) ShowMenu = {
 
     // no active menu
-    if (vid_realwidth != 0)
+    if (vid_size_x != 0)
     {
         // a different menu is/was active, now we change it or send ACK if same
         if (mnu_active != menuitem)
@@ -38,13 +38,13 @@ void (float menuitem) ShowMenu = {
             switch (menuitem)
             {
                 case MNU_LOBBYTEAM:
-                    ShowLobbyMenu();
+                    ShowLobbyMenu(vid_size);
                 break;
                 case MNU_LOBBYCHAMP:
                     ShowLobbyChampMenu();
                 break;
                 case MNU_SHOP:
-                    ShowShopMenu();
+                    ShowShopMenu(vid_size);
                 case MNU_INACTIVE:
                     setcursormode(FALSE);
                 default:

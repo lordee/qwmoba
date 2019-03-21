@@ -7,6 +7,8 @@ vector vPlayerVelocity;
 float leveluptime;
 vector COLOR_PANEL_BG = [128, 128, 128];
 float ALPHA_PANEL_BG = .2;
+float Shop_Category = BTN_CAT_ALL;
+vector glob_vid_size;
 
 .string netname;
 .float health;
@@ -22,8 +24,6 @@ float ALPHA_PANEL_BG = .2;
 
 // menu stuff
 float mnu_active;
-float vid_realwidth;
-float vid_realheight;
 
 typedef struct
 {

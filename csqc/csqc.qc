@@ -1,4 +1,4 @@
-void (float menuitem) ShowMenu;
+void (vector vid_size, float menuitem) ShowMenu;
 void () Menu_Draw;
 void () Messages_Draw;
 void () MouseClick;
@@ -11,7 +11,7 @@ void() CSQC_Parse_Event = {
     {
         case SE_MNU_OPEN:
             second = readbyte();
-            ShowMenu(second);
+            ShowMenu(vid_size, second);
             break;
         default:
     }
@@ -93,9 +93,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 	//setviewprop(VF_DRAWENGINESBAR, 1);
 	setviewprop(VF_DRAWCROSSHAIR, 1);
     
-
-	vid_realwidth = width;
-    vid_realheight = height;
+    vector glob_vid_size = [width, height];
     
     addentities((intermission?0:MASK_VIEWMODEL)|MASK_ENGINE);
 
@@ -103,7 +101,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
     setproperty(VF_ANGLES, view_angles);
 
     renderscene();
-    Hud_Draw([width, height]);
-    Menu_Draw();
+    Hud_Draw(glob_vid_size);
+    Menu_Draw(glob_vid_size);
     Messages_Draw();
 }
