@@ -2,11 +2,6 @@ csprogs.dat
 qwprogs.dat
 qwprogs.lno
 csprogs.lno
-.vscode/ipch/1291a17093440ab2/mmap_address.bin
-.vscode/ipch/51eae69ba0f7c9a1/mmap_address.bin
-.vscode/ipch/6307ec8ca13b467b/mmap_address.bin
-.vscode/ipch/834951b055fc9f0f/mmap_address.bin
-.vscode/ipch/c4910be7e13134dc/mmap_address.bin
-.vscode/ipch/d07c433ffb109196/mmap_address.bin
-.vscode/ipch/9609dc347103daad/mmap_address.bin
+mmap_address.bin
 .gitignore
+*.ipch
