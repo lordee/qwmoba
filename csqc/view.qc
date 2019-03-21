@@ -157,6 +157,7 @@ void Hud_DrawBarEXP(vector pos, float val, float max_val, float lvl, vector colo
 
 void Hud_DrawGold(vector pos, float goldval)
 {
+    vector color = [128, 128, 128];
     vector fillsize = [50, 20, 0];
     drawfill(pos, fillsize, color, .2, 0);
     string msg = ftos(goldval);
@@ -180,6 +181,12 @@ string GetItemIcon(float item_num)
     case IT_BOOTS_BASE:
 
         break;
+}
+
+void Hud_DrawMiniMap(vector pos, vector fillsize)
+{
+    vector color = [128, 128, 128];
+    drawfill(pos, fillsize, color, .2, 0);
 }
 
 void Hud_Draw(vector scrsz)
@@ -258,6 +265,9 @@ void Hud_Draw(vector scrsz)
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 7) ? TRUE : FALSE, p.item_seven_cooldown);
 
 		// minimap
+        pos = scrsz;
+        vector fillsize = [100, 100, 0];
+        pos = pos - fillsize;
+        Hud_DrawMiniMap(pos, fillsize);
 	}
-	
 };
