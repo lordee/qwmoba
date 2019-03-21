@@ -1328,12 +1328,6 @@ void() powerup_touch =
 	self.model = string_null;
 
 // do the apropriate action
-	if (self.classname == "item_artifact_envirosuit")
-	{
-		other.rad_time = 1;
-		other.radsuit_finished = time + 30;
-	}
-	
 	if (self.classname == "item_artifact_invulnerability")
 	{
 		other.invincible_time = 1;
@@ -1383,25 +1377,6 @@ void() item_artifact_invulnerability =
 	setsize (self, '-16 -16 -24', '16 16 32');
 	StartItem ();
 };
-
-/*QUAKED item_artifact_envirosuit (0 .5 .8) (-16 -16 -24) (16 16 32)
-Player takes no damage from water or slime for 30 seconds
-*/
-void() item_artifact_envirosuit =
-{
-	self.touch = powerup_touch;
-
-	precache_model ("progs/suit.mdl");
-	precache_sound ("items/suit.wav");
-	precache_sound ("items/suit2.wav");
-	self.noise = "items/suit.wav";
-	setmodel (self, "progs/suit.mdl");
-	self.netname = "Biosuit";
-	self.items = IT_SUIT;
-	setsize (self, '-16 -16 -24', '16 16 32');
-	StartItem ();
-};
-
 
 /*QUAKED item_artifact_invisibility (0 .5 .8) (-16 -16 -24) (16 16 32)
 Player is invisible for 30 seconds
