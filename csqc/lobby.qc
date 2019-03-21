@@ -13,11 +13,10 @@ void () ShowLobbyMenu = {
     but_size = '160 35 0';
     men_x = (vid_realwidth*0.5) - (but_size_x*0.5);      // first button will be displayed in the dead center of the horizontal area
     men_y = vid_realheight*0.2;                     // first button will be displayed 20% of the vertical value from the top of the screen
-    buttonback = "progs/csqc/csqcguiback.tga";
 
-    btn = CreateButton( "Join Team One", LobbyJoinTeam, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
+    btn = CreateButton( "Join Team One", LobbyJoinTeam, men, BTN_BG, but_size, 0, btnID); men_y+=but_size_y; btnID++;
     btn.team_no = 1;
-    btn = CreateButton( "Join Team Two", LobbyJoinTeam, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
+    btn = CreateButton( "Join Team Two", LobbyJoinTeam, men, BTN_BG, but_size, 0, btnID); men_y+=but_size_y; btnID++;
     btn.team_no = 2;
 }
 

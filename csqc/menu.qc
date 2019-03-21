@@ -43,6 +43,8 @@ void (float menuitem) ShowMenu = {
                 case MNU_LOBBYCHAMP:
                     ShowLobbyChampMenu();
                 break;
+                case MNU_SHOP:
+                    ShowShopMenu();
                 case MNU_INACTIVE:
                     setcursormode(FALSE);
                 default:

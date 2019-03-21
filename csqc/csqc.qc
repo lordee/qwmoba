@@ -83,6 +83,7 @@ void(float apilevel, string enginename, float engineversion) CSQC_Init = {
     precache_pic (SKILLTWOICON_FROSTARCHER);
     precache_pic (SKILLTHREEICON_FROSTARCHER);
     precache_pic (SKILLFOURICON_FROSTARCHER);
+    precache_pic (BTN_BG);
 }
 
 void (vector size) Hud_Draw;

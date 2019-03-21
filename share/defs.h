@@ -227,6 +227,7 @@
 #define MNU_INACTIVE 0
 #define MNU_LOBBYTEAM 1
 #define MNU_LOBBYCHAMP 2
+#define MNU_SHOP    3
 
 // champs
 #define CHAMP_UNDEFINED      0
@@ -270,6 +271,7 @@
 #define IT_MOVEMENT_SPEED_PERC  2
 #define IT_ATTACK_SPEED_PERC    4
 
+#define BTN_BG  "progs/csqc/csqcguiback.tga"
 
 // icons
 #define SKILLONEICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/focus.png"

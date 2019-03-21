@@ -5,9 +5,9 @@ csmobadefs.qc
 ../share/items.qc
 csqc.qc
 input.qc
-view.qc
+hud.qc
 
-
+shop.qc
 menu.qc
 lobby.qc
 client.qc
