@@ -6,7 +6,7 @@ qwmobadefs.qc
 
 subs.qc
 combat.qc
-items.qc
+../share/items.qc
 weapons.qc
 world.qc
 client.qc

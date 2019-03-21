@@ -175,14 +175,6 @@ void Hud_DrawGold(vector pos, float goldval)
     // TODO gold coin icon
 }
 
-string GetItemIcon(float item_num)
-{
-    string icon = "";
-    case IT_BOOTS_BASE:
-
-        break;
-}
-
 void Hud_DrawMiniMap(vector pos, vector fillsize)
 {
     vector color = [128, 128, 128];
@@ -198,7 +190,6 @@ void Hud_Draw(vector scrsz)
 	entity p = findfloat(world, entnum, player_localentnum); 
 	if (p.champ)
 	{
-
 		float hval = p.health;
 		float h_max = p.max_health;
 		vector color = [255, 0, 0];
@@ -243,25 +234,28 @@ void Hud_Draw(vector scrsz)
 
 		// items
         pos = pos + [0, -64, 0];
-        string icon = GetItemIcon(p.item_one);
+        entity item = p.item_one;
+        
+
+        string icon = ItemsIcons[p.item_one];
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 1) ? TRUE : FALSE, p.item_one_cooldown);
         pos = pos + [22, 0, 0];
-        icon = GetItemIcon(p.item_two);
+        icon = ItemsIcons[p.item_two];
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 2) ? TRUE : FALSE, p.item_two_cooldown);
         pos = pos + [22, 0, 0];
-        icon = GetItemIcon(p.item_three);
+        icon = ItemsIcons[p.item_three];
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 3) ? TRUE : FALSE, p.item_three_cooldown);
         pos = pos + [22, 11, 0];
-        icon = GetItemIcon(p.item_four);
+        icon = ItemsIcons[p.item_four];
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 4) ? TRUE : FALSE, p.item_four_cooldown);
         pos = pos + [-66, 11, 0];
-        icon = GetItemIcon(p.item_five);
+        icon = ItemsIcons[p.item_five];
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 5) ? TRUE : FALSE, p.item_five_cooldown);
         pos = pos + [22, 0, 0];
-        icon = GetItemIcon(p.item_six);
+        icon = ItemsIcons[p.item_six];
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 6) ? TRUE : FALSE, p.item_six_cooldown);
         pos = pos + [22, 0, 0];
-        icon = GetItemIcon(p.item_seven);
+        icon = ItemsIcons[p.item_seven];
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 7) ? TRUE : FALSE, p.item_seven_cooldown);
 
 		// minimap

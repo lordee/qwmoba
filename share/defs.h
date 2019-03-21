@@ -266,9 +266,10 @@
 #define REGEN_TICKTIME  1
 
 // items
-#define IT_BOOTS_BASE   1
-#define IT_BOOTS_SPEED  2
-#define IT_BOOTS_AASPEED    3
+#define IT_MOVEMENT_SPEED_BASE 1
+#define IT_MOVEMENT_SPEED_PERC  2
+#define IT_ATTACK_SPEED_PERC    4
+
 
 // icons
 #define SKILLONEICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/focus.png"
