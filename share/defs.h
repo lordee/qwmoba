@@ -341,6 +341,8 @@
 // creeps
 #define CREEP_AGRO_RANGE    1000
 #define CREEP_CHASE_DISTANCE    2500
+#define CREEP_MELEE_ATTACK_RANGE    80
+#define CREEP_RANGE_ATTACK_RANGE    800
 
 #define CREEP_NONE          0
 #define CREEP_RANGE         1

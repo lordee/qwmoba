@@ -1,6 +1,4 @@
-float	enemy_yaw;
-float	enemy_vis, enemy_infront, enemy_range;
-
+float	enemy_vis, enemy_range;
 
 void(float dist) ai_forward =
 {
@@ -27,7 +25,7 @@ float() FacingIdeal =
 =============
 visible
 
-returns 1 if the entity is visible to self, even if not infront ()
+returns 1 if the entity is visible to self
 =============
 */
 float (entity targ) visible =
@@ -60,29 +58,6 @@ void() ai_turn =
 		return;
 	
 	ChangeYaw ();
-};
-
-/*
-=============
-infront
-
-returns 1 if the entity is in front (in sight) of self
-=============
-*/
-float(entity targ) infront =
-{
-	local vector	vec;
-	local float		dot;
-	
-	makevectors (self.angles);
-	vec = normalize (targ.origin - self.origin);
-	dot = vec * v_forward;
-	
-	if ( dot > 0.3)
-	{
-		return TRUE;
-	}
-	return FALSE;
 };
 
 /*
@@ -181,72 +156,6 @@ void() ai_melee_side =
 	T_Damage (self.enemy, self, self, self.attackdamage);
 };
 
-/*
-=============
-ai_run_slide
-
-Strafe sideways, but stay at aproximately the same range
-=============
-*/
-void() ai_run_slide =
-{
-	dprint("ai_run_slide executed\n");
-	local float	ofs;
-	
-	self.ideal_yaw = enemy_yaw;
-	ChangeYaw ();
-	if (self.lefty)
-		ofs = 90;
-	else
-		ofs = -90;
-	
-	if (walkmove (self.ideal_yaw + ofs, movedist))
-		return;
-		
-	self.lefty = 1 - self.lefty;
-	
-	walkmove (self.ideal_yaw - ofs, movedist);
-};
-
-/*
-=============
-ai_run_melee
-
-Turn and close until within an angle to launch a melee attack
-=============
-*/
-void() ai_run_melee =
-{
-	dprint("ai_run_melee executed\n");
-	self.ideal_yaw = enemy_yaw;
-	ChangeYaw ();
-
-	if (FacingIdeal())
-	{
-		self.th_melee ();
-		self.attack_state = AS_STRAIGHT;
-	}
-};
-
-/*
-=============
-ai_run_missile
-
-Turn in place until within an angle to launch a missile attack
-=============
-*/
-void() ai_run_missile =
-{
-	dprint("ai_run_missile executed\n");
-	self.ideal_yaw = enemy_yaw;
-	ChangeYaw ();
-	if (FacingIdeal())
-	{
-		self.th_missile ();
-		self.attack_state = AS_STRAIGHT;
-	}
-};
-
 entity () QWM_GetTarget = {
     // if within certain range, target closest
     entity targ, closest;
@@ -280,19 +189,6 @@ entity () QWM_GetTarget = {
         return world;
     }
 }
-
-/*
-=============
-ai_walk
-
-The monster is walking it's beat
-=============
-*/
-void(float dist) ai_walk =
-{
-	dprint("ai_walk executed\n");
-	movetogoal (dist);
-};
 
 /*
 =============
@@ -360,168 +256,36 @@ entity () QWM_getwaypoint = {
 	return closest;
 }
 
-float () QWM_TravelledTooFar = {
-	float dist;
-	dist = vlen(self.attackstartorigin - self.origin);
-
-	if (dist > CREEP_CHASE_DISTANCE)
-	{
-		return TRUE;
-	}
-	else
-	{
-		return FALSE;
-	}
+void ClearEnemy() 
+{
+    self.enemy = world;
+    self.goalentity = world;
+    if (self.movetarget)
+        self.ideal_yaw = vectoyaw(self.movetarget.origin - self.origin);
 }
 
-/*
-=============
-range
-
-returns the range catagorization of an entity reletive to self
-0	melee range, will become hostile even if back is turned
-1	visibility and infront, or visibility and show hostile
-2	infront and show hostile
-3	only triggered by damage
-=============
-*/
-float(entity targ) range =
+void GetAttackRange() 
 {
-local vector	spot1, spot2;
-local float		r;	
-	spot1 = self.origin + self.view_ofs;
-	spot2 = targ.origin + targ.view_ofs;
-	
-	r = vlen (spot1 - spot2);
-	if (r < 120)
-		return RANGE_MELEE;
-	if (r < 500)
-		return RANGE_NEAR;
-	if (r < 1000)
-		return RANGE_MID;
-	return RANGE_FAR;
-};
-
-/*
-===========
-SoldierCheckAttack
-
-The player is in view, so decide to move or launch an attack
-Returns FALSE if movement should continue
-============
-*/
-float() RangeCheckAttack =
-{
-	local vector	spot1, spot2;	
-	local entity	targ;
-
-	targ = self.enemy;
-	
-// see if any entities are in the way of the shot
-	spot1 = self.origin + self.view_ofs;
-	spot2 = targ.origin + targ.view_ofs;
-
-	traceline (spot1, spot2, FALSE, self);
-
-	if (trace_inopen && trace_inwater)
-		return FALSE;			// sight line crossed contents
-
-	if (trace_ent != targ)
-		return FALSE;	// don't have a clear shot
-			
-	
-// missile attack
-	if (time < self.attack_finished)
-		return FALSE;
-		
-	if (enemy_range == RANGE_FAR)
-		return FALSE;
-		
-	self.th_missile ();
-	self.attack_finished = 1 / CREEP_RANGE_ATTACKSPEED;
-	self.lefty = !self.lefty;
-
-	return TRUE;
-};
-
-/*
-===========
-CheckAttack
-
-The player is in view, so decide to move or launch an attack
-Returns FALSE if movement should continue
-============
-*/
-void () knight_attack;
-float() MeleeCheckAttack =
-{
-	local vector	spot1, spot2;	
-	local entity	targ;
-
-	targ = self.enemy;
-	
-// see if any entities are in the way of the shot
-	spot1 = self.origin + self.view_ofs;
-	spot2 = targ.origin + targ.view_ofs;
-
-	traceline (spot1, spot2, FALSE, self);
-
-	if (trace_ent != targ)
-		return FALSE;		// don't have a clear shot
-			
-	if (trace_inopen && trace_inwater)
-		return FALSE;			// sight line crossed contents
-
-	if (enemy_range == RANGE_MELEE)
-	{	// melee attack
-		if (self.th_melee)
-		{
-			if (self.type == CREEP_MELEE)
-				knight_attack();
-			else
-				self.th_melee ();
-			return TRUE;
-		}
-	}
-	
-	return FALSE;
-};
-
-float() CheckAnyAttack =
-{
-	if (!enemy_vis)
-		return TRUE;
-
-	switch (self.type)
-	{
-		case CREEP_MELEE:
-			return MeleeCheckAttack();
-			break;
-		case CREEP_RANGE:
-			return RangeCheckAttack();
-			break;
-		case CREEP_CANNON:
-			return RangeCheckAttack();
-			break;
-		case CREEP_SUPER:
-			return MeleeCheckAttack();
-			break;
-		default:
-			return FALSE;
-	}
-};
+    switch (self.type)
+    {
+        case CREEP_MELEE:
+        case CREEP_SUPER:
+            return CREEP_MELEE_ATTACK_RANGE;
+        case CREEP_RANGE:
+        case CREEP_CANNON:
+            return CREEP_RANGE_ATTACK_RANGE;
+            break;
+    }
+}
 
 void(float dist) ai_run =
 {
-	dprint("ai_run executed\n");
-	//self.nextthink = time + 0.2;
-	self.nextthink = time + 1;
+	self.nextthink = time + 0.2;
+	//self.nextthink = time + 1;
 	movedist = dist;
 	// see if the enemy is dead
-	eprint(self.enemy);
 	if (self.enemy.health <= 0)
 	{
-		dprint("enemy dead\n");
 		self.enemy = world;
 
 		// find a new target within range
@@ -531,76 +295,98 @@ void(float dist) ai_run =
 		if (self.enemy)
 		{
 			self.goalentity = self.enemy;
-			dprint("got enemy\n");
 			self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
 			self.attackstartorigin = self.origin;
 		}
 		else
 		{
 			// no enemy, move towards waypoint
-			dprint("no enemy, move towards waypoint\n");
 			// get waypoint
 			self.movetarget = QWM_getwaypoint();
 			self.goalentity = self.movetarget;
-			if (self.movetarget)
-			{
-				dprint("got a target, walking\n");
-				self.th_walk();
-			}
-			else
+			if (!self.movetarget)
 			{
 				self.th_stand();
+                return;
 			}
-			return;
 		}
 	}
 
-	// if travelled too far since started attacking
-	if (QWM_TravelledTooFar())
-	{
-		// clear enemy
-		self.enemy = world;
-		self.goalentity = world;
-		self.ideal_yaw = vectoyaw(self.movetarget.origin - self.origin);
-		return;
-	}
+	// if have an enemy
+    if (self.enemy)
+    {
+        // if travelled too far since started attacking
+        float dist;
+        dist = vlen(self.attackstartorigin - self.origin);
 
-// check knowledge of enemy
-	enemy_vis = visible(self.enemy);
-	enemy_infront = infront(self.enemy);
-	enemy_range = range(self.enemy);
-	enemy_yaw = vectoyaw(self.enemy.origin - self.origin);
+        if (dist > CREEP_CHASE_DISTANCE)
+        {
+            // clear enemy
+            ClearEnemy();
+            return;
+        }
 
-	self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
+        // check knowledge of enemy
+        enemy_vis = visible(self.enemy);
+        self.ideal_yaw = vectoyaw(self.enemy.origin - self.origin);
 
-    // TODO - set attack state if they're within x distance
-    // if attack state, attack
-    // else move
-    set attack state
-	
-	if (self.attack_state == AS_MISSILE)
-	{
-//dprint ("ai_run_missile\n");
-		ai_run_missile ();
-		return;
-	}
-	if (self.attack_state == AS_MELEE)
-	{
-		ai_run_melee ();
-		return;
-	}
+        // if enemy is visible
+        if (enemy_vis)
+        {
+            // turn to enemy
+            ChangeYaw();
 
-	if (CheckAnyAttack ())
-		return;					// beginning an attack
-		
-	if (self.attack_state == AS_SLIDING)
-	{
-		ai_run_slide ();
-		return;
-	}
-		
-// head straight in
-	dprint("movetogoal in ai_run");
-	movetogoal (dist);		// done in C code...
+             // if we're facing ideal angle
+            if (FacingIdeal())
+            {
+                // if can attack again
+                if (self.attack_finished <= time)
+                {
+                    // if we're in correct range
+                    float enemy_range = vlen(self.enemy.origin, self.origin);
+                    float self_range = GetAttackRange();
+
+                    if (enemy_range <= self_range)
+                    {
+                        // let's check if we're blocked
+                        vector	spot1, spot2;	
+                        
+                        // see if any entities are in the way of the shot
+                        spot1 = self.origin + self.view_ofs;
+                        spot2 = self.enemy.origin + self.enemy.view_ofs;
+                        traceline (spot1, spot2, FALSE, self);
+
+                        // has a clear shot
+                        if (trace_ent == self.enemy)
+                        {
+                            switch (self.type)
+                            {
+                                case CREEP_MELEE:
+                                    knight_attack();
+                                    break;
+                                case CREEP_SUPER:
+                                    self.th_melee ();
+                                    break;
+                                case CREEP_RANGE:
+                                case CREEP_CANNON:
+                                    self.th_missile();
+                                    self.attack_finished = 1 / CREEP_RANGE_ATTACKSPEED;
+                                    self.lefty = !self.lefty;
+                                    break;
+                            }
+                            return; // took a shot, return with no movement
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            // enemy not visible, lose agro
+            ClearEnemy();
+        }
+
+        // last of all, move towards enemy or waypoint
+        movetogoal (dist);  
+    }
 };
-

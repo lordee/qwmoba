@@ -30,11 +30,6 @@ creep_melee.qc
 creep_range.qc
 creep_cannon.qc
 creep_super.qc
-
-//fight.qc
-//ai.qc
-//monsters.qc
-//knight.qc
 creep.qc
 
 game.qc
