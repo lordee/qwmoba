@@ -7,7 +7,7 @@ void Hud_DrawBar(vector pos, float val, float max_val, vector color)
     vector fontsize = [8, 8, 0];
 
 	drawfill(pos, [barperc, 10, 0], color, 0.6, 0);
-	drawfill(pos, [barlength, 10, 0], color, 0.2, 0);
+	drawfill(pos, [barlength, 10, 0], color, ALPHA_PANEL_BG, 0);
 
 	string msg = strcat(ftos(val), "/", ftos(max_val));
 
@@ -38,7 +38,7 @@ void Hud_DrawSkillAndItemIcon(vector pos, string image, float selected, float co
 
 	if (cd > 0)
 	{
-		drawfill(pos, size, [128, 128, 128], 0.6, 0);
+		drawfill(pos, size, COLOR_PANEL_BG, 0.6, 0);
         vector fontsize = [6, 8, 0];
 		
 		float msgwidth = stringwidth(ftos(cd), 0, fontsize);
@@ -51,6 +51,7 @@ void Hud_DrawSkillAndItemIcon(vector pos, string image, float selected, float co
 	}
 }
 
+// TODO
 // this should not be tested every frame... fix it later
 string GetChampIcon(float champ, float skillnum)
 {
@@ -101,7 +102,7 @@ void Hud_DrawBarEXP(vector pos, float val, float max_val, float lvl, vector colo
 	}
 
 	drawfill(pos, [barcolorpx, 10, 0], color, 0.6, 0);
-	drawfill(pos, [barlength, 10, 0], color, 0.2, 0);
+	drawfill(pos, [barlength, 10, 0], color, ALPHA_PANEL_BG, 0);
 
 	string msg = strcat(ftos(val), "/", ftos(max_val));
 
@@ -157,9 +158,9 @@ void Hud_DrawBarEXP(vector pos, float val, float max_val, float lvl, vector colo
 
 void Hud_DrawGold(vector pos, float goldval)
 {
-    vector color = [128, 128, 128];
     vector fillsize = [50, 20, 0];
-    drawfill(pos, fillsize, color, .2, 0);
+    drawfill(pos, fillsize, COLOR_PANEL_BG, ALPHA_PANEL_BG, 0);
+
     string msg = ftos(goldval);
     vector fontsize = [6, 6, 0];
     vector stringpos = pos;
@@ -177,8 +178,7 @@ void Hud_DrawGold(vector pos, float goldval)
 
 void Hud_DrawMiniMap(vector pos, vector fillsize)
 {
-    vector color = [128, 128, 128];
-    drawfill(pos, fillsize, color, .2, 0);
+    drawfill(pos, fillsize, COLOR_PANEL_BG, ALPHA_PANEL_BG, 0);
 }
 
 void Hud_Draw(vector scrsz)
@@ -235,7 +235,7 @@ void Hud_Draw(vector scrsz)
 		// items
         pos = pos + [0, -64, 0];
         entity item = p.item_one;
-        
+
 
         string icon = ItemsIcons[p.item_one];
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 1) ? TRUE : FALSE, p.item_one_cooldown);

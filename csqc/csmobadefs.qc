@@ -5,6 +5,8 @@ vector vPlayerOrigin;
 vector vPlayerOriginOld; // We definitely need this later
 vector vPlayerVelocity;
 float leveluptime;
+vector COLOR_PANEL_BG = [128, 128, 128];
+float ALPHA_PANEL_BG = .2;
 
 .string netname;
 .float health;
