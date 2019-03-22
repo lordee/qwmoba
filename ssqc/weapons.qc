@@ -547,8 +547,8 @@ void() W_FireLightning =
 
 	if (self.ammo_cells < 1)
 	{
-		self.weapon = W_BestWeapon ();
-		W_SetCurrentAmmo ();
+		//self.weapon = W_BestWeapon ();
+		//W_SetCurrentAmmo ();
 		return;
 	}
 
@@ -566,7 +566,7 @@ void() W_FireLightning =
 			{
 				cells = self.ammo_cells;
 				self.ammo_cells = 0;
-				W_SetCurrentAmmo ();
+				//W_SetCurrentAmmo ();
 				T_RadiusDamage (self, self, 35*cells, world, "");
 				return;
 			}
@@ -575,7 +575,7 @@ void() W_FireLightning =
 		{
 			cells = self.ammo_cells;
 			self.ammo_cells = 0;
-			W_SetCurrentAmmo ();
+			//W_SetCurrentAmmo ();
 			T_RadiusDamage (self, self, 35*cells, world,"");
 			return;
 		}
@@ -772,8 +772,8 @@ void(float ox) W_FireSpikes =
 
 	if (self.ammo_nails < 1)
 	{
-		self.weapon = W_BestWeapon ();
-		W_SetCurrentAmmo ();
+		//self.weapon = W_BestWeapon ();
+		//W_SetCurrentAmmo ();
 		return;
 	}
 

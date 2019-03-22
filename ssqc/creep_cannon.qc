@@ -139,7 +139,7 @@ void() ogre_stand6	=[	$stand6,	ogre_stand7	] {ai_stand();};
 void() ogre_stand7	=[	$stand7,	ogre_stand8	] {ai_stand();};
 void() ogre_stand8	=[	$stand8,	ogre_stand9	] {ai_stand();};
 void() ogre_stand9	=[	$stand9,	ogre_stand1	] {ai_stand();};
-
+/*
 void() ogre_walk1	=[	$run1,		ogre_walk2	] {ai_walk(9);
 if (random() < 0.2)
 	sound (self, CHAN_VOICE, "ogre/ogidle2.wav", 1, ATTN_IDLE);
@@ -151,7 +151,7 @@ void() ogre_walk5	=[	$run5,		ogre_walk6	] {ai_walk(16);};
 void() ogre_walk6	=[	$run6,		ogre_walk7	] {ai_walk(4);};
 void() ogre_walk7	=[	$run7,		ogre_walk8	] {ai_walk(13);};
 void() ogre_walk8	=[	$run8,		ogre_walk1	] {ai_walk(24);};
-
+*/
 void() ogre_run1	=[	$run1,		ogre_run2	] {ai_run(9);
 if (random() < 0.2)
 	sound (self, CHAN_VOICE, "ogre/ogidle2.wav", 1, ATTN_IDLE);

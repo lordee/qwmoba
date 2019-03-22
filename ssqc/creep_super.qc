@@ -114,7 +114,7 @@ void()	hknight_stand8	=[	$stand8,	hknight_stand9	] {ai_stand();};
 void()	hknight_stand9	=[	$stand9,	hknight_stand1	] {ai_stand();};
 
 //===========================================================================
-
+/*
 void()	hknight_walk1	=[	$run1,		hknight_walk2	] {
 hk_idle_sound();
 ai_walk (20); };
@@ -125,7 +125,7 @@ void()	hknight_walk5	=[	$run5,		hknight_walk6	] {ai_walk(14);};
 void()	hknight_walk6	=[	$run6,		hknight_walk7	] {ai_walk(25);};
 void()	hknight_walk7	=[	$run7,		hknight_walk8	] {ai_walk(21);};
 void()	hknight_walk8	=[	$run8,		hknight_walk1	] {ai_walk(13);};
-
+*/
 //===========================================================================
 
 void()	hknight_run1	=[	$run1,		hknight_run2	] {
