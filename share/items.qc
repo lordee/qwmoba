@@ -5,59 +5,47 @@ int Items[4] = {
     IT_BOOTS_AASPEED
 }
 
-string ItemsIcons[4] = {
-    "progs/gfx/hud/items/it_none.png",
-    "progs/gfx/hud/items/it_boots_base.png",
-    "progs/gfx/hud/items/it_boots_speed.png",
-    "progs/gfx/hud/items/it_boots_aaspeed.png"
-}
-
 class IT_Base
 {
+    int item_id;
     string icon;
-    
-    void IT_Base();
-}
-
-void IT_Base :: IT_Base ()
-{
-    icon = "progs/gfx/hud/items/it_none.png";
-}
-
-class IT_Boots : IT_Base ()
-{
+    string display_text;
     float movement_speed_base;
+    float attack_speed_perc;
     float buff_flags;
-    void IT_Boots();
+
+    void IT_Base(void);
+    virtual void() Destruct;
 }
 
-void IT_Boots :: IT_Boots ()
+void IT_Base :: IT_Base (void)
 {
-    icon = "progs/gfx/hud/items/it_boots_base.png";
-    movement_speed_base = 25;
-    buff_flags |= IT_MOVEMENT_SPEED_BASE;
+    switch (item_id)
+    {
+        case IT_NONE:
+            icon = "progs/gfx/hud/items/it_none.png";
+            display_text = "none";
+            break;
+        case IT_BOOTS:
+            icon = "progs/gfx/hud/items/it_boots_base.png";
+            movement_speed_base = 25;
+            buff_flags = IT_MOVEMENT_SPEED_BASE;
+            break;
+        case IT_BOOTS_SPEED:
+            icon = "progs/gfx/hud/items/it_boots_speed.png";
+            movement_speed_base = 35;
+            buff_flags = IT_MOVEMENT_SLOW_RESIST | IT_MOVEMENT_SPEED_BASE;
+            break;
+        case IT_BOOTS_AASPEED:
+            icon = "progs/gfx/hud/items/it_boots_aaspeed.png";
+            movement_speed_base = 25;
+            attack_speed_perc = 25;
+            buff_flags = IT_ATTACK_SPEED_PERC | IT_MOVEMENT_SPEED_BASE;
+            break;
+    }
 }
 
-class IT_Boots_Speed : IT_Boots ()
+void IT_Base :: Destruct (void)
 {
-    void IT_Boots_Speed();
-}
-
-void IT_Boots_Speed :: IT_Boots_Speed ()
-{
-    icon = "progs/gfx/hud/items/it_boots_speed.png";
-    movement_speed_base = 35;
-}
-
-class IT_Boots_AASpeed : IT_Boots ()
-{
-    float attack_speed;
-    void IT_Boots_AASpeed();
-}
-
-void IT_Boots_AASpeed :: IT_Boots_AASpeed ()
-{
-    attack_speed_perc = 25;
-    icon = "progs/gfx/hud/items/it_boots_aaspeed.png";
-    buff_flags |= IT_ATTACK_SPEED_PERC;
+    remove(this);
 }

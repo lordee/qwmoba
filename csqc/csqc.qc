@@ -84,6 +84,14 @@ void(float apilevel, string enginename, float engineversion) CSQC_Init = {
     precache_pic (SKILLTHREEICON_FROSTARCHER);
     precache_pic (SKILLFOURICON_FROSTARCHER);
     precache_pic (BTN_BG);
+
+    float ilength = Items.length;
+    for (int i = 0; i < ilength; i++)
+    {
+        IT_Base item = spawn(IT_Base, item_id: i);
+        precache_pic(item.icon);
+        item.Destruct();
+    }
 }
 
 void (vector size) Hud_Draw;
