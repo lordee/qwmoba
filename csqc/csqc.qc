@@ -11,7 +11,7 @@ void() CSQC_Parse_Event = {
     {
         case SE_MNU_OPEN:
             second = readbyte();
-            ShowMenu(vid_size, second);
+            ShowMenu(glob_vid_size, second);
             break;
         default:
     }
@@ -101,7 +101,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 	//setviewprop(VF_DRAWENGINESBAR, 1);
 	setviewprop(VF_DRAWCROSSHAIR, 1);
     
-    vector glob_vid_size = [width, height];
+    glob_vid_size = [width, height];
     
     addentities((intermission?0:MASK_VIEWMODEL)|MASK_ENGINE);
 
