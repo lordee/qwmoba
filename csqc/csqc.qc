@@ -51,7 +51,7 @@ void CSQC_Ent_Update(float flIsNew) {
             self.health = readfloat();
             self.max_health = readfloat();
             self.skill_selected = readfloat();
-            self.skill_onecooldown = readfloat();
+            self.skill_one_cooldown = readfloat();
             self.skill_two_cooldown = readfloat();
             self.skill_three_cooldown = readfloat();
             self.skill_four_cooldown = readfloat();
@@ -84,13 +84,14 @@ void(float apilevel, string enginename, float engineversion) CSQC_Init = {
     precache_pic (SKILLTHREEICON_FROSTARCHER);
     precache_pic (SKILLFOURICON_FROSTARCHER);
     precache_pic (BTN_BG);
+    Shop_Category = BTN_CAT_ALL;
 
-    float ilength = Items.length;
-    for (int i = 0; i < ilength; i++)
+    float ilength = iItems.length;
+    for (int i = 0; i < ilength; i = i + 1)
     {
         IT_Base item = spawn(IT_Base, item_id: i);
         precache_pic(item.icon);
-        item.Destruct();
+        Items[i] = item;
     }
 }
 
@@ -110,6 +111,6 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 
     renderscene();
     Hud_Draw(glob_vid_size);
-    Menu_Draw(glob_vid_size);
+    Menu_Draw();
     Messages_Draw();
 }

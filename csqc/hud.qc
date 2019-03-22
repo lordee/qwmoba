@@ -121,10 +121,10 @@ void Hud_DrawBarEXP(vector pos, float val, float max_val, float lvl, vector colo
 	boxpos_y = boxpos_y - 5;
 	// for now just a string in a box
     drawfill(boxpos, boxsize, color, .2, 0);
-	drawfill(boxpos, boxcolorpx, color, .6, 0);
+	drawfill(boxpos, [boxcolorpx, boxsize_y, 0], color, .6, 0);
 
-    float msgwidth = stringwidth(ftos(lvl), 0, fontsize);
-    vector stringpos = boxpos;
+    msgwidth = stringwidth(ftos(lvl), 0, fontsize);
+    stringpos = boxpos;
     stringpos = stringpos + (boxsize * .5);
     stringpos_x = stringpos_x - (msgwidth * .5);
     stringpos_y = stringpos_y - (fontsize_y * .5);
@@ -234,28 +234,26 @@ void Hud_Draw(vector scrsz)
 
 		// items
         pos = pos + [0, -64, 0];
-        entity item = p.item_one;
 
-
-        string icon = ItemsIcons[p.item_one];
+        icon = Items[p.item_one].icon;
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 1) ? TRUE : FALSE, p.item_one_cooldown);
         pos = pos + [22, 0, 0];
-        icon = ItemsIcons[p.item_two];
+        icon = Items[p.item_two].icon;
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 2) ? TRUE : FALSE, p.item_two_cooldown);
         pos = pos + [22, 0, 0];
-        icon = ItemsIcons[p.item_three];
+        icon = Items[p.item_three].icon;
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 3) ? TRUE : FALSE, p.item_three_cooldown);
         pos = pos + [22, 11, 0];
-        icon = ItemsIcons[p.item_four];
+        icon = Items[p.item_four].icon;
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 4) ? TRUE : FALSE, p.item_four_cooldown);
         pos = pos + [-66, 11, 0];
-        icon = ItemsIcons[p.item_five];
+        icon = Items[p.item_five].icon;
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 5) ? TRUE : FALSE, p.item_five_cooldown);
         pos = pos + [22, 0, 0];
-        icon = ItemsIcons[p.item_six];
+        icon = Items[p.item_six].icon;
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 6) ? TRUE : FALSE, p.item_six_cooldown);
         pos = pos + [22, 0, 0];
-        icon = ItemsIcons[p.item_seven];
+        icon = Items[p.item_seven].icon;
         Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 7) ? TRUE : FALSE, p.item_seven_cooldown);
 
 		// minimap

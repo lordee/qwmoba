@@ -164,7 +164,7 @@ void (entity player) UpdateStats = {
             case DEBUFF_MSSLOW:
                 msspeed = msspeed * ((100 - val) / 100);
                 break;
-            case BUFF_AASPEED:
+            case BUFF_AASPEED_PERC:
                 attspeed = attspeed * ((100 + val) / 100);
                 break;
         }
