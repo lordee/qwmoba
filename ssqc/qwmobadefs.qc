@@ -46,6 +46,7 @@
 .float item_five;
 .float item_six;
 .float item_seven;
+.float can_shop;
 
 .float consecutive_deaths;
 .float consecutive_kills;

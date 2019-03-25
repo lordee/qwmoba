@@ -295,7 +295,7 @@ void() worldspawn =
 	precache_model ("progs/champions/frostarcher/frostarcherarrowbuff.mdl");
 	precache_model ("progs/champions/frostarcher/frostarcherultimate.mdl");
 	
-
+    clientstat(STAT_CANSHOP, EV_FLOAT, can_shop);
 //
 // Setup light animation tables. 'a' is total darkness, 'z' is maxbright.
 //

@@ -1,7 +1,30 @@
-void BtnShopCategory()
+void BtnShop()
 {
     // filter items, draw panel
-    Shop_Category = self.type;
+    switch (self.type)
+    {
+        case BTN_SHOP_BUY:
+            // change to tracking info on item ents
+            entity player = findfloat(world, entnum, player_localentnum); 
+            IT_BASE item = find(world, :classname, "item");
+            while (item)
+            {
+                if (item.selected)
+                {
+                    if (item.gold <= player.gold)
+                    {
+                        // tell server, server will ACK
+                        HeyServerICanBuy(item.item_id);
+                    }
+                }
+                item = find(item, ::classname, "item");
+            }
+            break;
+        case BTN_SHOP_CAT_ALL:
+        case BTN_SHOP_CAT_MS:
+        case BTN_SHOP_CAT_AS:
+            Shop_Category = self.type;
+    }
 }
 
 void ItemPanel_Draw(vector pos, vector panelsize, vector border)
@@ -39,7 +62,7 @@ void ItemPanel_Draw(vector pos, vector panelsize, vector border)
     // TODO check for scrolling needed if more items than panelsize    
 }
 
-void ShowShopMenu(vid_size)
+void ShowShopMenu(vector vid_size, float can_shop)
 {
     // background
     vector pos = vid_size;
@@ -53,17 +76,17 @@ void ShowShopMenu(vid_size)
     vector button_size = [40, 20, 0];
     vector btnpos = pos + border;
     float btnID = 1;
-    btn = CreateButton("All Items", BtnShopCategory, btnpos, BTN_BG, size, 0, btnID);
+    btn = CreateButton("All Items", BtnShop, btnpos, BTN_BG, size, 0, btnID);
     btn.type = BTN_CAT_ALL;
 
     btnpos_y = btnpos_y + border_y;
     btnID++;
-    CreateButton("Movement", BtnShopCategory, btnpos, BTN_BG, size, 0, btnID);
+    btn = CreateButton("Movement", BtnShop, btnpos, BTN_BG, size, 0, btnID);
     btn.type = BTN_CAT_MS;
 
     btnpos_y = btnpos_y + border_y;
     btnID++;
-    CreateButton("Attack Speed", BtnShopCategory, btnpos, BTN_BG, size, 0, btnID);
+    btn = CreateButton("Attack Speed", BtnShop, btnpos, BTN_BG, size, 0, btnID);
     btn.type = BTN_CAT_AS;
 
     // draw items on panel
@@ -73,4 +96,17 @@ void ShowShopMenu(vid_size)
     panelsize_x = panelsize_x - button_size_x;
     
     ItemPanel_Draw(panelpos, panelsize, border);
+
+    // TODO
+    // buy button, highlight if can shop
+    // just do dodge placement for POC
+    btnpos = size;
+    btnpos_y = btnpos_y - border_y;
+    btnpos_x = btnpos_x + border_x;
+
+    string btnbg = can_shop ? BTN_BG : BTN_BG_DISABLED;
+    btn = CreateButton("BUY", BtnShop, btnpos, btnbg, size, 0, btnID);
+    btn.type = BTN_SHOP_BUY;
+
+    
 }

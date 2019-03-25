@@ -44,7 +44,8 @@ void (vector vid_size, float menuitem) ShowMenu = {
                     ShowLobbyChampMenu();
                 break;
                 case MNU_SHOP:
-                    ShowShopMenu(vid_size);
+                    float can_shop = getstatf(STAT_CANSHOP);
+                    ShowShopMenu(vid_size, can_shop);
                 case MNU_INACTIVE:
                     setcursormode(FALSE);
                 default:

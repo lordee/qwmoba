@@ -268,6 +268,30 @@ void () GoalThink = {
     }
 }
 
+void ShopThink()
+{
+    self.nextthink = time + .5;
+    // find all players that can use shop
+    entity player = find(world, classname, "player");
+    while (player)
+    {
+        if (player.team_no = self.team_no)
+        {
+            float dist = vlen(self.origin - player.origin);
+            if (dist <== RANGE_LOCAL)
+            {
+                player.can_shop = TRUE;
+            }
+            else
+            {
+                player.can_shop = FALSE;
+            }
+        }
+        
+        player = find(player, classname, "player");
+    }
+}
+
 void () item_qwmgoal = {
     switch (self.team_no)
     {
@@ -395,10 +419,11 @@ void () item_qwmgoal = {
 	        self.movetype = MOVETYPE_NONE;
             setmodel (self, "progs/tarbaby.mdl");
 	        setsize (self, '-16 -16 -24', '16 16 40');
+            self.think = ShopThink;
+            self.nextthink = time + .5;
             break;
     }
 }
-
 
 // player/team spawn
 void () info_player_teamspawn = {
@@ -419,8 +444,6 @@ void () info_player_teamspawn = {
 }
 
 // waypoints
-//info_qwmgoal
-
 void () info_qwmgoal = {
     switch (self.team_no)
     {

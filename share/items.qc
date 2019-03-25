@@ -20,6 +20,8 @@ class IT_Base
 
 void IT_Base :: IT_Base (void)
 {
+    self.classname = "item";
+
     switch (item_id)
     {
         case IT_NONE:

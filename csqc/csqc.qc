@@ -84,6 +84,7 @@ void(float apilevel, string enginename, float engineversion) CSQC_Init = {
     precache_pic (SKILLTHREEICON_FROSTARCHER);
     precache_pic (SKILLFOURICON_FROSTARCHER);
     precache_pic (BTN_BG);
+    precache_pic (BTN_BG_DISABLED);
 
     float ilength = Items.length;
     for (int i = 0; i < ilength; i++)
