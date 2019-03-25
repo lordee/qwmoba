@@ -51,14 +51,14 @@ void()	knight_run6	=[	$runb6,		knight_run7	] {ai_run(20);};
 void()	knight_run7	=[	$runb7,		knight_run8	] {ai_run(14);};
 void()	knight_run8	=[	$runb8,		knight_run1	] {ai_run(6);};
 
-void()	knight_walk1	=[	$runb1,		knight_walk2	] {ai_walk(16);};
+/*void()	knight_walk1	=[	$runb1,		knight_walk2	] {ai_walk(16);};
 void()	knight_walk2	=[	$runb2,		knight_walk3	] {ai_walk(20);};
 void()	knight_walk3	=[	$runb3,		knight_walk4	] {ai_walk(13);};
 void()	knight_walk4	=[	$runb4,		knight_walk5	] {ai_walk(7);};
 void()	knight_walk5	=[	$runb5,		knight_walk6	] {ai_walk(16);};
 void()	knight_walk6	=[	$runb6,		knight_walk7	] {ai_walk(20);};
 void()	knight_walk7	=[	$runb7,		knight_walk8	] {ai_walk(14);};
-void()	knight_walk8	=[	$runb8,		knight_walk1	] {ai_walk(6);};
+void()	knight_walk8	=[	$runb8,		knight_walk1	] {ai_walk(6);};*/
 
 void()	knight_runatk1	=[	$runattack1,		knight_runatk2	]
 {

@@ -267,6 +267,12 @@
 #define REGEN_TICKTIME  1
 
 // items
+#define IT_NONE 0
+#define IT_BOOTS_BASE   1
+#define IT_BOOTS_SPEED  2
+#define IT_BOOTS_AASPEED    3
+
+
 #define IT_MOVEMENT_SPEED_BASE 1
 #define IT_MOVEMENT_SPEED_PERC  2
 #define IT_ATTACK_SPEED_PERC    4
@@ -334,8 +340,10 @@
 
 // buff category
 #define DEBUFF_MSSLOW       1
-#define DEBUFF_STUN         3
-#define BUFF_AASPEED        2
+#define DEBUFF_STUN         2
+#define BUFF_AASPEED_PERC        4
+#define BUFF_MS_BASE    8
+#define BUFF_RESIST_SLOW    16
 
 // buff type
 #define MSSLOW_FROSTARCHER     1

@@ -47,6 +47,14 @@
 .float item_six;
 .float item_seven;
 .float can_shop;
+.float item_selected;
+.float item_one_cooldown;
+.float item_two_cooldown;
+.float item_three_cooldown;
+.float item_four_cooldown;
+.float item_five_cooldown;
+.float item_six_cooldown;
+.float item_seven_cooldown;
 
 .float consecutive_deaths;
 .float consecutive_kills;

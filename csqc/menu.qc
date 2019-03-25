@@ -1,5 +1,5 @@
 void (vector vid_size) ShowLobbyMenu;
-void () ShowLobbyChampMenu;
+void (vector vid_size) ShowLobbyChampMenu
 
 void (vector boxpos, vector boxsize, string boxpic, string boxtext, vector boxrgb, float boxalpha) spawnbox =
 {
@@ -23,7 +23,7 @@ void () ClearMenu = {
 		button = find(button, classname, "gui_button");
 	}
 }
-
+void ShowShopMenu(vector vid_size);
 void (vector vid_size, float menuitem) ShowMenu = {
 
     // no active menu
@@ -41,14 +41,14 @@ void (vector vid_size, float menuitem) ShowMenu = {
                     ShowLobbyMenu(vid_size);
                 break;
                 case MNU_LOBBYCHAMP:
-                    ShowLobbyChampMenu();
+                    ShowLobbyChampMenu(vid_size);
                 break;
                 case MNU_SHOP:
                     float can_shop = getstatf(STAT_CANSHOP);
                     ShowShopMenu(vid_size, can_shop);
                 case MNU_INACTIVE:
                     setcursormode(FALSE);
-                default:
+                break;
             }
         }
         else 

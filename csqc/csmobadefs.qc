@@ -9,6 +9,8 @@ vector COLOR_PANEL_BG = [128, 128, 128];
 float ALPHA_PANEL_BG = .2;
 float Shop_Category = BTN_CAT_ALL;
 vector glob_vid_size;
+class IT_Base {};
+IT_Base Items[4];
 
 .string netname;
 .float health;

@@ -264,7 +264,7 @@ void ClearEnemy()
         self.ideal_yaw = vectoyaw(self.movetarget.origin - self.origin);
 }
 
-void GetAttackRange() 
+float GetAttackRange() 
 {
     switch (self.type)
     {
@@ -275,9 +275,11 @@ void GetAttackRange()
         case CREEP_CANNON:
             return CREEP_RANGE_ATTACK_RANGE;
             break;
+		default:
+			return 0;
     }
 }
-
+void() knight_attack;
 void(float dist) ai_run =
 {
 	self.nextthink = time + 0.2;
@@ -316,7 +318,6 @@ void(float dist) ai_run =
     if (self.enemy)
     {
         // if travelled too far since started attacking
-        float dist;
         dist = vlen(self.attackstartorigin - self.origin);
 
         if (dist > CREEP_CHASE_DISTANCE)
@@ -343,7 +344,7 @@ void(float dist) ai_run =
                 if (self.attack_finished <= time)
                 {
                     // if we're in correct range
-                    float enemy_range = vlen(self.enemy.origin, self.origin);
+                    enemy_range = vlen(self.enemy.origin - self.origin);
                     float self_range = GetAttackRange();
 
                     if (enemy_range <= self_range)
@@ -387,6 +388,6 @@ void(float dist) ai_run =
         }
 
         // last of all, move towards enemy or waypoint
-        movetogoal (dist);  
+        movetogoal (movedist);  
     }
 };

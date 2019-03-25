@@ -1,3 +1,5 @@
+entity (string button_text, void () btnMethod, vector button_spawnpos, string button_image, vector button_size, float button_flags, float btnID) CreateButton;
+
 void BtnShop()
 {
     // filter items, draw panel
@@ -39,14 +41,14 @@ void ItemPanel_Draw(vector pos, vector panelsize, vector border)
     int ycount = 1;
     // not sure if necessary speedwise
     float ilength = Items.length;
-    for (int i = 0; i < ilength; i++)
+    for (int i = 0; i < ilength; i = i + 1)
     {
         if (xcount > xitemsmax)
         {
             // go to beginning of next row
             itempos = pos;
             itempos_y = itempos_y + ((size_y + border_y) * ycount);
-            ycount++;
+            ycount = ycount + 1;
             xcount = 1;
         }
         else
@@ -54,9 +56,9 @@ void ItemPanel_Draw(vector pos, vector panelsize, vector border)
             itempos_x = itempos_x + size_x + border_x;
         }
         IT_Base item = spawn(IT_Base, item_id: i);
-        drawpic(itempos, item.image, size, [1, 1, 1], 1, 0);
+        drawpic(itempos, item.icon, size, [1, 1, 1], 1, 0);
         item.Destruct();
-        xcount++;
+        xcount = xcount + 1;
     }
     
     // TODO check for scrolling needed if more items than panelsize    

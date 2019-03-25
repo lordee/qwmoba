@@ -316,3 +316,6 @@ void() SUB_UseTargets =
 
 };
 
+float (entity e, float healamount, float ignore) T_Heal = {
+	return 1;
+}

@@ -136,7 +136,7 @@ void () SkillOne_FrostArcher = {
             self.mana = self.mana - self.skill_one_manacost;
             // show cast clientside
             // buff attack speed
-            T_ApplyBuff(self, BUFF_AASPEED, AASPEED_SKILLONE_FROSTARCHER, SKILLONE_VALUE_FROSTARCHER);
+            T_ApplyBuff(self, BUFF_AASPEED_PERC, AASPEED_SKILLONE_FROSTARCHER, SKILLONE_VALUE_FROSTARCHER);
             self.skill_one_cooldown = time + SKILLONE_COOLDOWN_FROSTARCHER;
         }
         else
