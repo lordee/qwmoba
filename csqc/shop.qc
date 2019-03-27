@@ -16,7 +16,7 @@ void BtnShop()
                     if (item.gold <= player.gold)
                     {
                         // TODO serverbuy send/rec
-                        HeyServerICanBuy(item.item_id);
+                        sendevent("BuyItem", "f", item.item_id);
                     }
                 }
                 item = find(item, ::classname, "item");

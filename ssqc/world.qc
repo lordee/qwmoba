@@ -296,6 +296,13 @@ void() worldspawn =
 	precache_model ("progs/champions/frostarcher/frostarcherultimate.mdl");
 	
     clientstat(STAT_CANSHOP, EV_FLOAT, can_shop);
+
+    float ilength = iItems.length;
+    for (int i = 0; i < ilength; i = i + 1)
+    {
+        IT_Base item = spawn(IT_Base, item_id: i);
+        Items[i] = item;
+    }
 //
 // Setup light animation tables. 'a' is total darkness, 'z' is maxbright.
 //

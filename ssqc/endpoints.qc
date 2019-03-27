@@ -16,9 +16,75 @@ void (float c) Cmd_ChooseChamp_f = {
     ClientKill();
 }
 
+void CheckComponents(float buy_id, entity checkitem)
+{
+    // TODO finish this when you can think again
+    if (checkitem.components.length > 0)
+    {
+        entity itempart;
+        for (int i = 0; i < checkitem.components.length; i = i + 1)
+        {
+            float checkid = checkitem.components[i];
+            // if checkid is the buyid, take gold away
+            
+            // if checkid not the item_id, check its components
+            // recursion, check for more components
+            // need to check components of higher order components to make sure we don't double dip
+            
+            if (checkid == self.item_one)
+            {
+                itempart = GetItem(checkid);
+                gold_needed = gold_needed - itempart.gold;
+                continue;
+            }
+            else if (checkid == self.item_two)
+            {
+
+            }
+                
+        }
+    }
+}
+
+void Cmd_BuyItem_f(float item_id)
+{
+    entity buyitem = Items[item_id];
+    float gold_needed = 0;
+    gold_needed = buyitem.gold;
+    // is it a combine?
+    CheckComponents(item_id, buyitem);
+    
+    
+    if (gold_needed <= self.gold)
+    {
+        
+        // is there a slot free?
+
+        // TODO need special case on item four for wards etc
+        // find an item slot
+        if (!self.item_one)
+            self.item_one = item_id;
+        else if (!self.item_two)
+            self.item_two = item_id;
+        else if (!self.item_three)
+            self.item_three = item_id;
+        else if (!self.item_four)
+            self.item_four = item_id;
+        else if (!self.item_five)
+            self.item_five = item_id;
+        else if (!self.item_six)
+            self.item_six = item_id;
+        else if (!self.item_seven)
+            self.item_seven = item_id;
+    }
+    else
+    {
+        // TODO can't buy
+    }
+    
+}
 
 // meh.. outgoing
-
 float Player_SendEntity(entity ePVEnt, float flChanged) {
     WriteByte(MSG_ENTITY, SE_PLAYER); // Unique Identifier, I suggest you use enums to make it easy on yourself
     WriteCoord(MSG_ENTITY, self.origin_x); // Position X
