@@ -277,6 +277,9 @@
 #define IT_MOVEMENT_SPEED_PERC  2
 #define IT_ATTACK_SPEED_PERC    4
 
+// first 32 are reserved
+#define STAT_CANSHOP    33
+
 #define BTN_BG  "progs/csqc/csqcguiback.tga"
 #define BTN_BG_DISABLED  "progs/csqc/csqcguiback_disabled.tga"
 #define BTN_SHOP_CAT_ALL 0

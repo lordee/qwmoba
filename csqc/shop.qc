@@ -15,7 +15,7 @@ void BtnShop()
                 {
                     if (item.gold <= player.gold)
                     {
-                        // tell server, server will ACK
+                        // TODO serverbuy send/rec
                         HeyServerICanBuy(item.item_id);
                     }
                 }
@@ -99,9 +99,7 @@ void ShowShopMenu(vector vid_size, float can_shop)
     
     ItemPanel_Draw(panelpos, panelsize, border);
 
-    // TODO
-    // buy button, highlight if can shop
-    // just do dodge placement for POC
+    // TODO just do dodge placement for POC
     btnpos = size;
     btnpos_y = btnpos_y - border_y;
     btnpos_x = btnpos_x + border_x;

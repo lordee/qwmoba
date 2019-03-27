@@ -51,8 +51,7 @@ void Hud_DrawSkillAndItemIcon(vector pos, string image, float selected, float co
 	}
 }
 
-// TODO
-// this should not be tested every frame... fix it later
+// TODO this should not be tested every frame... fix it later
 string GetChampIcon(float champ, float skillnum)
 {
 	switch (champ)

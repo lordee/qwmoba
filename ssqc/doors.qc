@@ -242,7 +242,6 @@ void() door_touch =
 	if (!self.items)
 		return;
 
-// FIXME: blink key on player's status bar
 	if ( (self.items & other.items) != self.items )
 	{
 		if (self.owner.items == IT_KEY1)
