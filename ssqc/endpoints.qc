@@ -16,34 +16,31 @@ void (float c) Cmd_ChooseChamp_f = {
     ClientKill();
 }
 
-void CheckComponents(float buy_id, entity checkitem)
+float CheckComponents(entity checkitem, float equippeditemf, float gold_needed)
 {
-    // TODO finish this when you can think again
+    // go through component items of item
     if (checkitem.components.length > 0)
     {
         entity itempart;
+        float checkid;
+        // if the item owned is in component, take away that amount from the bought item gold cost
         for (int i = 0; i < checkitem.components.length; i = i + 1)
         {
-            float checkid = checkitem.components[i];
-            // if checkid is the buyid, take gold away
-            
-            // if checkid not the item_id, check its components
-            // recursion, check for more components
-            // need to check components of higher order components to make sure we don't double dip
-            
-            if (checkid == self.item_one)
+            checkid = checkitem.components[i];
+            itempart = Items[checkid];
+            if (checkid == equippeditemf)
             {
-                itempart = GetItem(checkid);
                 gold_needed = gold_needed - itempart.gold;
-                continue;
+                break;
             }
-            else if (checkid == self.item_two)
+            else if (itempart.components.length > 0)
             {
-
-            }
-                
+                gold_needed = CheckComponents(itempart, equippeditemf, gold_needed);
+                break;
+            }            
         }
     }
+    return gold_needed;
 }
 
 void Cmd_BuyItem_f(float item_id)
@@ -51,13 +48,34 @@ void Cmd_BuyItem_f(float item_id)
     entity buyitem = Items[item_id];
     float gold_needed = 0;
     gold_needed = buyitem.gold;
+    float used[5];
+    float u = 0;
+    float gold_precheck = buyitem.gold;
     // is it a combine?
-    CheckComponents(item_id, buyitem);
+    gold_needed = CheckComponents(buyitem, self.item_one, gold_needed);
+    if (gold_needed != gold_precheck)
+    {
+        used[u] = 1;
+        u = u + 1;
+    }
+    gold_needed = CheckComponents(buyitem, self.item_two, gold_needed);
+    gold_needed = CheckComponents(buyitem, self.item_three, gold_needed);
+    gold_needed = CheckComponents(buyitem, self.item_five, gold_needed);
+    gold_needed = CheckComponents(buyitem, self.item_six, gold_needed);
+    gold_needed = CheckComponents(buyitem, self.item_seven, gold_needed);
     
+    // TODO
+    // unequip that item too
+    self.item_one = 0;
     
     if (gold_needed <= self.gold)
     {
-        
+        if (gold_needed < buyitem.gold)
+        {
+            // an equipped item was used, get rid of it
+        }
+
+
         // is there a slot free?
 
         // TODO need special case on item four for wards etc
