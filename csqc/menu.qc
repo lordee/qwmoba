@@ -23,7 +23,7 @@ void () ClearMenu = {
 		button = find(button, classname, "gui_button");
 	}
 }
-void ShowShopMenu(vector vid_size);
+void ShowShopMenu(vector vid_size, float can_shop);
 void (vector vid_size, float menuitem) ShowMenu = {
 
     // no active menu

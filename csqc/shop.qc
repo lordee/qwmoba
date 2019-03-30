@@ -8,9 +8,10 @@ void BtnShop()
         case BTN_SHOP_BUY:
             // change to tracking info on item ents
             entity player = findfloat(world, entnum, player_localentnum); 
-            IT_BASE item = find(world, :classname, "item");
-            while (item)
+            entity item_ent = find(world, classname, "item");
+            while (item_ent)
             {
+                IT_BASE item = (IT_BASE)item_ent;
                 if (item.selected)
                 {
                     if (item.gold <= player.gold)
@@ -19,7 +20,7 @@ void BtnShop()
                         sendevent("BuyItem", "f", item.item_id);
                     }
                 }
-                item = find(item, ::classname, "item");
+                item_ent = find(item, classname, "item");
             }
             break;
         case BTN_SHOP_CAT_ALL:
