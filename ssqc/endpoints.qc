@@ -16,7 +16,7 @@ void (float c) Cmd_ChooseChamp_f = {
     ClientKill();
 }
 
-float CheckComponents(entity checkitem, float equippeditemf, float gold_needed)
+float CheckComponents(IT_Base checkitem, float equippeditemf, float gold_needed)
 {
     // go through component items of item
     if (checkitem.components.length > 0)
@@ -45,40 +45,79 @@ float CheckComponents(entity checkitem, float equippeditemf, float gold_needed)
 
 void Cmd_BuyItem_f(float item_id)
 {
-    entity buyitem = Items[item_id];
+    IT_Base buyitem = Items[item_id];
     float gold_needed = 0;
     gold_needed = buyitem.gold;
     float used[5];
     float u = 0;
     float gold_precheck = buyitem.gold;
-    // is it a combine?
+    // TODO make this better
     gold_needed = CheckComponents(buyitem, self.item_one, gold_needed);
     if (gold_needed != gold_precheck)
     {
+        u = used.length;
         used[u] = 1;
-        u = u + 1;
     }
     gold_needed = CheckComponents(buyitem, self.item_two, gold_needed);
+    if (gold_needed != gold_precheck)
+    {
+        u = used.length;
+        used[u] = 2;
+    }
     gold_needed = CheckComponents(buyitem, self.item_three, gold_needed);
+    if (gold_needed != gold_precheck)
+    {
+        u = used.length;
+        used[u] = 3;
+    }
     gold_needed = CheckComponents(buyitem, self.item_five, gold_needed);
+    if (gold_needed != gold_precheck)
+    {
+        u = used.length;
+        used[u] = 5;
+    }
     gold_needed = CheckComponents(buyitem, self.item_six, gold_needed);
+    if (gold_needed != gold_precheck)
+    {
+        u = used.length;
+        used[u] = 6;
+    }
     gold_needed = CheckComponents(buyitem, self.item_seven, gold_needed);
-    
-    // TODO
-    // unequip that item too
-    self.item_one = 0;
+    if (gold_needed != gold_precheck)
+    {
+        u = used.length;
+        used[u] = 7;
+    }
     
     if (gold_needed <= self.gold)
     {
-        if (gold_needed < buyitem.gold)
+        // an equipped item was used, get rid of it
+        for (int i = 0; i < used.length; i = i + 1)
         {
-            // an equipped item was used, get rid of it
+            switch (used[i])
+            {
+                case 1:
+                    self.item_one = 0;
+                    break;
+                case 2:
+                    self.item_two = 0;
+                    break;
+                case 3:
+                    self.item_three = 0;
+                    break;
+                case 5:
+                    self.item_five = 0;
+                    break;
+                case 6:
+                    self.item_six = 0;
+                    break;
+                case 7:
+                    self.item_seven = 0;
+                    break;
+            }
         }
 
-
-        // is there a slot free?
-
-        // TODO need special case on item four for wards etc
+        // TODO need special case on item four for wards etc. also make it a switch
         // find an item slot
         if (!self.item_one)
             self.item_one = item_id;
@@ -94,12 +133,13 @@ void Cmd_BuyItem_f(float item_id)
             self.item_six = item_id;
         else if (!self.item_seven)
             self.item_seven = item_id;
+
+        self.gold = self.gold - gold_needed;
     }
     else
     {
-        // TODO can't buy
-    }
-    
+        sprint(self, PRINT_HIGH, "Not enough gold to buy that");
+    }   
 }
 
 // meh.. outgoing
