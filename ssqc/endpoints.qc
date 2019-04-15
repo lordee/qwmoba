@@ -19,6 +19,8 @@ void (float c) Cmd_ChooseChamp_f = {
 float CheckComponents(IT_Base checkitem, float equippeditemf, float gold_needed)
 {
     // go through component items of item
+    float test = checkitem.components.length;
+
     if (checkitem.components.length > 0)
     {
         entity itempart;
@@ -37,7 +39,7 @@ float CheckComponents(IT_Base checkitem, float equippeditemf, float gold_needed)
             {
                 gold_needed = CheckComponents(itempart, equippeditemf, gold_needed);
                 break;
-            }            
+            }
         }
     }
     return gold_needed;

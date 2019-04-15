@@ -8,19 +8,18 @@ void BtnShop()
         case BTN_SHOP_BUY:
             // change to tracking info on item ents
             entity player = findfloat(world, entnum, player_localentnum); 
-            entity item_ent = find(world, classname, "item");
+            IT_Base item_ent = (IT_Base)find(world, classname, "item");
             while (item_ent)
             {
-                IT_BASE item = (IT_BASE)item_ent;
-                if (item.selected)
+                if (item_ent.selected)
                 {
-                    if (item.gold <= player.gold)
+                    if (item_ent.gold <= player.gold)
                     {
                         // TODO serverbuy send/rec
-                        sendevent("BuyItem", "f", item.item_id);
+                        sendevent("BuyItem", "f", item_ent.item_id);
                     }
                 }
-                item_ent = find(item, classname, "item");
+                item_ent = (IT_Base)find(item_ent, classname, "item");
             }
             break;
         case BTN_SHOP_CAT_ALL:
@@ -80,17 +79,17 @@ void ShowShopMenu(vector vid_size, float can_shop)
     vector btnpos = pos + border;
     float btnID = 1;
     btn = CreateButton("All Items", BtnShop, btnpos, BTN_BG, size, 0, btnID);
-    btn.type = BTN_CAT_ALL;
+    btn.type = BTN_SHOP_CAT_ALL;
 
     btnpos_y = btnpos_y + border_y;
     btnID++;
     btn = CreateButton("Movement", BtnShop, btnpos, BTN_BG, size, 0, btnID);
-    btn.type = BTN_CAT_MS;
+    btn.type = BTN_SHOP_CAT_MS;
 
     btnpos_y = btnpos_y + border_y;
     btnID++;
     btn = CreateButton("Attack Speed", BtnShop, btnpos, BTN_BG, size, 0, btnID);
-    btn.type = BTN_CAT_AS;
+    btn.type = BTN_SHOP_CAT_AS;
 
     // draw items on panel
     vector panelpos = pos;

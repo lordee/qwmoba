@@ -1,3 +1,6 @@
+class IT_Base {};
+IT_Base Items[4];
+
 int iItems[4] = {
     IT_NONE,
     IT_BOOTS_BASE,
@@ -7,12 +10,15 @@ int iItems[4] = {
 
 class IT_Base
 {
+    int components[5];
     int item_id;
     string icon;
     string display_text;
     float movement_speed_base;
     float attack_speed_perc;
     float buff_flags;
+    float selected;
+    
 
     void() IT_Base;
     virtual void() Destruct;
@@ -39,6 +45,7 @@ void IT_Base :: IT_Base (void)
             display_text = "boots of speed";
             movement_speed_base = 35;
             buff_flags = BUFF_RESIST_SLOW | BUFF_MS_BASE;
+            components[0] = IT_BOOTS_BASE;
             break;
         case IT_BOOTS_AASPEED:
             icon = "progs/gfx/hud/items/it_boots_aaspeed.png";
@@ -46,6 +53,7 @@ void IT_Base :: IT_Base (void)
             movement_speed_base = 25;
             attack_speed_perc = 25;
             buff_flags = BUFF_AASPEED_PERC | BUFF_MS_BASE;
+            components[0] = IT_BOOTS_BASE;
             break;
         default:
     }

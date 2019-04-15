@@ -275,10 +275,10 @@ void ShopThink()
     entity player = find(world, classname, "player");
     while (player)
     {
-        if (player.team_no = self.team_no)
+        if (player.team_no == self.team_no)
         {
             float dist = vlen(self.origin - player.origin);
-            if (dist <== RANGE_LOCAL)
+            if (dist <= RANGE_LOCAL)
             {
                 player.can_shop = TRUE;
             }
