@@ -298,7 +298,7 @@ void() worldspawn =
     clientstat(STAT_CANSHOP, EV_FLOAT, can_shop);
 
     float ilength = iItems.length;
-    for (int i = 0; i < ilength; i = i + 1)
+    for (float i = 0; i < ilength; i++)
     {
         IT_Base item = spawn(IT_Base, item_id: i);
         Items[i] = item;

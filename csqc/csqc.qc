@@ -89,7 +89,7 @@ void(float apilevel, string enginename, float engineversion) CSQC_Init = {
     Shop_Category = BTN_SHOP_CAT_ALL;
 
     float ilength = iItems.length;
-    for (int i = 0; i < ilength; i = i + 1)
+    for (float i = 0; i < ilength; i++)
     {
         IT_Base item = spawn(IT_Base, item_id: i);
         precache_pic(item.icon);

@@ -10,7 +10,7 @@ float () Player_PreDraw {
 
         // Apply physics for every single input-frame that has not yet been
         // acknowledged by the server (servercommandframe = last acknowledged frame)
-        for (int i = servercommandframe + 1; i <= clientcommandframe; i = i + 1) {
+        for (float i = servercommandframe + 1; i <= clientcommandframe; i++) {
             float flSuccess = getinputstate(i);
 
             if (flSuccess == FALSE) {

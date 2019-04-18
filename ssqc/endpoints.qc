@@ -19,29 +19,33 @@ void (float c) Cmd_ChooseChamp_f = {
 float CheckComponents(IT_Base checkitem, float equippeditemf, float gold_needed)
 {
     // go through component items of item
-    float test = checkitem.components.length;
-
-    if (checkitem.components.length > 0)
+    for (float i = 0; i < ItemComponents.length; i++)
     {
-        entity itempart;
-        float checkid;
-        // if the item owned is in component, take away that amount from the bought item gold cost
-        for (int i = 0; i < checkitem.components.length; i = i + 1)
+        if (ItemComponents[i].item_id == checkitem.item_id)
         {
-            checkid = checkitem.components[i];
-            itempart = Items[checkid];
-            if (checkid == equippeditemf)
+            for (float i2 = 0; i2 < ItemComponents[i].components.length; i2++)
             {
-                gold_needed = gold_needed - itempart.gold;
-                break;
+                // if the item owned is in component, take away that amount from the bought item gold cost
+                IT_Base itempart;
+                float checkid;
+                checkid = ItemComponents[i].components[i2];
+                itempart = Items[checkid];
+
+                if (checkid == equippeditemf)
+                {
+                    gold_needed = gold_needed - itempart.gold;
+                    break;
+                }
+                else
+                {
+                    // if checkid has components, check them
+                    gold_needed = CheckComponents(itempart, equippeditemf, gold_needed);
+                }
             }
-            else if (itempart.components.length > 0)
-            {
-                gold_needed = CheckComponents(itempart, equippeditemf, gold_needed);
-                break;
-            }
+            break;
         }
     }
+
     return gold_needed;
 }
 
@@ -94,7 +98,7 @@ void Cmd_BuyItem_f(float item_id)
     if (gold_needed <= self.gold)
     {
         // an equipped item was used, get rid of it
-        for (int i = 0; i < used.length; i = i + 1)
+        for (float i = 0; i < used.length; i++)
         {
             switch (used[i])
             {

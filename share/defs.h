@@ -271,6 +271,7 @@
 #define IT_BOOTS_BASE   1
 #define IT_BOOTS_SPEED  2
 #define IT_BOOTS_AASPEED    3
+#define IT_DAGGER   4
 
 
 #define IT_MOVEMENT_SPEED_BASE 1

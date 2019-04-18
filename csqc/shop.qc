@@ -34,14 +34,14 @@ void ItemPanel_Draw(vector pos, vector panelsize, vector border)
     vector size = [20, 20];
     vector itempos = pos;
 
-    int xitemsmax = floor((panelsize_x - border_x) / (size_x + border_x));
-    int yitemsmax = floor((panelsize_y - border_y) / (size_y + border_y));
+    float xitemsmax = floor((panelsize_x - border_x) / (size_x + border_x));
+    float yitemsmax = floor((panelsize_y - border_y) / (size_y + border_y));
     // loop through all items, draw icons
-    int xcount = 1;
-    int ycount = 1;
+    float xcount = 1;
+    float ycount = 1;
     // not sure if necessary speedwise
     float ilength = Items.length;
-    for (int i = 0; i < ilength; i = i + 1)
+    for (float i = 0; i < ilength; i++)
     {
         if (xcount > xitemsmax)
         {
