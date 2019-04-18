@@ -50,12 +50,14 @@ void IT_Base :: IT_Base (void)
             display_text = "boots";
             movement_speed_base = 25;
             buff_flags = BUFF_MS_BASE;
+            self.gold = 300;
             break;
         case IT_BOOTS_SPEED:
             icon = "progs/gfx/hud/items/it_boots_speed.png";
             display_text = "boots of speed";
             movement_speed_base = 35;
             buff_flags = BUFF_RESIST_SLOW | BUFF_MS_BASE;
+            self.gold = 700;
             break;
         case IT_BOOTS_AASPEED:
             icon = "progs/gfx/hud/items/it_boots_aaspeed.png";
@@ -63,12 +65,14 @@ void IT_Base :: IT_Base (void)
             movement_speed_base = 25;
             attack_speed_perc = 25;
             buff_flags = BUFF_AASPEED_PERC | BUFF_MS_BASE;
+            self.gold = 800;
             break;
         case IT_DAGGER:
             icon = "progs/gfx/hud/items/it_none.png";
             display_text = "dagger of attack speed";
             attack_speed_perc = 15;
             buff_flags = BUFF_AASPEED_PERC;
+            self.gold = 300;
             break;
         default:
     }
