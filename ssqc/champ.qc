@@ -3,6 +3,92 @@ void () SkillTwo_FrostArcher;
 void () SkillThree_FrostArcher;
 void () SkillFour_FrostArcher;
 
+typedef struct {
+    float champ_id;
+    float basead;
+    float basehealth;
+    float basehealth_regen;
+    float basemana;
+    float basemana_regen;
+    float basespeed;
+    float weapon;
+    float baseattackspeed;
+    float skill_one;
+    float skill_one_manacost;
+    float skill_one_cooldown;
+    float skill_one_damage;
+    float skill_two;
+    float skill_two_manacost;
+    float skill_two_cooldown;
+    float skill_two_damage;
+    float skill_three;
+    float skill_three_manacost;
+    float skill_three_cooldown;
+    float skill_three_damage;
+    float skill_four;
+    float skill_four_manacost;
+    float skill_four_cooldown;
+    float skill_four_damage;
+} Champion_t;
+
+// item id, components
+Champion_t Champions[2] = {
+    {
+        CHAMP_FROSTARCHER, 
+        BASEAD_FROSTARCHER,
+        BASEHEALTH_FROSTARCHER,
+        BASEHEALTH_REGEN_FROSTARCHER,
+        BASEMANA_FROSTARCHER,
+        BASEMANA_REGEN_FROSTARCHER,
+        BASESPEED_FROSTARCHER,
+        WEAPON_FROSTARCHER,
+        BASEATTACKSPEED_FROSTARCHER,
+        SKILLONE_FROSTARCHER,
+        SKILLONE_MANACOST_FROSTARCHER,
+        SKILLONE_COOLDOWN_FROSTARCHER,
+        SKILLONE_DAMAGE_FROSTARCHER,
+        SKILLTWO_FROSTARCHER,
+        SKILLTWO_MANACOST_FROSTARCHER,
+        SKILLTWO_COOLDOWN_FROSTARCHER,
+        SKILLTWO_DAMAGE_FROSTARCHER,
+        SKILLTHREE_FROSTARCHER,
+        SKILLTHREE_MANACOST_FROSTARCHER,
+        SKILLTHREE_COOLDOWN_FROSTARCHER,
+        SKILLTHREE_DAMAGE_FROSTARCHER,
+        SKILLFOUR_FROSTARCHER,
+        SKILLFOUR_MANACOST_FROSTARCHER,
+        SKILLFOUR_COOLDOWN_FROSTARCHER,
+        SKILLFOUR_DAMAGE_FROSTARCHER
+    },
+    {
+        CHAMP_SHAMBLER, 
+        BASEAD_SHAMBLER,
+        BASEHEALTH_SHAMBLER,
+        BASEHEALTH_REGEN_SHAMBLER,
+        BASEMANA_SHAMBLER,
+        BASEMANA_REGEN_SHAMBLER,
+        BASESPEED_SHAMBLER,
+        WEAPON_SHAMBLER,
+        BASEATTACKSPEED_SHAMBLER,
+        SKILLONE_SHAMBLER,
+        SKILLONE_MANACOST_SHAMBLER,
+        SKILLONE_COOLDOWN_SHAMBLER,
+        SKILLONE_DAMAGE_SHAMBLER,
+        SKILLTWO_SHAMBLER,
+        SKILLTWO_MANACOST_SHAMBLER,
+        SKILLTWO_COOLDOWN_SHAMBLER,
+        SKILLTWO_DAMAGE_SHAMBLER,
+        SKILLTHREE_SHAMBLER,
+        SKILLTHREE_MANACOST_SHAMBLER,
+        SKILLTHREE_COOLDOWN_SHAMBLER,
+        SKILLTHREE_DAMAGE_SHAMBLER,
+        SKILLFOUR_SHAMBLER,
+        SKILLFOUR_MANACOST_SHAMBLER,
+        SKILLFOUR_COOLDOWN_SHAMBLER,
+        SKILLFOUR_DAMAGE_SHAMBLER
+    }
+};
+
 void (entity e) DoRegen = {
     if (e.deadflag == DEAD_NO)
     {
@@ -28,38 +114,50 @@ void (entity e) DoRegen = {
     }
 }
 
+Champion_t GetChamp(float id)
+{
+    for (float i = 0; i < Champions.length; i++)
+    {
+        if (Champions[i].champ_id == id)
+        {
+            Champion_t champ = Champions[i];
+            return champ;
+        }
+    }
+}
+
 void () SetupChamp = {
     self.regentick = time + REGEN_TICKTIME;
-    switch (self.champ)
+    if (self.champ_id)
     {
-        case CHAMP_FROSTARCHER:
-            self.attackdamage = BASEAD_FROSTARCHER;
-            self.health = BASEHEALTH_FROSTARCHER;
-            self.max_health = BASEHEALTH_FROSTARCHER;
-            self.healthregen = BASEHEALTH_REGEN_FROSTARCHER; // per second
-            self.mana = BASEMANA_FROSTARCHER;
-            self.max_mana = BASEMANA_FROSTARCHER;
-            self.manaregen = BASEMANA_REGEN_FROSTARCHER;
-            self.speed = BASESPEED_FROSTARCHER;
-            self.weapon = WEAPON_FROSTARCHER;
-            self.attackspeed = BASEATTACKSPEED_FROSTARCHER;
-            self.skill_one = SKILLONE_FROSTARCHER;
-            self.skill_one_manacost = SKILLONE_MANACOST_FROSTARCHER;
-            self.skill_one_cooldown = 0;
-            self.skill_one_damage = SKILLONE_DAMAGE_FROSTARCHER;
-            self.skill_two = SKILLTWO_FROSTARCHER;
-            self.skill_two_manacost = SKILLTWO_MANACOST_FROSTARCHER;
-            self.skill_two_cooldown = 0;
-            self.skill_two_damage = SKILLTWO_DAMAGE_FROSTARCHER;
-            self.skill_three = SKILLTHREE_FROSTARCHER;
-            self.skill_three_manacost = SKILLTHREE_MANACOST_FROSTARCHER;
-            self.skill_three_cooldown = 0;
-            self.skill_three_damage = SKILLTHREE_DAMAGE_FROSTARCHER;
-            self.skill_four = SKILLFOUR_FROSTARCHER;
-            self.skill_four_manacost = SKILLFOUR_MANACOST_FROSTARCHER;
-            self.skill_four_cooldown = 0;
-            self.skill_four_damage = SKILLFOUR_DAMAGE_FROSTARCHER;
-        break;
+        Champion_t champ = GetChamp(self.champ_id);
+
+        self.attackdamage = champ.basead;
+        self.health = champ.basehealth;
+        self.max_health = champ.basehealth;
+        self.healthregen = champ.basehealth_regen; // per second
+        self.mana = champ.basemana;
+        self.max_mana = champ.basemana;
+        self.manaregen = champ.basemana_regen;
+        self.speed = champ.basespeed;
+        self.weapon = champ.weapon;
+        self.attackspeed = champ.baseattackspeed;
+        self.skill_one = champ.skill_one;
+        self.skill_one_manacost = champ.skill_one_manacost;
+        self.skill_one_cooldown = 0;
+        self.skill_one_damage = champ.skill_one_damage;
+        self.skill_two = champ.skill_two;
+        self.skill_two_manacost = champ.skill_two_manacost;
+        self.skill_two_cooldown = 0;
+        self.skill_two_damage = champ.skill_two_damage;
+        self.skill_three = champ.skill_three;
+        self.skill_three_manacost = champ.skill_three_manacost;
+        self.skill_three_cooldown = 0;
+        self.skill_three_damage = champ.skill_three_damage;
+        self.skill_four = champ.skill_four;
+        self.skill_four_manacost = champ.skill_four_manacost;
+        self.skill_four_cooldown = 0;
+        self.skill_four_damage = champ.skill_four_damage;
     }
 }
 
@@ -131,7 +229,7 @@ void (entity player) UpdateStats = {
     float attdamage, attspeed, msspeed, hth, mna, lvl;
     lvl = player.level;
     
-    switch (player.champ)
+    switch (player.champ_id)
     {
         case CHAMP_FROSTARCHER:
             // base char

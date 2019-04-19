@@ -187,7 +187,7 @@ void Hud_Draw(vector scrsz)
 	float stitems = getstatbits(STAT_ITEMS, 0, 23);			//this is the player's self.items value (STAT_ITEMS is generated specially by the server)
 
 	entity p = findfloat(world, entnum, player_localentnum); 
-	if (p.champ)
+	if (p.champ_id)
 	{
 		float hval = p.health;
 		float h_max = p.max_health;
@@ -211,19 +211,19 @@ void Hud_Draw(vector scrsz)
         
 		// skills
 		// based on champ, show champ skill icons
-		string icon = GetChampIcon(p.champ, 1);
+		string icon = GetChampIcon(p.champ_id, 1);
 		pos = pos + [0, -40, 0];
 		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 1) ? TRUE : FALSE, p.skill_one_cooldown);
 
-		icon = GetChampIcon(p.champ, 2);
+		icon = GetChampIcon(p.champ_id, 2);
 		pos = pos + [25, 0, 0];
 		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 2) ? TRUE : FALSE, p.skill_two_cooldown);
 
-		icon = GetChampIcon(p.champ, 3);
+		icon = GetChampIcon(p.champ_id, 3);
 		pos = pos + [25, 0, 0];
 		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 3) ? TRUE : FALSE, p.skill_three_cooldown);
 
-		icon = GetChampIcon(p.champ, 4);
+		icon = GetChampIcon(p.champ_id, 4);
 		pos = pos + [25, 0, 0];
 		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 4) ? TRUE : FALSE, p.skill_four_cooldown);
 

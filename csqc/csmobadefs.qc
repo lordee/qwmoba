@@ -20,7 +20,7 @@ vector glob_vid_size;
 .float btn_flags;
 .float btn_no;
 .float team_no;
-.float champ;
+.float champ_id;
 
 // menu stuff
 float mnu_active;

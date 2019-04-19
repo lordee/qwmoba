@@ -10,7 +10,7 @@ void (float menu) Cmd_AckMenu_f = {
 
 void (float c) Cmd_ChooseChamp_f = {
     self.menu = MNU_INACTIVE;
-    self.champ = c;
+    self.champ_id = c;
     self.level = 1;
     // force a respawn as that champ
     ClientKill();
@@ -163,7 +163,7 @@ float Player_SendEntity(entity ePVEnt, float flChanged) {
     WriteFloat(MSG_ENTITY, self.flags); // Flags, important for physics
 
 	WriteString(MSG_ENTITY, self.netname);
-	WriteFloat(MSG_ENTITY, self.champ);
+	WriteFloat(MSG_ENTITY, self.champ_id);
 	WriteFloat(MSG_ENTITY, self.ready);
 	WriteFloat(MSG_ENTITY, self.mana);
 	WriteFloat(MSG_ENTITY, self.max_mana);

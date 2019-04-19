@@ -21,7 +21,7 @@ void (vector vid_size) ShowLobbyMenu = {
 }
 
 void () ChooseChamp = {
-    sendevent("ChooseChamp", "f", self.champ);
+    sendevent("ChooseChamp", "f", self.champ_id);
 }
 
 void (vector vid_size) ShowLobbyChampMenu = {
@@ -38,25 +38,25 @@ void (vector vid_size) ShowLobbyChampMenu = {
     buttonback = "progs/csqc/csqcguiback.tga";
 
     btn = CreateButton( "Frost Archer", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
-    btn.champ = CHAMP_FROSTARCHER;
-    btn = CreateButton( "Caitlyn", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
-    btn.champ = CHAMP_CAITLYN;
-    btn = CreateButton( "Alistar", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
-    btn.champ = CHAMP_ALISTAR;
+    btn.champ_id = CHAMP_FROSTARCHER;
+    btn = CreateButton( "Tristana", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
+    btn.champ_id = CHAMP_TRISTANA;
+    btn = CreateButton( "Shambler", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
+    btn.champ_id = CHAMP_SHAMBLER;
     btn = CreateButton( "Taric", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
-    btn.champ = CHAMP_TARIC;
+    btn.champ_id = CHAMP_TARIC;
     btn = CreateButton( "Master Yi", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
-    btn.champ = CHAMP_MASTERYI;
+    btn.champ_id = CHAMP_MASTERYI;
     btn = CreateButton( "Warwick", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
-    btn.champ = CHAMP_WARWICK;
+    btn.champ_id = CHAMP_WARWICK;
 
     btn = CreateButton( "Garen", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
-    btn.champ = CHAMP_GAREN;
+    btn.champ_id = CHAMP_GAREN;
     btn = CreateButton( "Kayle", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
-    btn.champ = CHAMP_KAYLE;
+    btn.champ_id = CHAMP_KAYLE;
 
     btn = CreateButton( "Ahri", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
-    btn.champ = CHAMP_AHRI;
+    btn.champ_id = CHAMP_AHRI;
     btn = CreateButton( "Veigar", ChooseChamp, men, buttonback, but_size, 0, btnID); men_y+=but_size_y; btnID++;
-    btn.champ = CHAMP_VEIGAR;
+    btn.champ_id = CHAMP_VEIGAR;
 }

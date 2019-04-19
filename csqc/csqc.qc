@@ -44,7 +44,7 @@ void CSQC_Ent_Update(float flIsNew) {
             self.velocity_z = readshort();
             self.flags = readfloat();
             self.netname = readstring();
-            self.champ = readfloat();
+            self.champ_id = readfloat();
             self.ready = readfloat();
             self.mana = readfloat();
             self.max_mana = readfloat();

@@ -153,7 +153,7 @@ void () Messages_Draw = {
     p = findfloat(world, entnum, player_localentnum); 
     if (p)
     {
-        if (p.champ && !p.ready)
+        if (p.champ_id && !p.ready)
         {
             string key1 = argv(0);
             string key2 = argv(1);
@@ -178,7 +178,7 @@ void () Messages_Draw = {
                 msg = strcat(msg, "^7 to start the game");           
             }
         }
-        else if (p.champ && p.ready)
+        else if (p.champ_id && p.ready)
         {
             string champs, readys;
             champs = "";
@@ -187,7 +187,7 @@ void () Messages_Draw = {
             player = find(world, classname, "player");
             while (player)
             {
-                if (!player.champ)
+                if (!player.champ_id)
                 {
                     if (champs == "")
                         champs = player.netname;

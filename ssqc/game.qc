@@ -162,7 +162,7 @@ void () LobbyThink = {
         while (p)
         {
             // not everyone has a champ yet
-            if (!p.champ)
+            if (!p.champ_id)
             {
                 self.nextthink = time + 1;
                 return;

@@ -291,7 +291,7 @@ Player entered the suicide command
 */
 void() ClientKill =
 {
-	if (self.champ == CHAMP_UNDEFINED)
+	if (self.champ_id == CHAMP_UNDEFINED)
 	{
 		return;
 	}
@@ -451,6 +451,7 @@ void() PutClientInServer =
 
 	setmodel (self, "progs/eyes.mdl");
 	modelindex_eyes = self.modelindex;
+
 
 	setmodel (self, "progs/player.mdl");
 	modelindex_player = self.modelindex;

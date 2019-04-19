@@ -1,5 +1,7 @@
 entity (string button_text, void () btnMethod, vector button_spawnpos, string button_image, vector button_size, float button_flags, float btnID) CreateButton;
 
+// TODO finish buying mechanics etc
+
 void BtnShop()
 {
     // filter items, draw panel
