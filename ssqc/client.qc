@@ -291,10 +291,7 @@ Player entered the suicide command
 */
 void() ClientKill =
 {
-	if (self.champ_id == CHAMP_UNDEFINED)
-	{
-		return;
-	}
+
 	bprint (PRINT_MEDIUM, self.netname);
 	bprint (PRINT_MEDIUM, " suicides\n");
 	set_suicide_frame ();
