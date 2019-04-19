@@ -655,15 +655,15 @@ void() PlayerDie =
 
 void() set_suicide_frame =
 {       // used by klill command and diconnect command
-	if (self.model != "progs/player.mdl")
-		return; // allready gibbed
+	GetChamp(self.champ_id);
+	if (self.model != selfchamp.model)
+		return; // already gibbed
 	self.frame = $deatha11;
 	self.solid = SOLID_NOT;
 	self.movetype = MOVETYPE_TOSS;
 	self.deadflag = DEAD_DEAD;
 	self.nextthink = -1;
 };
-
 
 void()  player_diea1    =       [       $deatha1,       player_diea2    ] {};
 void()  player_diea2    =       [       $deatha2,       player_diea3    ] {};

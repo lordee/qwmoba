@@ -255,8 +255,6 @@ void() worldspawn =
 	precache_sound ("items/protect2.wav");
 	precache_sound ("items/protect3.wav");
 
-
-	precache_model ("progs/player.mdl");
 	precache_model ("progs/eyes.mdl");
 	precache_model ("progs/h_player.mdl");
 	precache_model ("progs/gib1.mdl");
@@ -294,6 +292,10 @@ void() worldspawn =
 	precache_model ("progs/champions/frostarcher/frostarcherarrow.mdl");
 	precache_model ("progs/champions/frostarcher/frostarcherarrowbuff.mdl");
 	precache_model ("progs/champions/frostarcher/frostarcherultimate.mdl");
+	for (float i = 0; i < Champions.length; i++)
+	{
+		precache_model(Champions[i].model);
+	}
 	
     clientstat(STAT_CANSHOP, EV_FLOAT, can_shop);
 

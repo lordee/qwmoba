@@ -25,14 +25,6 @@ void CSQC_Ent_Update(float flIsNew) {
     switch (entType)
     {
         case SE_PLAYER:
-            if ( flIsNew == TRUE ) {
-                self.classname = "player";
-                self.solid = SOLID_SLIDEBOX;
-                self.predraw = Player_PreDraw;
-                self.drawmask = MASK_ENGINE;
-                setmodel(self, "progs/player.mdl");
-            }
-                
             self.origin_x = readcoord();
             self.origin_y = readcoord();
             self.origin_z = readcoord();
@@ -44,7 +36,7 @@ void CSQC_Ent_Update(float flIsNew) {
             self.velocity_z = readshort();
             self.flags = readfloat();
             self.netname = readstring();
-            self.champ_id = readfloat();
+            float cid = readfloat();
             self.ready = readfloat();
             self.mana = readfloat();
             self.max_mana = readfloat();
@@ -71,7 +63,25 @@ void CSQC_Ent_Update(float flIsNew) {
             self.item_six = readfloat();
             self.item_seven = readfloat();
                 
-            setsize(self, '-16 -16 -24', '16 16 32');
+            
+            
+            if ( flIsNew == TRUE ) {
+                self.classname = "player";
+                self.solid = SOLID_SLIDEBOX;
+                self.predraw = Player_PreDraw;
+                self.drawmask = MASK_ENGINE;               
+            }
+
+            
+
+            if (cid != self.champ_id)
+            {
+                self.champ_id = cid;
+                GetChamp(self.champ_id);
+                setmodel(self, selfchamp.model);
+                setsize (self, selfchamp.model_min, selfchamp.model_max);
+            }
+            
             setorigin(self, self.origin);
             break;
     }

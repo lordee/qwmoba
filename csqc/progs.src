@@ -3,6 +3,7 @@ csdefs.qc
 csmobadefs.qc
 ../share/helpers.qc
 ../share/items.qc
+../share/champtypes.qc
 csqc.qc
 input.qc
 hud.qc

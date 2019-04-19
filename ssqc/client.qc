@@ -445,20 +445,19 @@ void() PutClientInServer =
 
 	spot = SelectSpawnPoint ();
 
-	self.origin = spot.origin + '0 0 1';
+	self.origin = spot.origin + '0 0 100';
 	self.angles = spot.angles;
 	self.fixangle = TRUE;           // turn this way immediately
 
 	setmodel (self, "progs/eyes.mdl");
 	modelindex_eyes = self.modelindex;
 
-
-	setmodel (self, "progs/player.mdl");
+	GetChamp(self.champ_id);
+	setmodel(self, selfchamp.model);
 	modelindex_player = self.modelindex;
-
-	setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
+	setsize (self, selfchamp.model_min, selfchamp.model_max);
+	self.view_ofs = selfchamp.model_viewoffset;
 	
-	self.view_ofs = '0 0 22';
 
 // Mod - Xian (May.20.97)
 // Bug where player would have velocity from their last kill

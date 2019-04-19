@@ -7,6 +7,7 @@ qwmobadefs.qc
 subs.qc
 combat.qc
 ../share/items.qc
+../share/champtypes.qc
 weapons.qc
 world.qc
 client.qc
