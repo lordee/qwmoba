@@ -13,7 +13,6 @@ typedef struct {
     float growthmana;
     float basemana_regen;
     float basespeed;
-    float weapon;
     float baseattackspeed;
     float growthattackspeed;
     float skill_one;
@@ -32,7 +31,6 @@ typedef struct {
     float skill_four_manacost;
     float skill_four_cooldown;
     float skill_four_damage;
-
 } Champion_t;
 
 Champion_t Champions[3] = {
@@ -51,7 +49,6 @@ Champion_t Champions[3] = {
         GROWTH_MANA_UNDEFINED,
         BASEMANA_REGEN_UNDEFINED,
         BASESPEED_UNDEFINED,
-        WEAPON_UNDEFINED,
         BASEATTACKSPEED_UNDEFINED,
         GROWTH_AS_UNDEFINED,
         SKILLONE_UNDEFINED,
@@ -86,7 +83,6 @@ Champion_t Champions[3] = {
         GROWTH_MANA_FROSTARCHER,
         BASEMANA_REGEN_FROSTARCHER,
         BASESPEED_FROSTARCHER,
-        WEAPON_FROSTARCHER,
         BASEATTACKSPEED_FROSTARCHER,
         GROWTH_AS_FROSTARCHER,
         SKILLONE_FROSTARCHER,
@@ -121,7 +117,6 @@ Champion_t Champions[3] = {
         GROWTH_MANA_SHAMBLER,
         BASEMANA_REGEN_SHAMBLER,
         BASESPEED_SHAMBLER,
-        WEAPON_SHAMBLER,
         BASEATTACKSPEED_SHAMBLER,
         GROWTH_AS_SHAMBLER,
         SKILLONE_SHAMBLER,

@@ -41,7 +41,6 @@ void () SetupChamp = {
     self.max_mana = selfchamp.basemana;
     self.manaregen = selfchamp.basemana_regen;
     self.speed = selfchamp.basespeed;
-    self.weapon = selfchamp.weapon;
     self.attackspeed = selfchamp.baseattackspeed;
     self.skill_one = selfchamp.skill_one;
     self.skill_one_manacost = selfchamp.skill_one_manacost;

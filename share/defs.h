@@ -248,11 +248,6 @@
 #define KT_MINIONKILL    3
 #define KT_SELFDEATH    4
 
-// champ weapons
-#define WEAPON_UNDEFINED     0
-#define WEAPON_FROSTARCHER     1
-#define WEAPON_SHAMBLER     2
-
 // impulse defines
 #define SKILLONE    1
 #define SKILLTWO    2
@@ -309,7 +304,6 @@
 #define SKILLTWO_SHAMBLER   10
 #define SKILLTHREE_SHAMBLER  11
 #define SKILLFOUR_SHAMBLER   12
-
 
 // no selection
 #define MODEL_UNDEFINED   "progs/player.mdl"

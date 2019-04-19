@@ -25,6 +25,7 @@ endpoints.qc
 qwm.qc
 champ.qc
 champfrostarcher.qc
+champshambler.qc
 mapentities.qc
 creep_ai.qc
 creep_melee.qc

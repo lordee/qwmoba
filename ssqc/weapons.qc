@@ -890,24 +890,28 @@ void() W_SetCurrentAmmo =
 {
 	player_run ();          // get out of any weapon firing states
 
+	switch (self.champ_id)
+	{
+		case CHAMP_UNDEFINED:
+			return;
+		case CHAMP_FROSTARCHER:
+			self.currentammo = 0;
+			self.weaponmodel = "progs/v_shot.mdl";
+			self.weaponframe = 0;
+			break;
+		case CHAMP_SHAMBLER:
+			self.currentammo = 0;
+			self.weaponmodel = "progs/v_axe.mdl";
+			self.weaponframe = 0;
+			break;
+	}
+
 	self.items = self.items - ( self.items & (IT_SHELLS | IT_NAILS | IT_ROCKETS | IT_CELLS) );
 	
 	if (self.weapon == IT_AXE)
 	{
 		self.currentammo = 0;
 		self.weaponmodel = "progs/v_axe.mdl";
-		self.weaponframe = 0;
-	}
-    else if (self.weapon == WEAPON_FROSTARCHER)
-	{
-		self.currentammo = 0;
-		self.weaponmodel = "progs/v_shot.mdl";
-		self.weaponframe = 0;
-	}
-	else if (self.weapon == WEAPON_SHAMBLER)
-	{
-		self.currentammo = 0;
-		self.weaponmodel = "progs/v_shot.mdl";
 		self.weaponframe = 0;
 	}
 	else if (self.weapon == IT_SUPER_SHOTGUN)
@@ -998,6 +1002,7 @@ void()  player_rocket1;
 
 // qwmoba
 void () FrostArcherAttack;
+void () ShamblerAttack;
 
 void() W_Attack =
 {
@@ -1007,18 +1012,29 @@ void() W_Attack =
 	}
 
 	makevectors     (self.v_angle);                 // calculate forward angle for velocity
-	self.show_hostile = time + 1;   // wake monsters up
 
     float attacktime;
-    switch (self.weapon)
-    {
-        case WEAPON_FROSTARCHER:
-            player_shot1();
-            attacktime = 1 / self.attackspeed;
-            self.attack_finished = time + attacktime;
-            FrostArcherAttack();
-            break;
-    }
+	GetChamp(self.champ_id);
+
+	// TODO - shift this to csqc...
+	player_shot1();
+
+	attacktime = 1 / self.attackspeed;
+	self.attack_finished = time + attacktime;
+
+	// TODO - move function on to champ struct/class
+	switch (self.champ_id)
+	{
+		case CHAMP_UNDEFINED:
+			return;
+		case CHAMP_FROSTARCHER:
+			FrostArcherAttack();
+			break;
+		case CHAMP_SHAMBLER:
+			ShamblerAttack();
+			break;
+	}
+	
 };
 
 /*
