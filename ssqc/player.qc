@@ -654,7 +654,7 @@ void() PlayerDie =
 };
 
 void() set_suicide_frame =
-{       // used by klill command and diconnect command
+{       // used by kill command and disconnect command
 	GetChamp(self.champ_id);
 	if (self.model != selfchamp.model)
 		return; // already gibbed
