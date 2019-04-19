@@ -213,19 +213,21 @@ void Hud_Draw(vector scrsz)
 		// based on champ, show champ skill icons
 		string icon = GetChampIcon(p.champ_id, 1);
 		pos = pos + [0, -40, 0];
-		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 1) ? TRUE : FALSE, p.skill_one_cooldown);
+		
+		GetChamp(p.champ_id);
+		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == selfchamp.skill_one) ? TRUE : FALSE, p.skill_one_cooldown);
 
 		icon = GetChampIcon(p.champ_id, 2);
 		pos = pos + [25, 0, 0];
-		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 2) ? TRUE : FALSE, p.skill_two_cooldown);
+		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == selfchamp.skill_two) ? TRUE : FALSE, p.skill_two_cooldown);
 
 		icon = GetChampIcon(p.champ_id, 3);
 		pos = pos + [25, 0, 0];
-		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 3) ? TRUE : FALSE, p.skill_three_cooldown);
+		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == selfchamp.skill_three) ? TRUE : FALSE, p.skill_three_cooldown);
 
 		icon = GetChampIcon(p.champ_id, 4);
 		pos = pos + [25, 0, 0];
-		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == 4) ? TRUE : FALSE, p.skill_four_cooldown);
+		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == selfchamp.skill_four) ? TRUE : FALSE, p.skill_four_cooldown);
 
 		// gold
         pos = pos + [50, 64, 0];
