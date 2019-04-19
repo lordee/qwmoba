@@ -129,23 +129,19 @@ void (entity player) UpdateStats = {
     float attdamage, attspeed, msspeed, hth, mna, lvl;
     lvl = player.level;
     
-    switch (player.champ_id)
-    {
-        case CHAMP_FROSTARCHER:
-            // base char
-            attdamage = BASEAD_FROSTARCHER;
-            attspeed = BASEATTACKSPEED_FROSTARCHER;
-            msspeed = BASESPEED_FROSTARCHER;
-            hth = BASEHEALTH_FROSTARCHER;
-            mna = BASEMANA_FROSTARCHER;
+    GetChamp(player.champ_id)
 
-            // char levels
-            attdamage = attdamage + (GROWTH_AD_FROSTARCHER * lvl);
-            attspeed = attspeed * ((100 + (GROWTH_AS_FROSTARCHER * lvl)) / 100);
-            hth = hth + (GROWTH_HEALTH_FROSTARCHER * lvl);
-            mna = mna + (GROWTH_MANA_FROSTARCHER * lvl);
-            break;
-    }
+    attdamage = selfchamp.basead;
+    attspeed = selfchamp.baseattackspeed;
+    msspeed = selfchamp.basespeed;
+    hth = selfchamp.basehealth;
+    mna = selfchamp.basemana;
+
+    // char levels
+    attdamage = attdamage + (selfchamp.growthad * lvl);
+    attspeed = attspeed * ((100 + (selfchamp.growthattackspeed * lvl)) / 100);
+    hth = hth + (selfchamp.growthhealth * lvl);
+    mna = mna + (selfchamp.growthmana * lvl);
 
     // items
 
@@ -156,15 +152,18 @@ void (entity player) UpdateStats = {
     buff = find(world, classname, "buff");
     while (buff)
     {
-        val = buff.buffvalue;
-        switch (buff.buffcategory)
+        if(buff.owner == player)
         {
-            case DEBUFF_MSSLOW:
-                msspeed = msspeed * ((100 - val) / 100);
-                break;
-            case BUFF_AASPEED_PERC:
-                attspeed = attspeed * ((100 + val) / 100);
-                break;
+            val = buff.buffvalue;
+            switch (buff.buffcategory)
+            {
+                case DEBUFF_MSSLOW:
+                    msspeed = msspeed * ((100 - val) / 100);
+                    break;
+                case BUFF_AASPEED_PERC:
+                    attspeed = attspeed * ((100 + val) / 100);
+                    break;
+            }
         }
         buff = find(buff, classname, "buff");
     }

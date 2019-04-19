@@ -63,16 +63,12 @@ void CSQC_Ent_Update(float flIsNew) {
             self.item_six = readfloat();
             self.item_seven = readfloat();
                 
-            
-            
             if ( flIsNew == TRUE ) {
                 self.classname = "player";
                 self.solid = SOLID_SLIDEBOX;
                 self.predraw = Player_PreDraw;
                 self.drawmask = MASK_ENGINE;               
             }
-
-            
 
             if (cid != self.champ_id)
             {

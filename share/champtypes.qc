@@ -5,13 +5,17 @@ typedef struct {
     vector model_max;
     vector model_viewoffset;
     float basead;
+    float growthad;
     float basehealth;
+    float growthhealth;
     float basehealth_regen;
     float basemana;
+    float growthmana;
     float basemana_regen;
     float basespeed;
     float weapon;
     float baseattackspeed;
+    float growthattackspeed;
     float skill_one;
     float skill_one_manacost;
     float skill_one_cooldown;
@@ -28,6 +32,7 @@ typedef struct {
     float skill_four_manacost;
     float skill_four_cooldown;
     float skill_four_damage;
+
 } Champion_t;
 
 Champion_t Champions[3] = {
@@ -38,13 +43,17 @@ Champion_t Champions[3] = {
         MODEL_MAX_UNDEFINED,
         MODEL_VIEWOFFSET_UNDEFINED,
         BASEAD_UNDEFINED,
+        GROWTH_AD_UNDEFINED,
         BASEHEALTH_UNDEFINED,
+        GROWTH_HEALTH_UNDEFINED,
         BASEHEALTH_REGEN_UNDEFINED,
         BASEMANA_UNDEFINED,
+        GROWTH_MANA_UNDEFINED,
         BASEMANA_REGEN_UNDEFINED,
         BASESPEED_UNDEFINED,
         WEAPON_UNDEFINED,
         BASEATTACKSPEED_UNDEFINED,
+        GROWTH_AS_UNDEFINED,
         SKILLONE_UNDEFINED,
         SKILLONE_MANACOST_UNDEFINED,
         SKILLONE_COOLDOWN_UNDEFINED,
@@ -69,13 +78,17 @@ Champion_t Champions[3] = {
         MODEL_MAX_FROSTARCHER,
         MODEL_VIEWOFFSET_FROSTARCHER,
         BASEAD_FROSTARCHER,
+        GROWTH_AD_FROSTARCHER,
         BASEHEALTH_FROSTARCHER,
+        GROWTH_HEALTH_FROSTARCHER,
         BASEHEALTH_REGEN_FROSTARCHER,
         BASEMANA_FROSTARCHER,
+        GROWTH_MANA_FROSTARCHER,
         BASEMANA_REGEN_FROSTARCHER,
         BASESPEED_FROSTARCHER,
         WEAPON_FROSTARCHER,
         BASEATTACKSPEED_FROSTARCHER,
+        GROWTH_AS_FROSTARCHER,
         SKILLONE_FROSTARCHER,
         SKILLONE_MANACOST_FROSTARCHER,
         SKILLONE_COOLDOWN_FROSTARCHER,
@@ -100,13 +113,17 @@ Champion_t Champions[3] = {
         MODEL_MAX_SHAMBLER,
         MODEL_VIEWOFFSET_SHAMBLER,
         BASEAD_SHAMBLER,
+        GROWTH_AD_SHAMBLER,
         BASEHEALTH_SHAMBLER,
+        GROWTH_HEALTH_SHAMBLER,
         BASEHEALTH_REGEN_SHAMBLER,
         BASEMANA_SHAMBLER,
+        GROWTH_MANA_SHAMBLER,
         BASEMANA_REGEN_SHAMBLER,
         BASESPEED_SHAMBLER,
         WEAPON_SHAMBLER,
         BASEATTACKSPEED_SHAMBLER,
+        GROWTH_AS_SHAMBLER,
         SKILLONE_SHAMBLER,
         SKILLONE_MANACOST_SHAMBLER,
         SKILLONE_COOLDOWN_SHAMBLER,

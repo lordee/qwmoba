@@ -904,12 +904,11 @@ void() W_SetCurrentAmmo =
 		self.weaponmodel = "progs/v_shot.mdl";
 		self.weaponframe = 0;
 	}
-	else if (self.weapon == IT_SHOTGUN)
+	else if (self.weapon == WEAPON_SHAMBLER)
 	{
-		self.currentammo = self.ammo_shells;
+		self.currentammo = 0;
 		self.weaponmodel = "progs/v_shot.mdl";
 		self.weaponframe = 0;
-		self.items = self.items | IT_SHELLS;
 	}
 	else if (self.weapon == IT_SUPER_SHOTGUN)
 	{
