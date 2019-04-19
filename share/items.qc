@@ -12,10 +12,10 @@ float iItems[5] = {
 typedef struct {
     float item_id;
     float components[2];
-} itemComponent_t;
+} ItemComponent_t;
 
 // item id, components
-itemComponent_t ItemComponents[2] = {
+ItemComponent_t ItemComponents[2] = {
     {IT_BOOTS_SPEED, {IT_BOOTS_BASE, IT_NONE}},
     {IT_BOOTS_AASPEED, {IT_BOOTS_BASE, IT_DAGGER}}
 };
