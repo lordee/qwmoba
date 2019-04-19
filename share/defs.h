@@ -402,12 +402,9 @@
 #define SKILLFOUR_MANACOST_FROSTARCHER  200
 
 // SHAMBLER defs
-//#define MODEL_SHAMBLER     "progs/shambler.mdl"
-#define MODEL_SHAMBLER     "progs/player.mdl"
-//#define MODEL_MIN_SHAMBLER   '-32 -32 -24'
-//#define MODEL_MAX_SHAMBLER   '32 32 64'
-#define MODEL_MIN_SHAMBLER   '-16 -16 -24'
-#define MODEL_MAX_SHAMBLER   '16 16 32'
+#define MODEL_SHAMBLER     "progs/shambler.mdl"
+#define MODEL_MIN_SHAMBLER   '-32 -32 -24'
+#define MODEL_MAX_SHAMBLER   '32 32 64'
 #define MODEL_VIEWOFFSET_SHAMBLER    '0 0 50'
 #define BASEAD_SHAMBLER     50
 #define BASEHEALTH_SHAMBLER 500

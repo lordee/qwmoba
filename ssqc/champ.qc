@@ -129,7 +129,7 @@ void (entity player) UpdateStats = {
     float attdamage, attspeed, msspeed, hth, mna, lvl;
     lvl = player.level;
     
-    GetChamp(player.champ_id)
+    GetChamp(player.champ_id);
 
     attdamage = selfchamp.basead;
     attspeed = selfchamp.baseattackspeed;
