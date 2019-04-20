@@ -430,8 +430,6 @@ local entity    bubble_spawner;
 
 void() DeathSound =
 {
-local float             rs;
-
 	// water death sounds
 	if (self.waterlevel == 3)
 	{
@@ -440,19 +438,7 @@ local float             rs;
 		return;
 	}
 	
-	rs = rint ((random() * 4) + 1);
-	if (rs == 1)
-		self.noise = "player/death1.wav";
-	if (rs == 2)
-		self.noise = "player/death2.wav";
-	if (rs == 3)
-		self.noise = "player/death3.wav";
-	if (rs == 4)
-		self.noise = "player/death4.wav";
-	if (rs == 5)
-		self.noise = "player/death5.wav";
-
-	sound (self, CHAN_VOICE, self.noise, 1, ATTN_NONE);
+	sound (self, CHAN_VOICE, selfchamp.sound_death, 1, ATTN_NONE);
 	return;
 };
 
@@ -544,7 +530,7 @@ void(string gibname, float dm) ThrowHead =
 
 void() GibPlayer =
 {
-	ThrowHead ("progs/h_player.mdl", self.health);
+	ThrowHead (selfchamp.model_head, self.health);
 	ThrowGib ("progs/gib1.mdl", self.health);
 	ThrowGib ("progs/gib2.mdl", self.health);
 	ThrowGib ("progs/gib3.mdl", self.health);
@@ -619,9 +605,11 @@ void() PlayerDie =
 	if (self.velocity_z < 10)
 		self.velocity_z = self.velocity_z + random()*300;
 
+	GetChamp(self.champ_id);
+
 	if (self.health < -40)
 	{
-		GibPlayer ();
+		GibPlayer();
 		return;
 	}
 

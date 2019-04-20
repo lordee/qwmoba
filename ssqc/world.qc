@@ -256,7 +256,6 @@ void() worldspawn =
 	precache_sound ("items/protect3.wav");
 
 	precache_model ("progs/eyes.mdl");
-	precache_model ("progs/h_player.mdl");
 	precache_model ("progs/gib1.mdl");
 	precache_model ("progs/gib2.mdl");
 	precache_model ("progs/gib3.mdl");
