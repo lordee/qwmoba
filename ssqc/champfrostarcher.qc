@@ -102,7 +102,7 @@ void () FrostArcherAttack = {
 	newmis.nextthink = time + 6;
 	newmis.think = SUB_Remove;
 
-    sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
+    sound (self, CHAN_WEAPON, SOUND_AASHOOT_FROSTARCHER, 1, ATTN_NORM);
 	setmodel (newmis, "progs/champions/frostarcher/frostarcherarrow.mdl");
 
     entity buff;

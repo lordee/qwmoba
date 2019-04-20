@@ -295,6 +295,11 @@ void() worldspawn =
 	for (float i = 0; i < Champions.length; i++)
 	{
 		precache_model(Champions[i].model);
+		precache_model(Champions[i].model_head);
+		precache_sound(Champions[i].sound_death);
+		precache_sound(Champions[i].sound_aahit);
+		precache_sound(Champions[i].sound_aahitwall);
+		precache_sound(Champions[i].sound_aashoot);
 	}
 	
     clientstat(STAT_CANSHOP, EV_FLOAT, can_shop);

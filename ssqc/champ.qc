@@ -2,6 +2,10 @@ void () SkillOne_FrostArcher;
 void () SkillTwo_FrostArcher;
 void () SkillThree_FrostArcher;
 void () SkillFour_FrostArcher;
+void () SkillOne_Shambler;
+void () SkillTwo_Shambler;
+void () SkillThree_Shambler;
+void () SkillFour_Shambler;
 
 void (entity e) DoRegen = {
     if (e.deadflag == DEAD_NO)
@@ -99,6 +103,18 @@ void (float skill) UseSkill = {
         break;
         case SKILLFOUR_FROSTARCHER:
             SkillFour_FrostArcher();
+        break;
+        case SKILLONE_SHAMBLER:
+            SkillOne_Shambler();
+        break;
+        case SKILLTWO_SHAMBLER:
+            SkillTwo_Shambler();
+        break;
+        case SKILLTHREE_SHAMBLER:
+            SkillThree_Shambler();
+        break;
+        case SKILLFOUR_SHAMBLER:
+            SkillFour_Shambler();
         break;
     }   
 }

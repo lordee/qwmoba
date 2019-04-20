@@ -4,6 +4,11 @@ typedef struct {
     vector model_min;
     vector model_max;
     vector model_viewoffset;
+    string model_head;
+    string sound_death;
+    string sound_aashoot;
+    string sound_aahit;
+    string sound_aahitwall;
     float basead;
     float growthad;
     float basehealth;
@@ -40,6 +45,11 @@ Champion_t Champions[3] = {
         MODEL_MIN_UNDEFINED,
         MODEL_MAX_UNDEFINED,
         MODEL_VIEWOFFSET_UNDEFINED,
+        MODEL_HEAD_UNDEFINED,
+        SOUND_DEATH_UNDEFINED,
+        SOUND_AASHOOT_UNDEFINED,
+        SOUND_AAHIT_UNDEFINED,
+        SOUND_AAHITWALL_UNDEFINED,
         BASEAD_UNDEFINED,
         GROWTH_AD_UNDEFINED,
         BASEHEALTH_UNDEFINED,
@@ -74,6 +84,11 @@ Champion_t Champions[3] = {
         MODEL_MIN_FROSTARCHER,
         MODEL_MAX_FROSTARCHER,
         MODEL_VIEWOFFSET_FROSTARCHER,
+        MODEL_HEAD_FROSTARCHER,
+        SOUND_DEATH_FROSTARCHER,
+        SOUND_AASHOOT_FROSTARCHER,
+        SOUND_AAHIT_FROSTARCHER,
+        SOUND_AAHITWALL_FROSTARCHER,
         BASEAD_FROSTARCHER,
         GROWTH_AD_FROSTARCHER,
         BASEHEALTH_FROSTARCHER,
@@ -108,6 +123,11 @@ Champion_t Champions[3] = {
         MODEL_MIN_SHAMBLER,
         MODEL_MAX_SHAMBLER,
         MODEL_VIEWOFFSET_SHAMBLER,
+        MODEL_HEAD_SHAMBLER,
+        SOUND_DEATH_SHAMBLER,
+        SOUND_AASHOOT_SHAMBLER,
+        SOUND_AAHIT_SHAMBLER,
+        SOUND_AAHITWALL_SHAMBLER,
         BASEAD_SHAMBLER,
         GROWTH_AD_SHAMBLER,
         BASEHEALTH_SHAMBLER,

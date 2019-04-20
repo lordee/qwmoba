@@ -310,6 +310,11 @@
 #define MODEL_MIN_UNDEFINED   '-16 -16 -24'
 #define MODEL_MAX_UNDEFINED   '16 16 32'
 #define MODEL_VIEWOFFSET_UNDEFINED    '0 0 22'
+#define MODEL_HEAD_UNDEFINED "progs/h_player.mdl"
+#define SOUND_DEATH_UNDEFINED    "player/death1.wav"
+#define SOUND_AASHOOT_UNDEFINED    "weapons/grenade.wav"
+#define SOUND_AAHIT_UNDEFINED    ""
+#define SOUND_AAHITWALL_UNDEFINED    "weapons/tink1.wav"
 #define BASEAD_UNDEFINED     50
 #define BASEHEALTH_UNDEFINED 500
 #define BASEHEALTH_REGEN_UNDEFINED 5
@@ -355,6 +360,11 @@
 #define MODEL_MIN_FROSTARCHER   '-16 -16 -24'
 #define MODEL_MAX_FROSTARCHER   '16 16 32'
 #define MODEL_VIEWOFFSET_FROSTARCHER    '0 0 22'
+#define MODEL_HEAD_FROSTARCHER "progs/h_player.mdl"
+#define SOUND_DEATH_FROSTARCHER    "player/death1.wav"
+#define SOUND_AASHOOT_FROSTARCHER    "weapons/grenade.wav"
+#define SOUND_AAHIT_FROSTARCHER    ""
+#define SOUND_AAHITWALL_FROSTARCHER    "weapons/tink1.wav"
 #define BASEAD_FROSTARCHER     50
 #define BASEHEALTH_FROSTARCHER 500
 #define BASEHEALTH_REGEN_FROSTARCHER 5
@@ -400,6 +410,11 @@
 #define MODEL_MIN_SHAMBLER   '-32 -32 -24'
 #define MODEL_MAX_SHAMBLER   '32 32 64'
 #define MODEL_VIEWOFFSET_SHAMBLER    '0 0 50'
+#define MODEL_HEAD_SHAMBLER "progs/h_shams.mdl"
+#define SOUND_DEATH_SHAMBLER    "shambler/sdeath.wav"
+#define SOUND_AASHOOT_SHAMBLER    "shambler/melee1.wav"
+#define SOUND_AAHIT_SHAMBLER    "shambler/smack.wav"
+#define SOUND_AAHITWALL_SHAMBLER    "shambler/melee1.wav"
 #define BASEAD_SHAMBLER     50
 #define BASEHEALTH_SHAMBLER 500
 #define BASEHEALTH_REGEN_SHAMBLER 5
