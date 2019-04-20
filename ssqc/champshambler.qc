@@ -29,7 +29,6 @@ void ShamblerAttack()
 	}
 	else
 	{	// hit wall
-        // TODO change sound
 		sound (self, CHAN_WEAPON, selfchamp.sound_aahitwall, 1, ATTN_NORM);
 		WriteByte (MSG_MULTICAST, SVC_TEMPENTITY);
 		WriteByte (MSG_MULTICAST, TE_GUNSHOT);
@@ -44,114 +43,28 @@ void ShamblerAttack()
 void () SkillOne_Shambler = {
     if (CanCast(self.skill_one_cooldown, self.skill_one_manacost))
     {
-         // do checks for frost stacks
-        float s;
-        s = self.stacks;
+        // pop up all units in radius around champ
 
-        // if five frost stacks then allow cast
-        if (s >= 5)
-        {
-            self.mana = self.mana - self.skill_one_manacost;
-            // show cast clientside
-            // buff attack speed
-            T_ApplyBuff(self, BUFF_AASPEED_PERC, AASPEED_SKILLONE_FROSTARCHER, SKILLONE_VALUE_FROSTARCHER);
-            self.skill_one_cooldown = time + SKILLONE_COOLDOWN_FROSTARCHER;
-        }
-        else
-        {
-            sprint(self, PRINT_HIGH, "You need 5 frost stacks on a target before you can cast this\n");
-        }
+        // stun them for x seconds
     }
 }
 
 void () SkillTwo_Shambler = {
 	if (CanCast(self.skill_two_cooldown, self.skill_two_manacost))
     {
-        self.mana = self.mana - self.skill_two_manacost;
-        self.skill_two_cooldown = time + SKILLTWO_COOLDOWN_FROSTARCHER;
-
-        float num, ang;
-        num = 11;
-        ang = floor(1800 / num);
-
-        while (num > 0)
-        {
-            entity mis;
-            mis = spawn ();
-            mis.voided = 0;
-            mis.owner = self;
-            mis.movetype = MOVETYPE_BOUNCE;
-            mis.solid = SOLID_BBOX;
-            mis.classname = "frostarcherskilltwo";
-            mis.effects = EF_BLUE;
-            makevectors (self.v_angle);
-
-            if (self.v_angle_x)
-            {
-                if (num < 6)
-                {
-                    mis.velocity = v_forward*1000 + v_up * 200 + (v_right * (num * ang) * -1) + crandom()*v_up*10;
-                }
-                else if (num > 6)
-                {
-                    mis.velocity = v_forward*1000 + v_up * 200 + v_right * ((num - 6) * ang) + crandom()*v_up*10;
-                }
-                else
-                {
-                    mis.velocity = v_forward*1000 + v_up * 200 + crandom()*v_right*10 + crandom()*v_up*10;
-                }
-            }
-            else
-            {
-                mis.velocity = aim(self, 10000);
-                mis.velocity = newmis.velocity * 1000;
-                mis.velocity_z = 200;
-            }
-
-            mis.angles = vectoangles(mis.velocity);
-            mis.touch = FrostArcherSkillTwoTouch;
-            mis.nextthink = time + 6;
-            mis.think = SUB_Remove;
-            
-            setmodel (mis, "progs/champions/frostarcher/frostarcherarrow.mdl");
-            setsize (mis, VEC_ORIGIN, VEC_ORIGIN);
-            setorigin (mis, self.origin);
-            num = num - 1;
-        }
-
-        sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
+        // push back unit hit, stunning them for duration and .1 secs after hitting ground?
     }
 }
 void () SkillThree_Shambler = {
-	sprint(self, PRINT_HIGH, "Not implemented\n");
+	/*Alistar tramples the ground around him every 0.5 seconds for 5 seconds, dealing magic damage to all nearby enemies and gaining a Trample stack every time the ability damages at least one enemy champion. Alistar is Ghost ghosted for the duration.*/
+
+    /*At 5 Trample stacks, Alistar's next basic attack deals 35 − 290 (based on level) bonus magic damage and Stun icon stuns his target for 1 second.*/
+
 }
 void () SkillFour_Shambler = {
 	if (CanCast(self.skill_four_cooldown, self.skill_four_manacost))
     {
-        self.mana = self.mana - self.skill_four_manacost;
-        self.skill_four_cooldown = time + SKILLFOUR_COOLDOWN_FROSTARCHER;
-            
-        newmis = spawn ();
-        newmis.voided = 0;
-        newmis.owner = self;
-        newmis.movetype = MOVETYPE_FLYMISSILE;
-        newmis.solid = SOLID_BBOX;
-        newmis.effects = EF_BLUE;
-        newmis.classname = "frostarcherskillfour";
-        makevectors (self.v_angle);
+        /*reduces all incoming physical and magic damage for the next 7 seconds, cleansing himself of all Stun icon crowd control on cast.*/
 
-        newmis.velocity = aim(self, 1000);
-        newmis.velocity = newmis.velocity * 1000;
-        newmis.angles = vectoangles(newmis.velocity);
-
-        newmis.touch = FrostArcherSkillFourTouch;
-        newmis.nextthink = time + 60;
-        newmis.think = SUB_Remove;
-        
-        setmodel (newmis, "progs/champions/frostarcher/frostarcherultimate.mdl");
-        setsize (newmis, '0 0 0', '0 0 0');             
-        setorigin (newmis, self.origin + v_forward*8 + '0 0 16');
-
-        sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
     }
 }
