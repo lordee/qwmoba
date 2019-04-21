@@ -44,15 +44,61 @@ void () SkillOne_Shambler = {
     if (CanCast(self.skill_one_cooldown, self.skill_one_manacost))
     {
         // pop up all units in radius around champ
+        entity affected = findradius(self.origin, SKILLONE_RANGE_SHAMBLER);
 
-        // stun them for x seconds
+        while (affected)
+        {
+            if (affected.team_no != self.team_no)
+            {
+                if (affected.classname == "player" || affected.classname == "creep")
+                {
+                    // pop up
+                    affected.velocity = '0 0 0';
+                    affected.velocity_z = 500;
+
+                    // stun 
+                    T_ApplyBuff(affected, DEBUFF_STUN_MOVEALLOWED, STUN_SKILLONE_SHAMBLER, SKILLONE_VALUE_UNDEFINED);
+                    T_Damage(affected, self, self, self.skill_one_damage);
+                }
+            }
+            affected = affected.chain;
+        }
     }
+}
+
+void Skill_Two_Shambler_Touch()
+{
+    // push back unit hit, stunning them for duration and .1 secs after hitting ground?
+    if (other)
+    {
+        if (other.team_no != self.team_no)
+        {
+            if (other.classname == "player" || other.classname == "creep")
+            {
+                makevectors(self.angles);
+                T_Damage(other, self, self, self.skill_two_damage);
+                other.velocity = v_forward * 1000;
+                other.velocity_z = 50;
+                T_ApplyBuff(other, DEBUFF_STUN_MOVEALLOWED, STUN_SKILLTWO_SHAMBLER, SKILLONE_VALUE_UNDEFINED);
+            }
+        }
+    }
+    self.touch = SUB_Null;
 }
 
 void () SkillTwo_Shambler = {
 	if (CanCast(self.skill_two_cooldown, self.skill_two_manacost))
     {
-        // push back unit hit, stunning them for duration and .1 secs after hitting ground?
+        // move shambler forward a bunch
+        makevectors(self.angles);
+        self.velocity = v_forward * 1000;
+        if (self.flags & FL_ONGROUND)
+        {
+            self.velocity_z = 50;
+        }
+
+        // if he hits a unit
+        self.touch = Skill_Two_Shambler_Touch;
     }
 }
 void () SkillThree_Shambler = {

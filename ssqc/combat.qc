@@ -479,9 +479,13 @@ void () BuffThink = {
 
     switch (self.buffcategory)
     {
+		case DEBUFF_STUN_MOVEALLOWED:
+			self.owner.stunned = FALSE;
+			break;
         case DEBUFF_STUN:
             self.owner.stunned = FALSE;
             self.owner.movetype = MOVETYPE_WALK;
+			break;
         default:
     }
 
@@ -512,9 +516,14 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
         case DEBUFF_STUN:
             targ.stunned = TRUE;
             targ.movetype = MOVETYPE_NONE;
+			break;
+		case DEBUFF_STUN_MOVEALLOWED:
+			targ.stunned = TRUE;
+			break;
         default:
     }
     
+	// TODO - rework this just to be values sent in to function?
     switch (type)
     {
         case MSSLOW_FROSTARCHER:
@@ -540,6 +549,18 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
 			newbuff.health = SKILLFOUR_LIFETIME_FROSTARCHER; 
             newbuff.nextthinkinterval = SKILLFOUR_TICKRATE_FROSTARCHER; 
             newbuff.nextthink = time + SKILLFOUR_TICKRATE_FROSTARCHER;
+			break;
+		case STUN_SKILLONE_SHAMBLER:
+			newbuff.max_health = SKILLONE_LIFETIME_SHAMBLER;
+			newbuff.health = SKILLONE_LIFETIME_SHAMBLER; 
+            newbuff.nextthinkinterval = SKILLONE_TICKRATE_SHAMBLER; 
+            newbuff.nextthink = time + SKILLONE_TICKRATE_SHAMBLER;
+			break;
+		case STUN_SKILLTWO_SHAMBLER:
+			newbuff.max_health = SKILLTWO_LIFETIME_SHAMBLER;
+			newbuff.health = SKILLTWO_LIFETIME_SHAMBLER; 
+            newbuff.nextthinkinterval = SKILLTWO_TICKRATE_SHAMBLER; 
+            newbuff.nextthink = time + SKILLTWO_TICKRATE_SHAMBLER;
 			break;
         default:
             newbuff.max_health = 10;

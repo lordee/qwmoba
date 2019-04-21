@@ -299,8 +299,20 @@ void () FrostArcherSkillFourTouch = {
         spawn_touchblood (self.owner.skill_four_damage);
 		other.deathtype = "frostarcherskillfour";
 		
-        // apply stun in radius
-        T_ApplyBuff(other, DEBUFF_STUN, STUN_SKILLFOUR_FROSTARCHER, SKILLFOUR_VALUE_FROSTARCHER);
+        //apply stun in radius     
+        entity affected;
+        affected = findradius(self.origin, SKILLFOUR_RANGE_FROSTARCHER);
+        while (affected)
+        {
+            if (affected.team_no != self.owner.team_no)
+            {
+                if (affected.classname == "player" || affected.classname == "creep")
+                    T_ApplyBuff(affected, DEBUFF_STUN, STUN_SKILLFOUR_FROSTARCHER, SKILLONE_VALUE_UNDEFINED);
+            }
+            
+            affected = affected.chain;
+        }
+        
         T_Damage (other, self, self.owner, self.owner.skill_two_damage);
     }
     else

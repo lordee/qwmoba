@@ -62,6 +62,9 @@ void CSQC_Ent_Update(float flIsNew) {
             self.item_five = readfloat();
             self.item_six = readfloat();
             self.item_seven = readfloat();
+
+            // TODO - ui buff/debuff, animation above player in game
+            self.stunned = readfloat();
                 
             if ( flIsNew == TRUE ) {
                 self.classname = "player";

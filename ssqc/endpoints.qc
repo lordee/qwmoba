@@ -184,6 +184,7 @@ float Player_SendEntity(entity ePVEnt, float flChanged) {
     WriteFloat(MSG_ENTITY, self.item_five);
     WriteFloat(MSG_ENTITY, self.item_six);
     WriteFloat(MSG_ENTITY, self.item_seven);
+    WriteFloat(MSG_ENTITY, self.stunned);
 
     return TRUE;
 }
