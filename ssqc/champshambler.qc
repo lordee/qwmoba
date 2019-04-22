@@ -41,7 +41,7 @@ void ShamblerAttack()
 }
 
 void () SkillOne_Shambler = {
-    if (CanCast(self.skill_one_cooldown, self.skill_one_manacost))
+    if (Cast(1, self.skill_one_cooldown_time, self.skill_one_manacost))
     {
         // pop up all units in radius around champ
         entity affected = findradius(self.origin, SKILLONE_RANGE_SHAMBLER);
@@ -87,7 +87,7 @@ void Skill_Two_Shambler_Touch()
 }
 
 void () SkillTwo_Shambler = {
-	if (CanCast(self.skill_two_cooldown, self.skill_two_manacost))
+	if (Cast(2, self.skill_two_cooldown_time, self.skill_two_manacost))
     {
         // move shambler forward a bunch
         makevectors(self.angles);
@@ -103,9 +103,9 @@ void () SkillTwo_Shambler = {
 }
 void SkillThree_Shambler()
 {
-    if (CanCast(self.skill_three_cooldown, self.skill_three_manacost))
+    if (Cast(3, self.skill_three_cooldown_time, self.skill_three_manacost))
     {
-        
+
     }
 	/*Alistar tramples the ground around him every 0.5 seconds for 5 seconds, dealing magic damage to all nearby enemies and gaining a Trample stack every time the ability damages at least one enemy champion. Alistar is Ghost ghosted for the duration.*/
 
@@ -113,7 +113,7 @@ void SkillThree_Shambler()
 
 }
 void () SkillFour_Shambler = {
-	if (CanCast(self.skill_four_cooldown, self.skill_four_manacost))
+	if (Cast(4, self.skill_four_cooldown_time, self.skill_four_manacost))
     {
         /*reduces all incoming physical and magic damage for the next 7 seconds, cleansing himself of all Stun icon crowd control on cast.*/
 

@@ -48,19 +48,23 @@ void () SetupChamp = {
     self.attackspeed = selfchamp.baseattackspeed;
     self.skill_one = selfchamp.skill_one;
     self.skill_one_manacost = selfchamp.skill_one_manacost;
-    self.skill_one_cooldown = 0;
+    self.skill_one_cooldown = selfchamp.skill_one_cooldown;
+    self.skill_one_cooldown_time = 0;
     self.skill_one_damage = selfchamp.skill_one_damage;
     self.skill_two = selfchamp.skill_two;
     self.skill_two_manacost = selfchamp.skill_two_manacost;
-    self.skill_two_cooldown = 0;
+    self.skill_two_cooldown = selfchamp.skill_two_cooldown;
+    self.skill_two_cooldown_time = 0;
     self.skill_two_damage = selfchamp.skill_two_damage;
     self.skill_three = selfchamp.skill_three;
     self.skill_three_manacost = selfchamp.skill_three_manacost;
-    self.skill_three_cooldown = 0;
+    self.skill_three_cooldown = selfchamp.skill_three_cooldown;
+    self.skill_three_cooldown_time = 0;
     self.skill_three_damage = selfchamp.skill_three_damage;
     self.skill_four = selfchamp.skill_four;
     self.skill_four_manacost = selfchamp.skill_four_manacost;
-    self.skill_four_cooldown = 0;
+    self.skill_four_cooldown = selfchamp.skill_four_cooldown;
+    self.skill_four_cooldown_time = 0;
     self.skill_four_damage = selfchamp.skill_four_damage;
 }
 
@@ -116,7 +120,7 @@ void (float skill) UseSkill = {
         case SKILLFOUR_SHAMBLER:
             SkillFour_Shambler();
         break;
-    }   
+    }
 }
 
 float (float cooldown, float manacost) CanCast = {
@@ -125,6 +129,42 @@ float (float cooldown, float manacost) CanCast = {
         // take off mana
         if (self.mana >= manacost)
         {
+           return TRUE;
+        }
+        else
+        {
+            sprint(self, PRINT_HIGH, "Not enough mana\n");
+            return FALSE;
+        }
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+float (float skillnum, float cooldown, float manacost) Cast = {
+    if (cooldown <= time)
+    {
+        // take off mana
+        if (self.mana >= manacost)
+        {
+            self.mana = self.mana - manacost;
+            switch (skillnum)
+            {
+                case 1:
+                    self.skill_one_cooldown_time = time + self.skill_one_cooldown;
+                    break;
+                case 2:
+                    self.skill_two_cooldown_time = time + self.skill_two_cooldown;
+                    break;
+                case 3:
+                    self.skill_three_cooldown_time = time + self.skill_three_cooldown;
+                    break;
+                case 4:
+                    self.skill_four_cooldown_time = time + self.skill_four_cooldown;
+                    break;
+            }
            return TRUE;
         }
         else

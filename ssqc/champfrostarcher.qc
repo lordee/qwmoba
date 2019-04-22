@@ -124,7 +124,7 @@ void () FrostArcherAttack = {
 
 
 void () SkillOne_FrostArcher = {
-    if (CanCast(self.skill_one_cooldown, self.skill_one_manacost))
+    if (CanCast(self.skill_one_cooldown_time, self.skill_one_manacost))
     {
          // do checks for frost stacks
         float s;
@@ -133,11 +133,10 @@ void () SkillOne_FrostArcher = {
         // if five frost stacks then allow cast
         if (s >= 5)
         {
-            self.mana = self.mana - self.skill_one_manacost;
-            // show cast clientside
+            Cast(1, self.skill_one_cooldown_time, self.skill_one_manacost);
+            // TODO show cast clientside
             // buff attack speed
             T_ApplyBuff(self, BUFF_AASPEED_PERC, AASPEED_SKILLONE_FROSTARCHER, SKILLONE_VALUE_FROSTARCHER);
-            self.skill_one_cooldown = time + SKILLONE_COOLDOWN_FROSTARCHER;
         }
         else
         {
@@ -215,7 +214,7 @@ void () FrostArcherSkillTwoTouch = {
 }
 
 void () SkillTwo_FrostArcher = {
-	if (CanCast(self.skill_two_cooldown, self.skill_two_manacost))
+	if (Cast(2, self.skill_two_cooldown_time, self.skill_two_manacost))
     {
         self.mana = self.mana - self.skill_two_manacost;
         self.skill_two_cooldown = time + SKILLTWO_COOLDOWN_FROSTARCHER;
@@ -329,7 +328,7 @@ void () FrostArcherSkillFourTouch = {
 }
 
 void () SkillFour_FrostArcher = {
-	if (CanCast(self.skill_four_cooldown, self.skill_four_manacost))
+	if (Cast(4, self.skill_four_cooldown_time, self.skill_four_manacost))
     {
         self.mana = self.mana - self.skill_four_manacost;
         self.skill_four_cooldown = time + SKILLFOUR_COOLDOWN_FROSTARCHER;

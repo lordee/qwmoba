@@ -43,10 +43,10 @@ void CSQC_Ent_Update(float flIsNew) {
             self.health = readfloat();
             self.max_health = readfloat();
             self.skill_selected = readfloat();
-            self.skill_one_cooldown = readfloat();
-            self.skill_two_cooldown = readfloat();
-            self.skill_three_cooldown = readfloat();
-            self.skill_four_cooldown = readfloat();
+            self.skill_one_cooldown_time = readfloat();
+            self.skill_two_cooldown_time = readfloat();
+            self.skill_three_cooldown_time = readfloat();
+            self.skill_four_cooldown_time = readfloat();
             self.gold = readfloat();
             float lvl = readfloat();
             if (lvl != self.level)
