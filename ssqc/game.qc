@@ -151,6 +151,8 @@ void () StartGame = {
     wm.think = WaveThink;
     wm.wait = 30;
     wm.nextthink = time + wm.wait;
+
+    GameStarted = TRUE;
 }
 
 void () LobbyThink = {

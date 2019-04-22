@@ -159,6 +159,8 @@ void() worldspawn =
 	lastspawn = world;
 	InitBodyQue ();
 
+	GameStarted = FALSE;
+
 // custom map attributes
 
 	if (self.model == "maps/e1m8.bsp")

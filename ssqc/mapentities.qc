@@ -142,6 +142,11 @@ void () TowerShoot = {
 // tower, inhibs, base
 void () GoalThink = {
     self.nextthink = time + .1;
+
+    if (!GameStarted)
+    {
+        return;
+    }
     
     if (self.deadflag == DEAD_DEAD && self.type != STRUCTURE_INHIB)
     {

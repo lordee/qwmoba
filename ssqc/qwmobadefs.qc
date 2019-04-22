@@ -93,3 +93,4 @@
 .float chainnum;
 
 entity oldself;
+float GameStarted;
