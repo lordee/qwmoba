@@ -642,7 +642,6 @@ void() PlayerJump =
 	
 	if (self.waterlevel >= 2)
 	{
-// play swiming sound
 		if (self.swim_flag < time)
 		{
 			self.swim_flag = time + 1;

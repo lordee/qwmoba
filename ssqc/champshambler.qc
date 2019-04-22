@@ -94,14 +94,19 @@ void () SkillTwo_Shambler = {
         self.velocity = v_forward * 1000;
         if (self.flags & FL_ONGROUND)
         {
-            self.velocity_z = 50;
+            self.velocity_z = 181;
         }
 
         // if he hits a unit
         self.touch = Skill_Two_Shambler_Touch;
     }
 }
-void () SkillThree_Shambler = {
+void SkillThree_Shambler()
+{
+    if (CanCast(self.skill_three_cooldown, self.skill_three_manacost))
+    {
+        
+    }
 	/*Alistar tramples the ground around him every 0.5 seconds for 5 seconds, dealing magic damage to all nearby enemies and gaining a Trample stack every time the ability damages at least one enemy champion. Alistar is Ghost ghosted for the duration.*/
 
     /*At 5 Trample stacks, Alistar's next basic attack deals 35 − 290 (based on level) bonus magic damage and Stun icon stuns his target for 1 second.*/
