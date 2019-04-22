@@ -78,7 +78,7 @@ void Skill_Two_Shambler_Touch()
                 makevectors(self.angles);
                 T_Damage(other, self, self, self.skill_two_damage);
                 other.velocity = v_forward * 1000;
-                other.velocity_z = 50;
+                other.velocity_z = 181;
                 T_ApplyBuff(other, DEBUFF_STUN_MOVEALLOWED, STUN_SKILLTWO_SHAMBLER, SKILLONE_VALUE_UNDEFINED);
             }
         }
