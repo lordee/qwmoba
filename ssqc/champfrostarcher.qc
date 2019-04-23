@@ -124,24 +124,23 @@ void () FrostArcherAttack = {
 
 
 void () SkillOne_FrostArcher = {
-    if (CanCast(self.skill_one_cooldown_time, self.skill_one_manacost))
-    {
-         // do checks for frost stacks
-        float s;
-        s = self.stacks;
+     // do checks for frost stacks
+    float s;
+    s = self.stacks;
 
-        // if five frost stacks then allow cast
-        if (s >= 5)
+    // if five frost stacks then allow cast
+    if (s >= 5)
+    {
+        if (Cast(1, self.skill_one_cooldown_time, self.skill_one_manacost))
         {
-            Cast(1, self.skill_one_cooldown_time, self.skill_one_manacost);
             // TODO show cast clientside
             // buff attack speed
             T_ApplyBuff(self, BUFF_AASPEED_PERC, AASPEED_SKILLONE_FROSTARCHER, SKILLONE_VALUE_FROSTARCHER);
         }
-        else
-        {
-            sprint(self, PRINT_HIGH, "You need 5 frost stacks on a target before you can cast this\n");
-        }
+    }
+    else
+    {
+        sprint(self, PRINT_HIGH, "You need 5 frost stacks on a target before you can cast this\n");
     }
 }
 
@@ -216,9 +215,6 @@ void () FrostArcherSkillTwoTouch = {
 void () SkillTwo_FrostArcher = {
 	if (Cast(2, self.skill_two_cooldown_time, self.skill_two_manacost))
     {
-        self.mana = self.mana - self.skill_two_manacost;
-        self.skill_two_cooldown = time + SKILLTWO_COOLDOWN_FROSTARCHER;
-
         float num, ang;
         num = 11;
         ang = floor(1800 / num);

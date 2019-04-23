@@ -123,26 +123,6 @@ void (float skill) UseSkill = {
     }
 }
 
-float (float cooldown, float manacost) CanCast = {
-    if (cooldown <= time)
-    {
-        // take off mana
-        if (self.mana >= manacost)
-        {
-           return TRUE;
-        }
-        else
-        {
-            sprint(self, PRINT_HIGH, "Not enough mana\n");
-            return FALSE;
-        }
-    }
-    else
-    {
-        return FALSE;
-    }
-}
-
 float (float skillnum, float cooldown, float manacost) Cast = {
     if (cooldown <= time)
     {
