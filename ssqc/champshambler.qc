@@ -44,7 +44,7 @@ void () SkillOne_Shambler = {
     if (Cast(1, self.skill_one_cooldown_time, self.skill_one_manacost))
     {
         // pop up all units in radius around champ
-        entity affected = findradius(self.origin, SKILLONE_RANGE_SHAMBLER);
+        entity affected = findradius(self.origin, self.skill_one_range);
 
         while (affected)
         {

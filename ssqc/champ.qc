@@ -51,21 +51,25 @@ void () SetupChamp = {
     self.skill_one_cooldown = selfchamp.skill_one_cooldown;
     self.skill_one_cooldown_time = 0;
     self.skill_one_damage = selfchamp.skill_one_damage;
+    self.skill_one_range = selfchamp.skill_one_range;
     self.skill_two = selfchamp.skill_two;
     self.skill_two_manacost = selfchamp.skill_two_manacost;
     self.skill_two_cooldown = selfchamp.skill_two_cooldown;
     self.skill_two_cooldown_time = 0;
     self.skill_two_damage = selfchamp.skill_two_damage;
+    self.skill_two_range = selfchamp.skill_two_range;
     self.skill_three = selfchamp.skill_three;
     self.skill_three_manacost = selfchamp.skill_three_manacost;
     self.skill_three_cooldown = selfchamp.skill_three_cooldown;
     self.skill_three_cooldown_time = 0;
     self.skill_three_damage = selfchamp.skill_three_damage;
+    self.skill_three_range = selfchamp.skill_three_range;
     self.skill_four = selfchamp.skill_four;
     self.skill_four_manacost = selfchamp.skill_four_manacost;
     self.skill_four_cooldown = selfchamp.skill_four_cooldown;
     self.skill_four_cooldown_time = 0;
     self.skill_four_damage = selfchamp.skill_four_damage;
+    self.skill_four_range = selfchamp.skill_four_range;
 }
 
 void () ChangeSkill = {
