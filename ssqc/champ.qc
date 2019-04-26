@@ -191,7 +191,7 @@ void (entity player) UpdateStats = {
     buff = find(world, classname, "buff");
     while (buff)
     {
-        if(buff.owner == player)
+        if (buff.owner == player)
         {
             val = buff.buffvalue;
             switch (buff.buffcategory)
@@ -201,6 +201,9 @@ void (entity player) UpdateStats = {
                     break;
                 case BUFF_AASPEED_PERC:
                     attspeed = attspeed * ((100 + val) / 100);
+                    break;
+                case BUFF_AA_EMPOWERED:
+                    attdamage = attdamage + val;
                     break;
             }
         }

@@ -463,6 +463,7 @@ void () ChampUpdateThink = {
 }
 
 // qwmoba
+void SkillThreeThink_Shambler();
 void () BuffThink = {
     float h;
     h = self.health - 1;
@@ -473,6 +474,19 @@ void () BuffThink = {
         self.nextthink = time + self.nextthinkinterval;
 
         // apply ticks (health damage etc)
+		switch (self.bufftype)
+		{
+			case AOEBURN_SKILLTHREE_SHAMBLER:
+				SkillThreeThink_Shambler();
+				break;
+		}
+
+		switch (self.buffcategory)
+		{
+			case BUFF_AA_EMPOWERED:
+				UpdateStats(self.owner);
+				break;
+		}
 
         return;
     }
@@ -489,6 +503,14 @@ void () BuffThink = {
         default:
     }
 
+	switch (self.bufftype)
+	{
+		case AOEBURN_SKILLTHREE_SHAMBLER:
+			self.owner.stacks = 0;
+			break;
+	}
+
+	// redo stats after self is removed
     entity upd;
     upd = spawn();
     upd.owner = self.owner;
@@ -497,6 +519,24 @@ void () BuffThink = {
     upd.nextthink = time + .1;
 
     remove(self);
+}
+
+float BuffExists(entity player, float type)
+{
+	entity buff;
+	buff = find(world, classname, "buff");
+	while (buff)
+	{
+		if (buff.owner == player)
+		{
+			if (buff.bufftype == type)
+			{
+				return TRUE;
+			}
+		}
+		buff = find(buff, classname, "buff");
+	}
+	return FALSE;
 }
 
 void (entity targ, float cat, float type, float value) T_ApplyBuff = {
@@ -561,6 +601,18 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
 			newbuff.health = SKILLTWO_LIFETIME_SHAMBLER; 
             newbuff.nextthinkinterval = SKILLTWO_TICKRATE_SHAMBLER; 
             newbuff.nextthink = time + SKILLTWO_TICKRATE_SHAMBLER;
+			break;
+		case AAEMPOWER_SKILLTHREE_SHAMBLER:
+			newbuff.max_health = SKILLTHREE_EMPOWERED_LIFETIME_SHAMBLER;
+			newbuff.health = SKILLTHREE_EMPOWERED_LIFETIME_SHAMBLER; 
+            newbuff.nextthinkinterval = SKILLTHREE_EMPOWERED_TICKRATE_SHAMBLER; 
+            newbuff.nextthink = time + SKILLTHREE_EMPOWERED_TICKRATE_SHAMBLER;
+			break;
+		case AOEBURN_SKILLTHREE_SHAMBLER:
+			newbuff.max_health = SKILLTHREE_LIFETIME_SHAMBLER;
+			newbuff.health = SKILLTHREE_LIFETIME_SHAMBLER; 
+            newbuff.nextthinkinterval = SKILLTHREE_TICKRATE_SHAMBLER; 
+            newbuff.nextthink = time + SKILLTHREE_TICKRATE_SHAMBLER;
 			break;
         default:
             newbuff.max_health = 10;
