@@ -149,6 +149,6 @@ void SkillThree_Shambler()
 void () SkillFour_Shambler = {
 	if (Cast(4, self.skill_four_cooldown_time, self.skill_four_manacost))
     {
-        T_ApplyBuff(self, BUFF_DMGRD, DMGRD_SKILLFOUR_SHAMBLER, self.skill_four_value);
+        T_ApplyBuff(self, BUFF_DMGRD, DMGRD_SKILLFOUR_SHAMBLER, self.skill_four_value, SKILLFOUR_LIFETIME_SHAMBLER, SKILLFOUR_TICKRATE_SHAMBLER);
     }
 }
