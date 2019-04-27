@@ -539,7 +539,7 @@ float BuffExists(entity player, float type)
 	return FALSE;
 }
 
-void (entity targ, float cat, float type, float value) T_ApplyBuff = {
+void (entity targ, float cat, float type, float value, float lifetime, float tickrate) T_ApplyBuff = {
 	entity newbuff;
 	newbuff = spawn();
     newbuff.owner = targ;
@@ -549,6 +549,11 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
     
     newbuff.buffvalue = value;
     newbuff.think = BuffThink;
+	newbuff.max_health = lifetime;
+	newbuff.health = lifetime;
+	newbuff.nextthinkinterval = tickrate;
+	newbuff.nextthink = time + tickrate;
+
 
     // instant debuff
     switch (cat)
@@ -561,64 +566,6 @@ void (entity targ, float cat, float type, float value) T_ApplyBuff = {
 			targ.stunned = TRUE;
 			break;
         default:
-    }
-    
-	// TODO - rework this just to be values sent in to function?
-    switch (type)
-    {
-        case MSSLOW_FROSTARCHER:
-            newbuff.max_health = AASLOW_LIFETIME_FROSTARCHER;
-            newbuff.health = AASLOW_LIFETIME_FROSTARCHER; // lifetime of debuff
-            newbuff.nextthinkinterval = AASLOW_TICKRATE_FROSTARCHER; // this isn't needed but use for examples later on
-            newbuff.nextthink = time + AASLOW_TICKRATE_FROSTARCHER;
-            break;
-        case AASPEED_SKILLONE_FROSTARCHER:
-            newbuff.max_health = SKILLONE_LIFETIME_FROSTARCHER;
-            newbuff.health = SKILLONE_LIFETIME_FROSTARCHER; 
-            newbuff.nextthinkinterval = SKILLONE_TICKRATE_FROSTARCHER; 
-            newbuff.nextthink = time + SKILLONE_TICKRATE_FROSTARCHER;
-            break;
-        case MSSLOW_SKILLTWO_FROSTARCHER:
-            newbuff.max_health = SKILLTWO_LIFETIME_FROSTARCHER;
-            newbuff.health = SKILLTWO_LIFETIME_FROSTARCHER; 
-            newbuff.nextthinkinterval = SKILLTWO_TICKRATE_FROSTARCHER; 
-            newbuff.nextthink = time + SKILLTWO_TICKRATE_FROSTARCHER;
-            break;
-		case STUN_SKILLFOUR_FROSTARCHER:
-            newbuff.max_health = SKILLFOUR_LIFETIME_FROSTARCHER;
-			newbuff.health = SKILLFOUR_LIFETIME_FROSTARCHER; 
-            newbuff.nextthinkinterval = SKILLFOUR_TICKRATE_FROSTARCHER; 
-            newbuff.nextthink = time + SKILLFOUR_TICKRATE_FROSTARCHER;
-			break;
-		case STUN_SKILLONE_SHAMBLER:
-			newbuff.max_health = SKILLONE_LIFETIME_SHAMBLER;
-			newbuff.health = SKILLONE_LIFETIME_SHAMBLER; 
-            newbuff.nextthinkinterval = SKILLONE_TICKRATE_SHAMBLER; 
-            newbuff.nextthink = time + SKILLONE_TICKRATE_SHAMBLER;
-			break;
-		case STUN_SKILLTWO_SHAMBLER:
-			newbuff.max_health = SKILLTWO_LIFETIME_SHAMBLER;
-			newbuff.health = SKILLTWO_LIFETIME_SHAMBLER; 
-            newbuff.nextthinkinterval = SKILLTWO_TICKRATE_SHAMBLER; 
-            newbuff.nextthink = time + SKILLTWO_TICKRATE_SHAMBLER;
-			break;
-		case AAEMPOWER_SKILLTHREE_SHAMBLER:
-			newbuff.max_health = SKILLTHREE_EMPOWERED_LIFETIME_SHAMBLER;
-			newbuff.health = SKILLTHREE_EMPOWERED_LIFETIME_SHAMBLER; 
-            newbuff.nextthinkinterval = SKILLTHREE_EMPOWERED_TICKRATE_SHAMBLER; 
-            newbuff.nextthink = time + SKILLTHREE_EMPOWERED_TICKRATE_SHAMBLER;
-			break;
-		case AOEBURN_SKILLTHREE_SHAMBLER:
-			newbuff.max_health = SKILLTHREE_LIFETIME_SHAMBLER;
-			newbuff.health = SKILLTHREE_LIFETIME_SHAMBLER; 
-            newbuff.nextthinkinterval = SKILLTHREE_TICKRATE_SHAMBLER; 
-            newbuff.nextthink = time + SKILLTHREE_TICKRATE_SHAMBLER;
-			break;
-        default:
-            newbuff.max_health = 10;
-            newbuff.health = 10; // 10 ticks of nextthink
-            newbuff.nextthinkinterval = .1;
-            newbuff.nextthink = time + .1;
     }
 
     UpdateStats(newbuff.owner);

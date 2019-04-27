@@ -54,7 +54,7 @@ void () FrostArcherAttackTouch = {
             if (slowed == 0)
             {
                 // apply a slow for FrostArcher attacks
-                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_FROSTARCHER, AASLOW_VALUE_FROSTARCHER);
+                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_FROSTARCHER, AASLOW_VALUE_FROSTARCHER, AASLOW_LIFETIME_FROSTARCHER, AASLOW_TICKRATE_FROSTARCHER);
             }
         }
 	}
@@ -135,7 +135,7 @@ void () SkillOne_FrostArcher = {
         {
             // TODO show cast clientside
             // buff attack speed
-            T_ApplyBuff(self, BUFF_AASPEED_PERC, AASPEED_SKILLONE_FROSTARCHER, SKILLONE_VALUE_FROSTARCHER);
+            T_ApplyBuff(self, BUFF_AASPEED_PERC, AASPEED_SKILLONE_FROSTARCHER, SKILLONE_VALUE_FROSTARCHER, SKILLONE_LIFETIME_FROSTARCHER, SKILLONE_TICKRATE_FROSTARCHER);
         }
     }
     else
@@ -189,8 +189,8 @@ void () FrostArcherSkillTwoTouch = {
 
             if (slowed == 0)
             {
-                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_SKILLTWO_FROSTARCHER, SKILLTWO_VALUE_FROSTARCHER);
-                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_FROSTARCHER, 0); // for frost stacks
+                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_SKILLTWO_FROSTARCHER, SKILLTWO_VALUE_FROSTARCHER, SKILLTWO_LIFETIME_FROSTARCHER, SKILLTWO_TICKRATE_FROSTARCHER);
+                T_ApplyBuff(other, DEBUFF_MSSLOW, MSSLOW_FROSTARCHER, 0, AASLOW_LIFETIME_FROSTARCHER, AASLOW_TICKRATE_FROSTARCHER);
                 T_Damage (other, self, self.owner, self.owner.skill_two_damage);
             }
         }
@@ -302,7 +302,7 @@ void () FrostArcherSkillFourTouch = {
             if (affected.team_no != self.owner.team_no)
             {
                 if (affected.classname == "player" || affected.classname == "creep")
-                    T_ApplyBuff(affected, DEBUFF_STUN, STUN_SKILLFOUR_FROSTARCHER, SKILLONE_VALUE_UNDEFINED);
+                    T_ApplyBuff(affected, DEBUFF_STUN, STUN_SKILLFOUR_FROSTARCHER, SKILLONE_VALUE_UNDEFINED, SKILLFOUR_LIFETIME_FROSTARCHER, SKILLFOUR_TICKRATE_FROSTARCHER);
             }
             
             affected = affected.chain;

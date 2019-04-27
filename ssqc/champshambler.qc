@@ -57,7 +57,7 @@ void () SkillOne_Shambler = {
                     affected.velocity_z = 500;
 
                     // stun 
-                    T_ApplyBuff(affected, DEBUFF_STUN_MOVEALLOWED, STUN_SKILLONE_SHAMBLER, SKILLONE_VALUE_UNDEFINED);
+                    T_ApplyBuff(affected, DEBUFF_STUN_MOVEALLOWED, STUN_SKILLONE_SHAMBLER, SKILLONE_VALUE_UNDEFINED, SKILLONE_LIFETIME_SHAMBLER, SKILLONE_TICKRATE_SHAMBLER);
                     T_Damage(affected, self, self, self.skill_one_damage);
                 }
             }
@@ -79,7 +79,7 @@ void Skill_Two_Shambler_Touch()
                 T_Damage(other, self, self, self.skill_two_damage);
                 other.velocity = v_forward * SKILLTWO_RANGE_SHAMBLER;
                 other.velocity_z = 181;
-                T_ApplyBuff(other, DEBUFF_STUN_MOVEALLOWED, STUN_SKILLTWO_SHAMBLER, SKILLONE_VALUE_UNDEFINED);
+                T_ApplyBuff(other, DEBUFF_STUN_MOVEALLOWED, STUN_SKILLTWO_SHAMBLER, SKILLONE_VALUE_UNDEFINED, SKILLTWO_LIFETIME_SHAMBLER, SKILLTWO_TICKRATE_SHAMBLER);
             }
         }
     }
@@ -104,6 +104,8 @@ void () SkillTwo_Shambler = {
 
 void SkillThreeThink_Shambler()
 {
+    // TODO - play a sound
+
     // do damage in radius of owner
     entity affected;
     affected = findradius(self.owner.origin, SKILLTHREE_RANGE_SHAMBLER);
@@ -121,7 +123,7 @@ void SkillThreeThink_Shambler()
                 {
                     if (!BuffExists(self, AAEMPOWER_SKILLTHREE_SHAMBLER))
                     {
-                        T_ApplyBuff(self, BUFF_AA_EMPOWERED, AAEMPOWER_SKILLTHREE_SHAMBLER, SKILLTHREE_EMPOWERED_DAMAGE_SHAMBLER);
+                        T_ApplyBuff(self, BUFF_AA_EMPOWERED, AAEMPOWER_SKILLTHREE_SHAMBLER, SKILLTHREE_EMPOWERED_DAMAGE_SHAMBLER, SKILLTHREE_EMPOWERED_LIFETIME_SHAMBLER, SKILLTHREE_EMPOWERED_TICKRATE_SHAMBLER);
                     }
                 }
             case "creep": // allow fallthrough
@@ -139,17 +141,14 @@ void SkillThree_Shambler()
     if (Cast(3, self.skill_three_cooldown_time, self.skill_three_manacost))
     {
         self.stacks = 0;
-        T_ApplyBuff(self, BUFF_AOE, AOEBURN_SKILLTHREE_SHAMBLER, self.skill_three_damage);
+        T_ApplyBuff(self, BUFF_AOE, AOEBURN_SKILLTHREE_SHAMBLER, self.skill_three_damage, SKILLTHREE_LIFETIME_SHAMBLER, SKILLTHREE_TICKRATE_SHAMBLER);
     }
-	/*Alistar tramples the ground around him every 0.5 seconds for 5 seconds, dealing magic damage to all nearby enemies and gaining a Trample stack every time the ability damages at least one enemy champion. Alistar is Ghost ghosted for the duration.*/
-
-    /*At 5 Trample stacks, Alistar's next basic attack deals 35 − 290 (based on level) bonus magic damage and Stun icon stuns his target for 1 second.*/
-
 }
+
+/*reduces all incoming physical and magic damage for the next 7 seconds, cleansing himself of all Stun crowd control on cast.*/
 void () SkillFour_Shambler = {
 	if (Cast(4, self.skill_four_cooldown_time, self.skill_four_manacost))
     {
-        /*reduces all incoming physical and magic damage for the next 7 seconds, cleansing himself of all Stun icon crowd control on cast.*/
-
+        T_ApplyBuff(self, BUFF_DMGRD, DMGRD_SKILLFOUR_SHAMBLER, self.skill_four_value);
     }
 }
