@@ -301,6 +301,7 @@ void() worldspawn =
 		precache_sound(Champions[i].sound_aahit);
 		precache_sound(Champions[i].sound_aahitwall);
 		precache_sound(Champions[i].sound_aashoot);
+		precache_sound(Champions[i].sound_skillfour_cast);
 	}
 	
     clientstat(STAT_CANSHOP, EV_FLOAT, can_shop);

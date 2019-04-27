@@ -194,14 +194,7 @@ void () AssistTrackerThink = {
 		self.nextthink = time + 1;
 	}
 }
-/*
-============
-T_Damage
 
-The damage is coming from inflictor, but get mad at attacker
-This should be the only function that ever reduces health.
-============
-*/
 void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 {
 	local   vector  dir;
@@ -241,7 +234,21 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage =
 		(attacker.classname == "player") && 
 		inflictor.classname !="door")
 		return;
-	
+
+	// check for damage reduction
+	entity buff;
+	buff = find(world, classname, "buff");
+	while (buff)
+	{
+		switch (buff.buffcategory)
+		{
+			case BUFF_DMGRD_ALL:
+				damage = damage * (buff.buffvalue / 100);
+				break;
+		}
+		buff = find(buff, classname, "buff");
+	}
+
 	// do the damage
 	targ.health = targ.health - damage;
 
@@ -454,119 +461,3 @@ void(entity attacker, float damage) T_BeamDamage =
 		head = head.chain;
 	}
 };
-
-void (entity player) UpdateStats;
-
-void () ChampUpdateThink = {
-    UpdateStats(self.owner);
-    remove(self);
-}
-
-// qwmoba
-void SkillThreeThink_Shambler();
-void () BuffThink = {
-    float h;
-    h = self.health - 1;
-
-    if (h > 0)
-    {
-        self.health = h;
-        self.nextthink = time + self.nextthinkinterval;
-
-        // apply ticks (health damage etc)
-		switch (self.bufftype)
-		{
-			case AOEBURN_SKILLTHREE_SHAMBLER:
-				SkillThreeThink_Shambler();
-				break;
-		}
-
-		switch (self.buffcategory)
-		{
-			case BUFF_AA_EMPOWERED:
-				UpdateStats(self.owner);
-				break;
-		}
-
-        return;
-    }
-
-    switch (self.buffcategory)
-    {
-		case DEBUFF_STUN_MOVEALLOWED:
-			self.owner.stunned = FALSE;
-			break;
-        case DEBUFF_STUN:
-            self.owner.stunned = FALSE;
-            self.owner.movetype = MOVETYPE_WALK;
-			break;
-        default:
-    }
-
-	switch (self.bufftype)
-	{
-		case AOEBURN_SKILLTHREE_SHAMBLER:
-			self.owner.stacks = 0;
-			break;
-	}
-
-	// redo stats after self is removed
-    entity upd;
-    upd = spawn();
-    upd.owner = self.owner;
-    upd.classname = "champupdater";
-    upd.think = ChampUpdateThink;
-    upd.nextthink = time + .1;
-
-    remove(self);
-}
-
-float BuffExists(entity player, float type)
-{
-	entity buff;
-	buff = find(world, classname, "buff");
-	while (buff)
-	{
-		if (buff.owner == player)
-		{
-			if (buff.bufftype == type)
-			{
-				return TRUE;
-			}
-		}
-		buff = find(buff, classname, "buff");
-	}
-	return FALSE;
-}
-
-void (entity targ, float cat, float type, float value, float lifetime, float tickrate) T_ApplyBuff = {
-	entity newbuff;
-	newbuff = spawn();
-    newbuff.owner = targ;
-    newbuff.classname = "buff";
-    newbuff.buffcategory = cat;
-	newbuff.bufftype = type;
-    
-    newbuff.buffvalue = value;
-    newbuff.think = BuffThink;
-	newbuff.max_health = lifetime;
-	newbuff.health = lifetime;
-	newbuff.nextthinkinterval = tickrate;
-	newbuff.nextthink = time + tickrate;
-
-
-    // instant debuff
-    switch (cat)
-    {
-        case DEBUFF_STUN:
-            targ.stunned = TRUE;
-            targ.movetype = MOVETYPE_NONE;
-			break;
-		case DEBUFF_STUN_MOVEALLOWED:
-			targ.stunned = TRUE;
-			break;
-        default:
-    }
-
-    UpdateStats(newbuff.owner);
-}

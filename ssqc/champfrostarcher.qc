@@ -1,5 +1,3 @@
-void (entity targ, float cat, float type, float value) T_ApplyBuff;
-
 void () FrostArcherAttackTouch = {
     if (other == self.owner)
 		return;

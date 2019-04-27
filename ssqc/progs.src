@@ -5,6 +5,7 @@ fteextensions.qc
 qwmobadefs.qc
 
 subs.qc
+buff.qc
 combat.qc
 ../share/items.qc
 ../share/champtypes.qc

@@ -9,6 +9,7 @@ typedef struct {
     string sound_aashoot;
     string sound_aahit;
     string sound_aahitwall;
+    string sound_skillfour_cast;
     float basead;
     float growthad;
     float basehealth;
@@ -58,6 +59,7 @@ Champion_t Champions[3] = {
         SOUND_AASHOOT_UNDEFINED,
         SOUND_AAHIT_UNDEFINED,
         SOUND_AAHITWALL_UNDEFINED,
+        "",
         BASEAD_UNDEFINED,
         GROWTH_AD_UNDEFINED,
         BASEHEALTH_UNDEFINED,
@@ -105,6 +107,7 @@ Champion_t Champions[3] = {
         SOUND_AASHOOT_FROSTARCHER,
         SOUND_AAHIT_FROSTARCHER,
         SOUND_AAHITWALL_FROSTARCHER,
+        "",
         BASEAD_FROSTARCHER,
         GROWTH_AD_FROSTARCHER,
         BASEHEALTH_FROSTARCHER,
@@ -152,6 +155,7 @@ Champion_t Champions[3] = {
         SOUND_AASHOOT_SHAMBLER,
         SOUND_AAHIT_SHAMBLER,
         SOUND_AAHITWALL_SHAMBLER,
+        SOUND_SKILLFOUR_CAST_SHAMBLER,
         BASEAD_SHAMBLER,
         GROWTH_AD_SHAMBLER,
         BASEHEALTH_SHAMBLER,

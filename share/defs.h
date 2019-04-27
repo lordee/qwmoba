@@ -423,6 +423,7 @@
 #define SOUND_AASHOOT_SHAMBLER    "shambler/melee1.wav"
 #define SOUND_AAHIT_SHAMBLER    "shambler/smack.wav"
 #define SOUND_AAHITWALL_SHAMBLER    "shambler/melee1.wav"
+#define SOUND_SKILLFOUR_CAST_SHAMBLER   "shambler/ssight.wav"
 #define BASEAD_SHAMBLER     50
 #define BASEHEALTH_SHAMBLER 500
 #define BASEHEALTH_REGEN_SHAMBLER 5
@@ -479,7 +480,9 @@
 #define DEBUFF_STUN_MOVEALLOWED 32  // target will still fly through air etc
 #define BUFF_AA_EMPOWERED   64
 #define BUFF_AOE    128
-#define BUFF_DMGRD   256
+#define BUFF_DMGRD_ALL   256
+#define BUFF_DMGRD_AD   512
+#define BUFF_DMGRD_AP   1024
 
 // buff type
 #define MSSLOW_FROSTARCHER     1
