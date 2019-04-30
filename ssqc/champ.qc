@@ -102,6 +102,7 @@ void () ChangeSkill = {
 }
 
 void (float skill) UseSkill = {
+    GetChamp(self.champ_id);
     switch (skill)
     {
         case SKILLONE_FROSTARCHER:
@@ -131,7 +132,8 @@ void (float skill) UseSkill = {
     }
 }
 
-float (float skillnum, float cooldown, float manacost) Cast = {
+float Cast(float skillnum, float cooldown, float manacost)
+{
     if (cooldown <= time)
     {
         // take off mana
@@ -142,15 +144,19 @@ float (float skillnum, float cooldown, float manacost) Cast = {
             {
                 case 1:
                     self.skill_one_cooldown_time = time + self.skill_one_cooldown;
+                    sound (self, CHAN_WEAPON, selfchamp.sound_skillone_cast, 1, ATTN_NORM);
                     break;
                 case 2:
                     self.skill_two_cooldown_time = time + self.skill_two_cooldown;
+                    sound (self, CHAN_WEAPON, selfchamp.sound_skilltwo_cast, 1, ATTN_NORM);
                     break;
                 case 3:
                     self.skill_three_cooldown_time = time + self.skill_three_cooldown;
+                    sound (self, CHAN_WEAPON, selfchamp.sound_skillthree_cast, 1, ATTN_NORM);
                     break;
                 case 4:
                     self.skill_four_cooldown_time = time + self.skill_four_cooldown;
+                    sound (self, CHAN_WEAPON, selfchamp.sound_skillfour_cast, 1, ATTN_NORM);
                     break;
             }
            return TRUE;

@@ -147,7 +147,6 @@ void SkillThree_Shambler()
 void () SkillFour_Shambler = {
 	if (Cast(4, self.skill_four_cooldown_time, self.skill_four_manacost))
     {
-        sound (self, CHAN_WEAPON, selfchamp.sound_skillfour_cast, 1, ATTN_NORM);
         T_ApplyBuff(self, BUFF_DMGRD_ALL, DMGRD_SKILLFOUR_SHAMBLER, self.skill_four_value, SKILLFOUR_LIFETIME_SHAMBLER, SKILLFOUR_TICKRATE_SHAMBLER);
     }
 }

@@ -369,6 +369,10 @@
 #define SOUND_AASHOOT_FROSTARCHER    "weapons/grenade.wav"
 #define SOUND_AAHIT_FROSTARCHER    ""
 #define SOUND_AAHITWALL_FROSTARCHER    "weapons/tink1.wav"
+#define SOUND_SKILLONE_CAST_FROSTARCHER   ""
+#define SOUND_SKILLTWO_CAST_FROSTARCHER   "weapons/grenade.wav"
+#define SOUND_SKILLTHREE_CAST_FROSTARCHER   "shambler/ssight.wav"
+#define SOUND_SKILLFOUR_CAST_FROSTARCHER   "weapons/grenade.wav"
 #define BASEAD_FROSTARCHER     50
 #define BASEHEALTH_FROSTARCHER 500
 #define BASEHEALTH_REGEN_FROSTARCHER 5
@@ -423,6 +427,9 @@
 #define SOUND_AASHOOT_SHAMBLER    "shambler/melee1.wav"
 #define SOUND_AAHIT_SHAMBLER    "shambler/smack.wav"
 #define SOUND_AAHITWALL_SHAMBLER    "shambler/melee1.wav"
+#define SOUND_SKILLONE_CAST_SHAMBLER   "shambler/ssight.wav"
+#define SOUND_SKILLTWO_CAST_SHAMBLER   "shambler/ssight.wav"
+#define SOUND_SKILLTHREE_CAST_SHAMBLER   "shambler/ssight.wav"
 #define SOUND_SKILLFOUR_CAST_SHAMBLER   "shambler/ssight.wav"
 #define BASEAD_SHAMBLER     50
 #define BASEHEALTH_SHAMBLER 500

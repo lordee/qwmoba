@@ -301,6 +301,9 @@ void() worldspawn =
 		precache_sound(Champions[i].sound_aahit);
 		precache_sound(Champions[i].sound_aahitwall);
 		precache_sound(Champions[i].sound_aashoot);
+		precache_sound(Champions[i].sound_skillone_cast);
+		precache_sound(Champions[i].sound_skilltwo_cast);
+		precache_sound(Champions[i].sound_skillthree_cast);
 		precache_sound(Champions[i].sound_skillfour_cast);
 	}
 	
