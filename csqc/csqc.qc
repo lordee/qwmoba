@@ -107,6 +107,7 @@ void(float apilevel, string enginename, float engineversion) CSQC_Init = {
 }
 
 void (vector size) Hud_Draw;
+void View_Draw();
 void(float width, float height, float menushown) CSQC_UpdateView =
 {
     clearscene();
@@ -122,6 +123,7 @@ void(float width, float height, float menushown) CSQC_UpdateView =
 
     renderscene();
     Hud_Draw(glob_vid_size);
+    View_Draw(); // health bars, stuns etc
     Menu_Draw();
     Messages_Draw();
 }
