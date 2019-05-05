@@ -5,14 +5,30 @@ void View_Draw()
     e = find(world, classname, "player");
     while (e)
     {
-        float h = e.health;
-        float mh = e.max_health;
-        vector org = e.origin;
-        org_z = org_z + 30;
+        if (e != self)
+        {
+            float h = e.health;
+            float mh = e.max_health;
+            vector org = e.origin;
+            GetChamp(e.champ_id);
+            vector mmax = selfchamp.model_max;
+            org_z = org_z + mmax_z;
 
-        vector pos = project(org);
+            vector pos = project(org);
+            makevectors(getviewprop(VF_ANGLES));
+            float dot = dotproduct((e.origin - self.origin), v_forward);
 
-        Hud_DrawBar(pos, h, mh, [255, 0, 0]);
+            print("e.origin: ", vtos(e.origin), "\n");
+            print("org: ", vtos(self.origin), "\n");
+
+            if (dot > 0);
+            {
+                Hud_DrawBar(pos, h, mh, [255, 0, 0]);
+                print(ftos(e.health), "\n");
+                print(ftos(dot), "\n");            
+            }
+
+        }
         e = find(e, classname, "player");
     }
 }
