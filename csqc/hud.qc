@@ -186,7 +186,7 @@ void Hud_Draw(vector scrsz)
 	
 	float stitems = getstatbits(STAT_ITEMS, 0, 23);			//this is the player's self.items value (STAT_ITEMS is generated specially by the server)
 
-	entity p = findfloat(world, entnum, player_localentnum); 
+	entity p = findfloat(world, entnum, player_localentnum);
 	if (p.champ_id)
 	{
 		float hval = p.health;
