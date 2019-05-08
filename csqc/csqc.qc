@@ -106,13 +106,6 @@ void(float apilevel, string enginename, float engineversion) CSQC_Init = {
     }
 }
 
-void GetSelf()
-{
-    self = findfloat(world, entnum, player_localentnum);
-    print ("class: ", self.classname, "\n");
-    print ("name: ", self.netname, "\n");
-}
-
 void (vector size) Hud_Draw;
 void View_Draw();
 void(float width, float height, float menushown) CSQC_UpdateView =

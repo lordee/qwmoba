@@ -4,6 +4,7 @@ csmobadefs.qc
 ../share/helpers.qc
 ../share/items.qc
 ../share/champtypes.qc
+csutil.qc
 csqc.qc
 input.qc
 hud.qc
