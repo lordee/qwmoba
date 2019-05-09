@@ -170,7 +170,7 @@ void Hud_DrawGold(vector pos, float goldval)
 
     // vertical middle align
     stringpos_y = stringpos_y + (fontsize_y * .5);
-    drawstring(stringpos, msg, fontsize, [255, 215, 0], 1, 0);
+	drawstring(stringpos, msg, fontsize, [1, 0.84, 0], 1, 0);
 
     // TODO gold coin icon
 }
@@ -230,7 +230,7 @@ void Hud_Draw(vector scrsz)
 		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == selfchamp.skill_four) ? TRUE : FALSE, p.skill_four_cooldown);
 
 		// gold
-        pos = pos + [50, 64, 0];
+        pos = pos + [100, 64, 0];
         Hud_DrawGold(pos, p.gold);
 
 		// items
