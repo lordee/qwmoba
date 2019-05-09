@@ -181,83 +181,95 @@ void Hud_DrawMiniMap(vector pos, vector fillsize)
     drawfill(pos, fillsize, COLOR_PANEL_BG, ALPHA_PANEL_BG, 0);
 }
 
+void Hud_DrawIcon(IT_Base item, vector pos)
+{
+	vector size = [20, 20, 0];
+	vector color = [147, 112, 219];
+
+	if (item.item_id == IT_NONE)
+	{
+		drawfill(pos, size, color, ALPHA_PANEL_BG, 0);
+	}
+	else
+	{
+		Hud_DrawSkillAndItemIcon(pos, item.icon, (self.item_selected == 1) ? TRUE : FALSE, self.item_one_cooldown);
+	}
+}
+
 void Hud_Draw(vector scrsz)
 {
 	vector pos = [(scrsz_x-320)/2, pos_y = scrsz_y - 24, 0];	//calculate the top-left of the sbar, assuming it is 320 units wide and placed in the bottom-middle of the screen
 	
 	float stitems = getstatbits(STAT_ITEMS, 0, 23);			//this is the player's self.items value (STAT_ITEMS is generated specially by the server)
-
-	entity p = findfloat(world, entnum, player_localentnum);
-	if (p.champ_id)
+	GetSelf();
+	if (self.champ_id)
 	{
-		float hval = p.health;
-		float h_max = p.max_health;
+		float hval = self.health;
+		float h_max = self.max_health;
 		vector color = [255, 0, 0];
 		pos = pos + [24, 12, 0];
 		Hud_DrawBar(pos, hval, h_max, color);
 
-		float manaval = p.mana;
-		float mana_max = p.max_mana;
+		float manaval = self.mana;
+		float mana_max = self.max_mana;
 		pos = pos + [0, -12, 0];
 		color = [0, 0, 255];
 		Hud_DrawBar(pos, manaval, mana_max, color);
 
         // level and experience
-		float exp = p.experience;
-        float e_max = GetExpBar(p.level);
+		float exp = self.experience;
+        float e_max = GetExpBar(self.level);
         color = [147, 112, 219];
         pos = pos + [0, -12, 0];
-		float lvl = p.level;
+		float lvl = self.level;
 		Hud_DrawBarEXP(pos, exp, e_max, lvl, color);
         
 		// skills
 		// based on champ, show champ skill icons
-		string icon = GetChampIcon(p.champ_id, 1);
+		string icon = GetChampIcon(self.champ_id, 1);
 		pos = pos + [0, -40, 0];
 		
-		GetChamp(p.champ_id);
-		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == selfchamp.skill_one) ? TRUE : FALSE, p.skill_one_cooldown);
+		GetChamp(self.champ_id);
+		Hud_DrawSkillAndItemIcon(pos, icon, (self.skill_selected == selfchamp.skill_one) ? TRUE : FALSE, self.skill_one_cooldown);
 
-		icon = GetChampIcon(p.champ_id, 2);
+		icon = GetChampIcon(self.champ_id, 2);
 		pos = pos + [25, 0, 0];
-		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == selfchamp.skill_two) ? TRUE : FALSE, p.skill_two_cooldown);
+		Hud_DrawSkillAndItemIcon(pos, icon, (self.skill_selected == selfchamp.skill_two) ? TRUE : FALSE, self.skill_two_cooldown);
 
-		icon = GetChampIcon(p.champ_id, 3);
+		icon = GetChampIcon(self.champ_id, 3);
 		pos = pos + [25, 0, 0];
-		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == selfchamp.skill_three) ? TRUE : FALSE, p.skill_three_cooldown);
+		Hud_DrawSkillAndItemIcon(pos, icon, (self.skill_selected == selfchamp.skill_three) ? TRUE : FALSE, self.skill_three_cooldown);
 
-		icon = GetChampIcon(p.champ_id, 4);
+		icon = GetChampIcon(self.champ_id, 4);
 		pos = pos + [25, 0, 0];
-		Hud_DrawSkillAndItemIcon(pos, icon, (p.skill_selected == selfchamp.skill_four) ? TRUE : FALSE, p.skill_four_cooldown);
+		Hud_DrawSkillAndItemIcon(pos, icon, (self.skill_selected == selfchamp.skill_four) ? TRUE : FALSE, self.skill_four_cooldown);
 
 		// gold
         pos = pos + [100, 64, 0];
-        Hud_DrawGold(pos, p.gold);
+        Hud_DrawGold(pos, self.gold);
 
 		// items
         pos = pos + [0, -64, 0];
+		Hud_DrawIcon(Items[self.item_one], pos);
+		
+        pos = pos + [22, 0, 0];
+		Hud_DrawIcon(Items[self.item_two], pos);
 
-        icon = Items[p.item_one].icon;
-        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 1) ? TRUE : FALSE, p.item_one_cooldown);
         pos = pos + [22, 0, 0];
-        icon = Items[p.item_two].icon;
-        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 2) ? TRUE : FALSE, p.item_two_cooldown);
-        pos = pos + [22, 0, 0];
-        icon = Items[p.item_three].icon;
-        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 3) ? TRUE : FALSE, p.item_three_cooldown);
+		Hud_DrawIcon(Items[self.item_three], pos);
+		
         pos = pos + [22, 11, 0];
-        icon = Items[p.item_four].icon;
-        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 4) ? TRUE : FALSE, p.item_four_cooldown);
-        pos = pos + [-66, 11, 0];
-        icon = Items[p.item_five].icon;
-        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 5) ? TRUE : FALSE, p.item_five_cooldown);
-        pos = pos + [22, 0, 0];
-        icon = Items[p.item_six].icon;
-        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 6) ? TRUE : FALSE, p.item_six_cooldown);
-        pos = pos + [22, 0, 0];
-        icon = Items[p.item_seven].icon;
-        Hud_DrawSkillAndItemIcon(pos, icon, (p.item_selected == 7) ? TRUE : FALSE, p.item_seven_cooldown);
+		Hud_DrawIcon(Items[self.item_four], pos);
 
+        pos = pos + [-66, 11, 0];
+		Hud_DrawIcon(Items[self.item_five], pos);
+
+        pos = pos + [22, 0, 0];
+		Hud_DrawIcon(Items[self.item_six], pos);
+		
+        pos = pos + [22, 0, 0];
+		Hud_DrawIcon(Items[self.item_seven], pos);
+		
 		// minimap
         pos = scrsz;
         vector fillsize = [100, 100, 0];
