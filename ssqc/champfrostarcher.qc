@@ -321,10 +321,7 @@ void () FrostArcherSkillFourTouch = {
 
 void () SkillFour_FrostArcher = {
 	if (Cast(4, self.skill_four_cooldown_time, self.skill_four_manacost))
-    {
-        self.mana = self.mana - self.skill_four_manacost;
-        self.skill_four_cooldown = time + SKILLFOUR_COOLDOWN_FROSTARCHER;
-            
+    {           
         newmis = spawn ();
         newmis.voided = 0;
         newmis.owner = self;
