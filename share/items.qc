@@ -20,7 +20,7 @@ ItemComponent_t ItemComponents[2] = {
     {IT_BOOTS_AASPEED, {IT_BOOTS_BASE, IT_DAGGER}}
 };
 
-// TODO make in to struct
+// TODO make in to struct??
 class IT_Base
 {
     float item_id;
