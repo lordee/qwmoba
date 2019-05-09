@@ -162,17 +162,18 @@ void Hud_DrawGold(vector pos, float goldval)
 
     string msg = ftos(goldval);
     vector fontsize = [6, 6, 0];
+
     vector stringpos = pos;
+	vector goldpos = pos;
+	goldpos_y = goldpos_y - 3;
     float msgwidth = stringwidth(msg, 0, fontsize);
 
-    // let's right align
+    // let's right, vertical middle align
     stringpos_x = stringpos_x + (fillsize_x - msgwidth);
-
-    // vertical middle align
     stringpos_y = stringpos_y + (fontsize_y * .5);
 	drawstring(stringpos, msg, fontsize, [1, 0.84, 0], 1, 0);
 
-    // TODO gold coin icon
+	drawpic(goldpos, ICON_GOLDCOIN, [18, 18, 0], [1, 1, 1], 1, 0);
 }
 
 void Hud_DrawMiniMap(vector pos, vector fillsize)

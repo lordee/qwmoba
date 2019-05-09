@@ -92,6 +92,7 @@ void(float apilevel, string enginename, float engineversion) CSQC_Init = {
     precache_pic (SKILLTWOICON_FROSTARCHER);
     precache_pic (SKILLTHREEICON_FROSTARCHER);
     precache_pic (SKILLFOURICON_FROSTARCHER);
+    precache_pic (ICON_GOLDCOIN);
     precache_pic (BTN_BG);
     precache_pic (BTN_BG_DISABLED);
     

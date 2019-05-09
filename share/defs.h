@@ -290,6 +290,7 @@
 #define SKILLTWOICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/volley.tga"
 #define SKILLTHREEICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/bird.png"
 #define SKILLFOURICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/largearrow.png"
+#define ICON_GOLDCOIN   "progs/gfx/hud/coin.tga"
 
 // champ skills
 #define SKILLONE_UNDEFINED   1
