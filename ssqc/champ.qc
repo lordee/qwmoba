@@ -74,6 +74,8 @@ void () SetupChamp = {
     self.skill_four_damage = selfchamp.skill_four_damage;
     self.skill_four_range = selfchamp.skill_four_range;
     self.skill_four_value = selfchamp.skill_four_value;
+
+    UpdateStats(self);
 }
 
 void () ChangeSkill = {
