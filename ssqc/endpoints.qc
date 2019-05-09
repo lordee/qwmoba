@@ -12,6 +12,7 @@ void (float c) Cmd_ChooseChamp_f = {
     self.menu = MNU_INACTIVE;
     self.champ_id = c;
     self.level = 1;
+    self.gold = 500;
     // force a respawn as that champ
     ClientKill();
 }

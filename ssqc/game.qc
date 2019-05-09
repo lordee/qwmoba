@@ -131,9 +131,7 @@ void () StartGame = {
     {
         oldself = self;
         self = p;
-        self.gold = 500;
         
-        SetGold(self);
         PutClientInServer();
         self = oldself;
         p = find(p, classname, "player");
