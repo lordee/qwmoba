@@ -105,12 +105,16 @@ void () MouseClick = {
     float btnid;
     entity btn;
     btnid = MouseOnButton();
-    dprint ("btnid: ", ftos(btnid), "\n");
-    if (btnid > 0)
-    {
-        btn = GetButton(btnid);
-        btn.nextthink = 1;
-    }
+    
+        if (btnid > 0)
+        {
+            btn = GetButton(btnid);
+            if (btn.btn_flags & BTNFLAGS_ACTIVE)
+            {
+                btn.nextthink = 1;
+            }
+        }
+    
 }
 
 void Menu_Draw()
