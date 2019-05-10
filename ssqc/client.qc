@@ -1,6 +1,3 @@
-// qwmoba
-void (entity player, float menutype) ShowMenu;
-
 // prototypes
 void () W_WeaponFrame;
 void() W_SetCurrentAmmo;
@@ -880,10 +877,6 @@ void() PlayerPostThink =
     DoRegen(self);
 
 	W_WeaponFrame ();
-
-	// if there's a menu set, make sure it's activated
-	// send this even when 0
-	ShowMenu(self, self.menu);
 };
 
 void (float imp, string alias) AliasCommand = {
@@ -892,6 +885,7 @@ void (float imp, string alias) AliasCommand = {
 
 void () AliasImpulses = {
 	AliasCommand(READY, "ready");
+    AliasCommand(MNU_OPEN_SHOP, "menu_open_shop");
 }
 
 /*

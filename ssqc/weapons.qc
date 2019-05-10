@@ -1079,6 +1079,9 @@ void() ImpulseCommands =
 		case READY:
 			ToggleReady(self);
 			break;
+        case MNU_OPEN_SHOP:
+            player.menu = MNU_SHOP;
+            break;
 	}
 
 	self.impulse = 0;

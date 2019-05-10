@@ -7,10 +7,6 @@ void (vector boxpos, vector boxsize, string boxpic, string boxtext, vector boxrg
 	drawstring(boxpos + '10 12 0', boxtext, '8 8 0', boxrgb, 1, 0);
 };
 
-void (float menu) AckMenu = {
-    sendevent("AckMenu", "f", menu);
-}
-
 void () ClearMenu = {
     setcursormode(FALSE);
     entity button;
@@ -23,9 +19,9 @@ void () ClearMenu = {
 		button = find(button, classname, "gui_button");
 	}
 }
-void ShowShopMenu(vector vid_size, float can_shop);
-void (vector vid_size, float menuitem) ShowMenu = {
-
+void Menu_Show_Shop(vector vid_size, float can_shop);
+void Menu_Show(vector vid_size, float menuitem) 
+{
     // no active menu
     if (vid_size_x != 0)
     {
@@ -45,15 +41,11 @@ void (vector vid_size, float menuitem) ShowMenu = {
                 break;
                 case MNU_SHOP:
                     float can_shop = getstatf(STAT_CANSHOP);
-                    ShowShopMenu(vid_size, can_shop);
+                    Menu_Show_Shop(vid_size, can_shop);
                 case MNU_INACTIVE:
                     setcursormode(FALSE);
                 break;
             }
-        }
-        else 
-        {
-            AckMenu(mnu_active);
         }
     }
 }
@@ -121,7 +113,11 @@ void () MouseClick = {
     }
 }
 
-void () Menu_Draw = {
+void Menu_Draw()
+{
+    float menu = getstatf(STAT_MENU);
+    Menu_Show(glob_vid_size, menu);
+
     entity button;
     float btnID;
 

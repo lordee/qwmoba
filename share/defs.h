@@ -259,6 +259,7 @@
 #define SKILL_USETHREE   8
 #define SKILL_USEFOUR    9
 #define READY   11
+#define MNU_OPEN_SHOP   12
 
 // global rules
 #define REGEN_TICKTIME  1
@@ -277,6 +278,7 @@
 
 // first 32 are reserved
 #define STAT_CANSHOP    33
+#define STAT_MENU    34
 
 #define BTN_BG  "progs/csqc/csqcguiback.tga"
 #define BTN_BG_DISABLED  "progs/csqc/csqcguiback_disabled.tga"

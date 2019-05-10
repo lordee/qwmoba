@@ -1,20 +1,17 @@
-void (vector vid_size, float menuitem) ShowMenu;
 void () Menu_Draw;
 void () Messages_Draw;
 void () MouseClick;
 
 void() CSQC_Parse_Event = {
-    float first = readbyte(); 
+    /*float first = readbyte(); 
     float second, third;
     string thirdS;
     switch (first)
     {
         case SE_MNU_OPEN:
-            second = readbyte();
-            ShowMenu(glob_vid_size, second);
             break;
         default:
-    }
+    }*/
 }
 
 float () Player_PreDraw;

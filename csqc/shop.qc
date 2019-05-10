@@ -66,7 +66,7 @@ void ItemPanel_Draw(vector pos, vector panelsize, vector border)
     // TODO check for scrolling needed if more items than panelsize    
 }
 
-void ShowShopMenu(vector vid_size, float can_shop)
+void Menu_Show_Shop(vector vid_size, float can_shop)
 {
     // background
     vector pos = vid_size;

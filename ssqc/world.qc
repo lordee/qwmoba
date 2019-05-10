@@ -308,6 +308,7 @@ void() worldspawn =
 	}
 	
     clientstat(STAT_CANSHOP, EV_FLOAT, can_shop);
+    clientstat(STAT_MENU, EV_FLOAT, menu);
 
     float ilength = iItems.length;
     for (float i = 0; i < ilength; i++)
