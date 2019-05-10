@@ -287,6 +287,9 @@
 #define BTN_SHOP_CAT_AS  2
 #define BTN_SHOP_BUY  3
 
+#define BTNFLAGS_INACTIVE   0
+#define BTNFLAGS_ACTIVE   1
+
 // icons
 #define SKILLONEICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/focus.png"
 #define SKILLTWOICON_FROSTARCHER    "progs/gfx/hud/champions/frostarcher/volley.tga"

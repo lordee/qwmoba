@@ -131,7 +131,14 @@ void Menu_Draw()
 
         if (btnID == highlight)
         {
-            spawnbox(button.origin, button.size, button.btn_img, button.btn_text, '1 1 1', .4);
+            if (button.btn_flags & BTNFLAGS_ACTIVE)
+            {
+                spawnbox(button.origin, button.size, button.btn_img, button.btn_text, '1 1 1', .4);
+            }
+            else
+            {
+                spawnbox(button.origin, button.size, button.btn_img, button.btn_text, '1 1 1', .2);
+            }
         }
         else
         {

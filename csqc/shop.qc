@@ -80,17 +80,17 @@ void Menu_Show_Shop(vector vid_size, float can_shop)
     vector button_size = [40, 20, 0];
     vector btnpos = pos + border;
     float btnID = 1;
-    btn = CreateButton("All Items", BtnShop, btnpos, BTN_BG, size, 0, btnID);
+    btn = CreateButton("All Items", BtnShop, btnpos, BTN_BG, size, BTNFLAGS_ACTIVE, btnID);
     btn.type = BTN_SHOP_CAT_ALL;
 
     btnpos_y = btnpos_y + border_y;
     btnID++;
-    btn = CreateButton("Movement", BtnShop, btnpos, BTN_BG, size, 0, btnID);
+    btn = CreateButton("Movement", BtnShop, btnpos, BTN_BG, size, BTNFLAGS_ACTIVE, btnID);
     btn.type = BTN_SHOP_CAT_MS;
 
     btnpos_y = btnpos_y + border_y;
     btnID++;
-    btn = CreateButton("Attack Speed", BtnShop, btnpos, BTN_BG, size, 0, btnID);
+    btn = CreateButton("Attack Speed", BtnShop, btnpos, BTN_BG, size, BTNFLAGS_ACTIVE, btnID);
     btn.type = BTN_SHOP_CAT_AS;
 
     // draw items on panel
@@ -107,7 +107,8 @@ void Menu_Show_Shop(vector vid_size, float can_shop)
     btnpos_x = btnpos_x + border_x;
 
     string btnbg = can_shop ? BTN_BG : BTN_BG_DISABLED;
-    btn = CreateButton("BUY", BtnShop, btnpos, btnbg, size, 0, btnID);
+    string active = can_shop ? BTNFLAGS_ACTIVE : BTNFLAGS_INACTIVE;
+    btn = CreateButton("BUY", BtnShop, btnpos, btnbg, size, active, btnID);
     btn.type = BTN_SHOP_BUY;
 
     
