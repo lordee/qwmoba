@@ -107,7 +107,7 @@ void Menu_Show_Shop(vector vid_size, float can_shop)
     btnpos_x = btnpos_x + border_x;
 
     string btnbg = can_shop ? BTN_BG : BTN_BG_DISABLED;
-    string active = can_shop ? BTNFLAGS_ACTIVE : BTNFLAGS_INACTIVE;
+    float active = can_shop ? BTNFLAGS_ACTIVE : BTNFLAGS_INACTIVE;
     btn = CreateButton("BUY", BtnShop, btnpos, btnbg, size, active, btnID);
     btn.type = BTN_SHOP_BUY;
 
